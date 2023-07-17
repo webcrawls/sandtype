@@ -31,7 +31,7 @@
       {
         "Name": "default",
         "GameIdent": "webcrawls.sandtyper#local",
-        "MapName": "",
+        "MapName": "\u003Cempty\u003E",
         "MaxPlayers": 1,
         "GameSettings": {},
         "Addons": "",
