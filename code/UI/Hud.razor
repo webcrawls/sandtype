@@ -8,19 +8,9 @@
 @inherits RootPanel
 
 <root>
-	<TextEntry @ref=Entry class="textentry"/>
-	<TextGhost @ref=Ghost/>
-	@if ( Game.Started  && !Game.Completed )
-	{
-		<TypingWPM Game="@Game"/>
-	}
-	
-	@if ( Game.Completed )
-	{
-		<p>Congrats, you finished!</p>
-		<p>Duration: @Game.Time</p>
-		<p>Wpm: @Game.FinalWpm</p>
-	}
+	<TextEntry @ref="Entry" class="textentry"/>
+	<TextGhost @ref="Ghost"/>
+	<TypingStatus Game="@Game"/>
 </root>
 
 @code {
