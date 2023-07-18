@@ -31,6 +31,8 @@ public class TypingGame
 		Target = Provider.GetText( TextSize.MEDIUM );
 		Content = "";
 		FinalWpm = 0;
+		Pawn.Hud.Entry.Disabled = false;
+		Pawn.Hud.Entry.Focus();
 	}
 
 	public void HandleInput( string input )

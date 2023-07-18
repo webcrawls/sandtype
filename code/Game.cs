@@ -9,8 +9,6 @@ public partial class SandtypeGame : GameManager
 	{
 		base.ClientJoined( client );
 
-		var steamId = client.SteamId;
-
 		Pawn pawn = new Pawn();
 		client.Pawn = pawn;
 	}
