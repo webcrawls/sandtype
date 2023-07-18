@@ -21,12 +21,11 @@ public class TypingGame
 	{
 		Pawn = pawn;
 		Provider = new DictionaryTextProvider("The quick brown fox jumps over the lazy dog".Split( " " ).ToList());
-	//Provider = new DictionaryTextProvider( new List<string>() { "hello", "world" } );
 	}
 
 	public void Reset()
 	{
-		Started = true;
+		Started = false;
 		Completed = false;
 		StartTime = DateTime.Now;
 		Target = Provider.GetText( TextSize.MEDIUM );
