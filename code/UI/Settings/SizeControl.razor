@@ -1,0 +1,19 @@
+﻿@namespace Sandtype.UI.Settings
+@using Sandbox
+@using Sandbox.UI;
+@attribute [StyleSheet("SizeControl.razor.scss")]
+@inherits Button
+
+<root>
+	<h1>Size Settings</h1>
+	<hr/>
+	<button @onclick=@(() => Pawn.Settings.TextSize = 24)>Small</button>
+	<button @onclick=@(() => Pawn.Settings.TextSize = 50)>Medium</button>
+	<button @onclick=@(() => Pawn.Settings.TextSize = 72)>Large</button>
+</root>
+
+@code {
+
+	public Pawn Pawn => Game.LocalPawn as Pawn;
+
+}

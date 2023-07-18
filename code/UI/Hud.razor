@@ -1,19 +1,21 @@
 ﻿@namespace Sandtype.UI
 @using System
-@using Sandbox
 @using Sandbox.UI;
 @using Sandtype.Engine;
-@using Sandtype.UI;
 @using Sandtype.UI.Typing;
+@using Sandtype.UI.Settings;
 @attribute [StyleSheet("Hud.razor.scss")]
 @inherits RootPanel
 
 <root>
 	<GameControls/>
 	<TypingEntry @ref="Entry" Game="@Game" class="textentry" autocomplete="true"/>
-	<TextGhost @ref="Ghost"/>
+	<TextGhost @ref="Ghost" style="font-size: @(FontSize)px"/>
 	<TypingStatus Game="@Game"/>
 	<Reset @onclick=@(() => Game.Reset())/>
+	<div class="sandtype-settings">
+		<SizeControl/>
+	</div>
 </root>
 
 @code {
@@ -21,6 +23,7 @@
 	public TextEntry Entry;
 	public TextGhost Ghost;
 	public TypingGame Game;
+	private int FontSize => Game.Pawn.Settings?.TextSize ?? 42;
 
 	public Hud( TypingGame game )
 	{

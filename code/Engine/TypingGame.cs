@@ -31,16 +31,15 @@ public class TypingGame
 		Target = Provider.GetText( TextSize.MEDIUM );
 		Content = "";
 		FinalWpm = 0;
-		if ( Pawn.Hud != null && Pawn.Hud.Entry != null )
-		{
-			Pawn.Hud.Entry.Disabled = false;
-			Pawn.Hud.Entry.Focus();
-			Pawn.Hud.Entry.Text = "";
-		}
 	}
 
 	public void HandleInput( string input )
 	{
+		if ( Completed )
+		{
+			return;
+		}
+		
 		if ( input.Length == Target.Length )
 		{
 			Complete();
@@ -58,7 +57,6 @@ public class TypingGame
 	{
 		EndTime = DateTime.Now;
 		Completed = true;
-		Pawn.Hud.Entry.Disabled = true;
 	}
 	
 }

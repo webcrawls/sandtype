@@ -2,8 +2,10 @@
 @using System
 @using Sandbox.UI
 @using Sandtype.Engine;
-@attribute [Sandbox.UI.StyleSheet("TypingStatus.razor.scss")]
+@attribute [StyleSheet("TypingEntry.razor.scss")]
 @inherits Sandbox.UI.TextEntry
+
+<root style="cursor: default; z-index: -1;"></root>
 
 @code {
 
@@ -11,12 +13,15 @@
 
 	public override void OnButtonTyped( ButtonEvent e )
 	{
-		base.OnButtonEvent( e );
-		Log.Info( e );
+		CaretColor = Color.Transparent;
+		
 		if ( e.Button == "tab" )
 		{
 			Game.Reset();
+			return;
 		}
+		
+		base.OnButtonTyped( e );
 	}
 
 }
