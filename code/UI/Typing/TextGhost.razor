@@ -1,10 +1,7 @@
 ﻿@namespace Sandtype.UI.Typing
 @using Sandbox.UI;
 @using System;
-@using System.Collections.Generic
 @using System.Linq
-@using System.Net.Mime
-@using System.Text.RegularExpressions
 @using Sandbox
 @attribute [StyleSheet("TextGhost.razor.scss")]
 @inherits Panel
@@ -51,12 +48,6 @@
 	private string _target => Pawn.TypingGame.Target;
 	private string _content => Pawn.TypingGame.Content;
 	private int _cursorPos => _content.Length;
-
-	private int NextToken( int characterIndex )
-	{
-		int nextSpace = _content.IndexOf( " ", characterIndex );
-		return nextSpace;
-	}
 
 	protected override int BuildHash()
 	{

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Sandbox.UI;
+using System.Linq;
 using Sandtype.Engine.Text;
 
 namespace Sandtype.Engine;
@@ -21,7 +20,8 @@ public class TypingGame
 	public TypingGame(Pawn pawn)
 	{
 		Pawn = pawn;
-		Provider = new DictionaryTextProvider( new List<string>() { "hello", "world" } );
+		Provider = new DictionaryTextProvider("The quick brown fox jumps over the lazy dog".Split( " " ).ToList());
+	//Provider = new DictionaryTextProvider( new List<string>() { "hello", "world" } );
 	}
 
 	public void Reset()

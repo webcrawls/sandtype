@@ -1,5 +1,4 @@
-﻿using System;
-using Sandbox;
+﻿using Sandbox;
 using Sandbox.UI;
 using Sandtype.Engine;
 using Sandtype.UI;
