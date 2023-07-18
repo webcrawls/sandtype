@@ -1,6 +1,7 @@
 ﻿@namespace Sandtype.UI.Typing
 @using Sandbox.UI;
 @using System;
+@using System.Collections.Generic
 @using System.Linq
 @using System.Net.Mime
 @using System.Text.RegularExpressions
@@ -9,35 +10,57 @@
 @inherits Panel
 
 
-<root style="height: @(CurrentLines * 120)px">
-	@foreach ( var (c, i) in Target.ToCharArray().Select( ( x, i ) => (x, i) ) )
+<root>
+	@foreach ( var (c, cIndex) in _target.ToCharArray().Select( ( v, i ) => (v, i) ) )
 	{
-		@if ( i >= Content.Length )
+		@if ( _cursorPos == cIndex )
 		{
-			<p class='char' style="color: white;">@c</p>
-			
-		} else if ( Target[i] != Content[i] )
-		{
-			<p class='char' style="color: red;">@c</p>
+			Log.Info( _target[cIndex] )	;
+			if ( _target[cIndex] == ' ' )
+			{
+				// char is at the cursor (render space as underscore)
+				<span style="color: white;">@('_')</span>
+			}
+			else
+			{
+				// char is at the cursor
+				<span style="color: white;">@c</span>
+			}
 		}
-		else
+		else if ( _cursorPos > cIndex ) {
+			// char is before the cursor
+			if ( _content[cIndex] != c )
+			{
+				Log.Info( "error: "+ _target[cIndex] );
+				<span style="color: red;">@c</span>
+			}
+			else
+			{
+				<span style="color: #1e1e1e;">@c</span>
+			}
+		} else if (_cursorPos < cIndex)
 		{
-			<p class='char' style="color: black;">@c</p>
+			<span style="color: #424242;">@c</span>
 		}
 	}
 </root>
 
 @code {
 
-	public int CharPerLine = 40;
-	public Pawn Pawn = Game.LocalPawn as Pawn;
-	public String Target => Pawn.TypingGame.Target;
-	public String Content => Pawn.TypingGame.Content;
-	public int CurrentLines => 1 + (int) (double) Content.Length / CharPerLine;
+	private Pawn Pawn = Game.LocalPawn as Pawn;
+	private string _target => Pawn.TypingGame.Target;
+	private string _content => Pawn.TypingGame.Content;
+	private int _cursorPos => _content.Length;
+
+	private int NextToken( int characterIndex )
+	{
+		int nextSpace = _content.IndexOf( " ", characterIndex );
+		return nextSpace;
+	}
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Content, Target, CurrentLines );
+		return HashCode.Combine( _target, _content );
 	}
 
 }
