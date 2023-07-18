@@ -1,0 +1,43 @@
+﻿@namespace Sandtype.UI
+@using System
+@using Sandbox
+@using Sandbox.UI;
+@using Sandtype.Engine;
+@using Sandtype.UI.Typing;
+@attribute [StyleSheet("Hud.razor.scss")]
+@inherits RootPanel
+
+<root>
+	<TextEntry @ref=Entry class="textentry"/>
+	<TextGhost @ref=Ghost/>
+	@if ( Game.Started  && !Game.Completed )
+	{
+		<TypingWPM Game="@Game"/>
+	}
+	
+	@if ( Game.Completed )
+	{
+		<p>Congrats, you finished!</p>
+		<p>Duration: @Game.Time</p>
+		<p>Wpm: @Game.FinalWpm</p>
+	}
+</root>
+
+@code {
+
+	public TextEntry Entry;
+	public TextGhost Ghost;
+	public TypingGame Game;
+
+	public Hud( TypingGame game )
+	{
+		Game = game;
+	}
+
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Game.Started, Game.Completed );
+	}
+
+}

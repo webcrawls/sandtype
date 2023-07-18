@@ -1,0 +1,43 @@
+﻿@namespace Sandtype.UI.Typing
+@using Sandbox.UI;
+@using System;
+@using System.Linq
+@using System.Net.Mime
+@using System.Text.RegularExpressions
+@using Sandbox
+@attribute [StyleSheet("TextGhost.razor.scss")]
+@inherits Panel
+
+
+<root style="height: @(CurrentLines * 120)px">
+	@foreach ( var (c, i) in Target.ToCharArray().Select( ( x, i ) => (x, i) ) )
+	{
+		@if ( i >= Content.Length )
+		{
+			<p class='char' style="color: white;">@c</p>
+			
+		} else if ( Target[i] != Content[i] )
+		{
+			<p class='char' style="color: red;">@c</p>
+		}
+		else
+		{
+			<p class='char' style="color: black;">@c</p>
+		}
+	}
+</root>
+
+@code {
+
+	public int CharPerLine = 40;
+	public Pawn Pawn = Game.LocalPawn as Pawn;
+	public String Target => Pawn.TypingGame.Target;
+	public String Content => Pawn.TypingGame.Content;
+	public int CurrentLines => 1 + (int) (double) Content.Length / CharPerLine;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Content, Target, CurrentLines );
+	}
+
+}

@@ -2,7 +2,7 @@
   "Title": "s\u0026typer",
   "Type": "game",
   "Org": "webcrawls",
-  "Ident": "sandtyper",
+  "Ident": "sandtype",
   "Tags": "typing test stats",
   "Schema": 1,
   "HasAssets": true,
@@ -30,7 +30,7 @@
     "LaunchConfigs": [
       {
         "Name": "default",
-        "GameIdent": "webcrawls.sandtyper#local",
+        "GameIdent": "webcrawls.sandtype#local",
         "MapName": "\u003Cempty\u003E",
         "MaxPlayers": 1,
         "GameSettings": {},

@@ -1,0 +1,27 @@
+﻿@namespace Sandtype.UI.Typing
+@using System
+@using Sandtype.Engine;
+@using Sandtype.UI;
+@attribute [Sandbox.UI.StyleSheet("TypingWPM.razor.scss")]
+@inherits Sandbox.UI.Panel
+
+
+<root>
+		<h1>Length: @TimeSince</h1>
+		<h1>WPM: @(WordsCounted / TimeSince.TotalMilliseconds)</h1>
+		<h1>Chars: @Content.Length</h1>
+</root>
+
+@code {
+
+	public TypingGame Game;
+	public string Content => Game.Content;
+	public TimeSpan TimeSince => DateTime.Now - Game.StartTime;
+	public int WordsCounted => Game.Content.Split(" ").Length;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( TimeSince, WordsCounted );
+	}
+	
+}

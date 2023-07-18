@@ -13,8 +13,6 @@ namespace Sandtype.UI
 	[Library( "TextEntry" )]
 	public partial class TextEntry : Panel, IInputControl
 	{
-
-		public SandtypeGame Game;
 		
 		/// <summary>
 		/// Called when the text of this text entry is changed.

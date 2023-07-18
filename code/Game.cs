@@ -1,58 +1,30 @@
-﻿using Sandbox;
-using System;
-using Sandbox.UI;
-using Sandtype.UI;
+﻿using System;
+using System.Collections.Generic;
+using Sandbox;
+using Sandtype.Engine.Text;
+using Sandtype.UI.Typing;
 
 namespace Sandtype;
 
-public class SandtypeGame : GameManager
+public partial class SandtypeGame : GameManager
 {
-	public String TypeTarget = "The quick brown fox jumps over the lazy dog.";
-
-	private String _content = "";
-
-	public bool IsComplete;
-	public String TypeContent
-	{
-		get => _content;
-		set
-		{
-			if ( _content == TypeTarget )
-			{
-				Complete();
-			}
-
-			_content = value;
-		}
-	}
-
-	public SandtypeGame()
-	{
-		if ( Game.IsServer ) return;
-		var panel = new Main();
-		panel.Game = this;
-		Game.RootPanel = panel;
-	}
 	
+	public static SandtypeGame Manager => SandtypeGame.Current as SandtypeGame;
+	private TextProvider _provider = new DictionaryTextProvider(new List<string>() {"hello", "world"});
+
 	public override void ClientJoined( IClient client )
 	{
 		base.ClientJoined( client );
+
+		var steamId = client.SteamId;
+
+		Pawn pawn = new Pawn();
+		client.Pawn = pawn;
 	}
 
-	public void ProcessInput()
+	public override void Simulate( IClient cl )
 	{
-		
+		if ( cl.Pawn is Pawn p )
+			p.Simulate( cl );
 	}
-
-	public void Reset()
-	{
-		TypeContent = "";
-	}
-
-	public void Complete()
-	{
-		IsComplete = true;
-		Log.Info( "You completed!" );
-	}
-
 }

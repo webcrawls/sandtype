@@ -1,0 +1,12 @@
+﻿TextGhost {
+  flex-direction: row;
+  width: 100%;
+  background-color: gray;
+  border-radius: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 72px;
+  transition: height 0.25s ease-in;
+}
