@@ -3,12 +3,14 @@
 @using Sandbox
 @using Sandbox.UI;
 @using Sandtype.Engine;
+@using Sandtype.UI;
 @using Sandtype.UI.Typing;
 @attribute [StyleSheet("Hud.razor.scss")]
 @inherits RootPanel
 
 <root>
-	<TextEntry @ref="Entry" class="textentry" autocomplete="true"/>
+	<GameControls/>
+	<TypingEntry @ref="Entry" Game="@Game" class="textentry" autocomplete="true"/>
 	<TextGhost @ref="Ghost"/>
 	<TypingStatus Game="@Game"/>
 	<Reset @onclick=@(() => Game.Reset())/>

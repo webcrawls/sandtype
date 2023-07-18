@@ -1,0 +1,22 @@
+﻿@namespace Sandtype.UI.Typing
+@using System
+@using Sandbox.UI
+@using Sandtype.Engine;
+@attribute [Sandbox.UI.StyleSheet("TypingStatus.razor.scss")]
+@inherits Sandbox.UI.TextEntry
+
+@code {
+
+	public TypingGame Game;
+
+	public override void OnButtonTyped( ButtonEvent e )
+	{
+		base.OnButtonEvent( e );
+		Log.Info( e );
+		if ( e.Button == "tab" )
+		{
+			Game.Reset();
+		}
+	}
+
+}
