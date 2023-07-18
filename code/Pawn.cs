@@ -24,18 +24,9 @@ public partial class Pawn : AnimatedEntity
 		// only run this code on our client (why do we need to do this?)
 		if ( Client != Game.LocalClient ) return;
 		Game.RootPanel = new Hud(TypingGame);
-		
-		// handle input from onchange, emitted by the TextEntry in Hud
-		// can we use a method reference here like in Java?
-		Hud.AddEventListener("onchange", (v) => {
-			Log.Info( v.Target );
-			if ( v.Target is TextEntry entry )
-			{
-				TypingGame.HandleInput( entry.Text );
-			}
-		});
+		Hud.AddEventListener( "onchange", HandleInputChange );
 	}
-
+	
 	private void InitializeGame()
 	{
 		// reset game on init
@@ -43,4 +34,12 @@ public partial class Pawn : AnimatedEntity
 		TypingGame.Reset();
 	}
 	
+	public void HandleInputChange( PanelEvent e )
+	{
+		if ( e.Target is TextEntry entry )
+		{
+			TypingGame.HandleInput( entry.Text );
+		}
+	}
+
 }
