@@ -1,5 +1,6 @@
 ﻿@namespace Sandtype.UI
 @using System
+@using Sandbox
 @using Sandbox.UI;
 @using Sandtype.Engine;
 @using Sandtype.UI.Typing;
@@ -7,9 +8,10 @@
 @inherits RootPanel
 
 <root>
-	<TextEntry @ref="Entry" class="textentry"/>
+	<TextEntry @ref="Entry" class="textentry" autocomplete="true"/>
 	<TextGhost @ref="Ghost"/>
 	<TypingStatus Game="@Game"/>
+	<Reset @onclick=@(() => Game.Reset())/>
 </root>
 
 @code {
@@ -22,7 +24,6 @@
 	{
 		Game = game;
 	}
-
 
 	protected override int BuildHash()
 	{
