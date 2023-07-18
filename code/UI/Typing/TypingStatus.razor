@@ -4,12 +4,10 @@
 @attribute [Sandbox.UI.StyleSheet("TypingStatus.razor.scss")]
 @inherits Sandbox.UI.Panel
 
-
 <root>
 	@if ( Game.Started && !Game.Completed)
 	{
 		<h1>Duration: @TimeSince.ToString(@"\:mm\:ss")</h1>
-		// <h1>WPM: @(WordsCounted / TimeSince.TotalMilliseconds)</h1>
 		<h1>Chars: @Content.Length</h1>
 	} else if ( Game.Completed )
 	{
