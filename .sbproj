@@ -8,7 +8,7 @@
   "HasAssets": true,
   "AssetsPath": "",
   "Resources": "\nfonts/JetBrainsMono.ttf\n*.scss",
-  "MenuResources": null,
+  "MenuResources": "\nfonts/JetBrainsMono.ttf",
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [],

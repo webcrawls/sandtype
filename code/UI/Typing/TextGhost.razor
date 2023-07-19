@@ -1,8 +1,6 @@
 ﻿@namespace Sandtype.UI.Typing
 @using Sandbox.UI;
 @using System;
-@using System.Linq
-@using Sandbox
 @attribute [StyleSheet("TextGhost.razor.scss")]
 @inherits Panel
 
@@ -12,7 +10,6 @@
 	{
 		@if ( _cursorPos == cIndex )
 		{
-			Log.Info( _target[cIndex] )	;
 			if ( _target[cIndex] == ' ' )
 			{
 				// char is at the cursor (render space as underscore)
@@ -28,7 +25,6 @@
 			// char is before the cursor
 			if ( _content[cIndex] != c )
 			{
-				Log.Info( "error: "+ _target[cIndex] );
 				<span style="color: red;">@c</span>
 			}
 			else
@@ -40,14 +36,11 @@
 			<span style="color: #424242;">@c</span>
 		}
 	}
+	<TypingEntry/>
 </root>
 
 @code {
 
-	private Pawn Pawn = Game.LocalPawn as Pawn;
-	private string _target => Pawn.TypingGame.Target;
-	private string _content => Pawn.TypingGame.Content;
-	private int _cursorPos => _content.Length;
 
 	protected override int BuildHash()
 	{

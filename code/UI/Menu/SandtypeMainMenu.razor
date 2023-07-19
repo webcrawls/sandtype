@@ -1,0 +1,42 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@namespace Sandtype.UI.Menu
+@inherits RootPanel
+@implements Sandbox.Menu.IGameMenuPanel
+
+<root>
+	<div @onclick=@HandleJoin>Click to play s&type :D</div>
+</root>
+
+<style>
+
+label {
+	color: white;
+}
+
+div {
+	background-color: white;
+	font-size:  72px;
+	width: 100%;
+}
+
+div label {
+	color:  black;
+}
+	
+</style>
+
+@code {
+	// Some notes to future self!
+	//
+	// When constructing the Game Menu, S&box will search your codebase for any Panels implementing `IGameMenuPanel`
+	// This wasn't immediately obvious to me, and is a little bit "magical", but it makes sense now.
+	// The DefaultGameMenu of Sandbox.UI.GameMenu is a great place to look to learn more about this.
+
+	static async void HandleJoin()
+	{
+		await Game.Menu.StartServerAsync( 32, "game", "facepunch.construct" );
+		await Game.Menu.EnterServerAsync();
+	}
+
+}
