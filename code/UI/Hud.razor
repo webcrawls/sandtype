@@ -1,65 +1,24 @@
 ﻿@namespace Sandtype.UI
-@using System
-@using Sandbox.UI;
-@using Sandtype.UI.Typing;
+@using Sandbox.UI
+@using Sandtype.UI.Game
+@using Sandtype.UI.Text
 @attribute [StyleSheet("Hud.razor.scss")]
-@inherits RootPanel
+@inherits Sandbox.UI.RootPanel
 
-<root style="">
-	<!-- overlays the whole screen, leave this here. -->
-	<TypingEntry @ref="Entry" Game="@Game" class="textentry" autocomplete="true"/>
-	
-	<div class="content">
-		<TerryPanel @ref="GameWorld" Game="@Game"/>
-		<BigTerryPanel class="terry-overlay"/>
-		@if ( HasStarted )
-		{
-			<div class="content-overlay content-overlay-top">
-				@if ( TerryCount == 0 )
-				{
-					<p>🎉🎉🎉 No terries...</p>
-				}
-				else
-				{
-					<p>Terry Count: @TerryCount</p>
-				}
-				<p>|</p>
-				<p>Terries Slain: @Game.TerrysSlain</p>
-				<p>|</p>
-				<p>Duration: @Game.Time.ToString()</p>
-			</div>
-		}
-		else
-		{
-			<div class="content-overlay-full">
-				<h1>Hello, dear warrior</h1>
-				<h1>Terry has gone all fucked, and its up to you and your keyboard to stop him</h1>
-			</div>
-
-		}
-	</div>
-	
-	<div class="footer">
-		<TextGhost @ref="Ghost" style="font-size: @(FontSize)px"/>
-	</div>
+<root>
+	<PlayerInformation class="player" Game="@Game"/>
+	<GameView class="game" Game="@Game" Test="@Test" @ref="GameView"/>
+	<TypingView class="input" @ref="TypingView"/>
+	<BossPanel class="boss" @ref="Boss"/>
 </root>
 
 @code {
 
-//	public TextEntry Entry;
-//	public TextGhost Ghost;
-//	private int FontSize => Game.Entity.Settings?.TextSize ?? 42;
-//	private bool HasStarted => Game.Started && !(Game.Completed || Game.Failed);
-//	private int TerryCount =>  GameWorld.AliveTerry;
-//
-//	public Hud( Pawn pawn )
-//	{
-//		Game = pawn.Components.Get<TypingGame>();
-//	}
-//
-//	protected override int BuildHash()
-//	{
-//		return HashCode.Combine( HasStarted, Game.Failed, Game.Started, Game.Completed, TerryCount);
-//	}
+	public TypingTest Test;
+	public TerryGame Game;
+	public BossPanel Boss;
+	
+	public GameView GameView;
+	public TypingView TypingView;
 
 }

@@ -1,0 +1,16 @@
+PlayerInformation {
+  color: black;
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  padding: 40px;
+}
+
+.player-text {
+  margin-bottom: 60px;
+  font-size: 32px;
+}

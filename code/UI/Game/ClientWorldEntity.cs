@@ -1,9 +1,11 @@
 ﻿using Sandbox.UI;
 
-namespace Sandtype.Game.UI.Entity;
+namespace Sandtype.UI.Game;
 
-public interface WorldEntity
+public interface ClientWorldEntity
 {
+
+	public bool IsActive();
 
 	public void Spawn();
 

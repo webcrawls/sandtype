@@ -34,7 +34,7 @@
         "MapName": "\u003Cempty\u003E",
         "MaxPlayers": 1,
         "GameSettings": {},
-        "Addons": "",
+        "Addons": "sugmagaming.fireparticle",
         "PreLaunchCommand": "",
         "PostLaunchCommand": ""
       }

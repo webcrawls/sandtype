@@ -1,13 +1,15 @@
 ﻿using Sandbox;
 
-namespace Sandtype.Game.UI.Entity;
+namespace Sandtype.UI.Game;
 
-public abstract class ModeledEntity : WorldEntity
+public abstract class ModeledEntity : ClientWorldEntity
 {
 
+	public Color Color = Color.Transparent;
 	protected SceneWorld World;
 	protected Model Model;
-	protected SceneObject SceneObject;
+	protected SceneModel SceneObject;
+	private bool _dead;
 
 	public ModeledEntity( SceneWorld world,
 		Model model )
@@ -16,12 +18,24 @@ public abstract class ModeledEntity : WorldEntity
 		Model = model;
 	}
 
-	public virtual void Spawn()
+	public bool IsActive()
 	{
-		SceneObject = new SceneModel( World, Model, Transform.Zero );
+		return !_dead;
 	}
 
-	public virtual void Delete()
+	public void Spawn()
+	{
+		SceneObject = new SceneModel( World, Model, Transform.Zero );
+		_dead = false;
+	}
+
+	public void Despawn()
+	{
+		SceneObject.Delete();
+		_dead = true;
+	}
+
+	public void Delete()
 	{
 		if ( SceneObject == null ) return;
 		
@@ -32,5 +46,8 @@ public abstract class ModeledEntity : WorldEntity
 	// Think(); is defined by WorldEntity, but
 	// we can use the 'abstract' keyword to
 	// force subclasses to implement it instead :D
-	public abstract void Think();
+	public virtual void Think()
+	{
+		SceneObject.ColorTint = Color;
+	}
 }

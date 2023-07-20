@@ -1,4 +1,4 @@
-﻿namespace Sandtype.Game;
+﻿namespace Sandtype;
 
 public struct TerryBotData
 {

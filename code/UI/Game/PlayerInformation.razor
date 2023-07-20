@@ -1,0 +1,25 @@
+@namespace Sandtype.UI.Game
+@attribute [StyleSheet("PlayerInformation.razor.scss")]
+@using System
+	@using Sandbox.UI
+@inherits Sandbox.UI.Panel
+
+<root>
+	<p class="player-text">Terry 💢 @TerryHealth / @TerryMaxHealth</p>
+	<p class="player-text">Player 💘 @PlayerHealth / @PlayerMaxHealth</p>
+</root>
+
+
+@code {
+	public TerryGame Game;
+	public int TerryHealth => Game.TerryHealth;
+	public int TerryMaxHealth => Game.TerryMaxHealth;
+	public int PlayerHealth => Game.PlayerHealth;
+	public int PlayerMaxHealth => Game.PlayerMaxHealth;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( TerryHealth, TerryMaxHealth, PlayerHealth, PlayerMaxHealth );
+	}
+
+}
