@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Sandbox;
 using Sandbox.UI;
+using Sandtype.UI.Game.Entity;
 
 namespace Sandtype.UI.Game;
 
 public class GameWorld : Panel
 {
-
+	public TerryGame Game;
 	public Action TerryHitAction;
 	public Action BulletHitAction;
 	private List<ClientWorldEntity> _entities;
@@ -28,7 +29,7 @@ public class GameWorld : Panel
 
 	public GameWorld()
 	{
-		_entities = new List<ClientWorldEntity>();
+		//_entities = new List<ClientWorldEntity>();
 		Style.Width = Length.Percent( 100 );
 		Style.Height = Length.Percent( 100 );
 		
@@ -61,47 +62,4 @@ public class GameWorld : Panel
 
 		new SceneSkyBox(World, Cloud.Material("semxy.bluecloudskybox" ));
 	}
-
-	public override void Tick()
-	{
-		base.Tick();
-
-		Queue<ClientWorldEntity> deleteQueue = new Queue<ClientWorldEntity>();
-
-		foreach ( var entity in _entities )
-		{
-			entity.Think();
-			if ( !entity.IsActive() )
-			{
-				deleteQueue.Enqueue( entity );
-			}
-		}
-
-		while ( deleteQueue.TryPeek( out ClientWorldEntity result ) )
-		{
-			if ( !result.IsActive() )
-			{
-				deleteQueue.Dequeue();
-			}
-		}
-
-	}
-	
-
-	public void CreateTerry()
-	{
-		var terry = new TerryBotEntity( endPos, startPos, World, citizenModel );
-		terry.Spawn();
-		terry.ReachedEndAction = TerryHitAction;
-		_entities.Add( terry );
-	}
-
-	public void CreateBullet()
-	{
-		var bullet = new BulletEntity(startPos, endPos,  0.005f, World, Cloud.Model( "mml.cirno" ));
-		bullet.ReachedEndAction = BulletHitAction;
-		bullet.Spawn();
-		_entities.Add( bullet );
-	}
-
 }

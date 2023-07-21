@@ -57,8 +57,6 @@ public class BossPanelBase : Panel
 
 	public void Simulate()
 	{
-		Log.Info( "Health: "+TerryHealth );
-		Log.Info( "Health: "+TerryMax );
 		if ( TerryHealth == 0 )
 		{
 			// todo

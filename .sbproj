@@ -1,5 +1,5 @@
 {
-  "Title": "s\u0026typer",
+  "Title": "Terry Teaches Typing",
   "Type": "game",
   "Org": "webcrawls",
   "Ident": "sandtype",
@@ -7,7 +7,7 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "Resources": "\nfonts/JetBrainsMono.ttf\n*.scss",
+  "Resources": "\nfonts/JetBrainsMono.ttf\n*.scss\ntext/english_1k.json",
   "MenuResources": "\nfonts/JetBrainsMono.ttf",
   "HasCode": true,
   "CodePath": "/code/",

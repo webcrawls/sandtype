@@ -1,32 +1,41 @@
 ﻿@namespace Sandtype.UI.Game
 @using System
-@using Sandbox.UI
-@using Sandtype.UI.Text;
-@attribute [StyleSheet("GameView.razor.scss")]
 @inherits Sandbox.UI.Panel
 
-<root>
-	<TextInput @ref="Input"/>
-	<GameWorld @ref="World"/>
-	@if ( Game.TerryHealth <= 0 )
-		// todo unfuck
-	{
-		<GameJumbo>
-			You killed terry in @(Math.Round( TimeSpan.FromMilliseconds( Game.TerryKillTime - Test.FirstInputTime ).TotalSeconds * 1000, 2 )) @("s! 💥💥💥")
-		</GameJumbo>
+<style>
+	.game-overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		padding:  40px;
+		opacity: 0.8;
 	}
+</style>
+
+<root style="backdrop-filter: blur(3px);">
+	<BossPanel @ref="Boss" style="right: -250px;"/>
+	<BetterGameWorld @ref="World" Game="@Game"/>
+	<div class="game-overlay">
+		@if ( Game != null && Game.PlayerHealth <= 0 )
+		{
+			<PlayerLose Game="@Game" Test="@Test"/>
+		} else if ( Game != null && Game.TerryHealth <= 0 )
+		{
+			<PlayerWin Game="@Game" Test="@Test"/>
+		}
+	</div>
 </root>
 
 @code {
 
 	public TypingTest Test;
 	public TerryGame Game;
-	public GameWorld World;
-	public TextInput Input;
+	public BetterGameWorld World;
+	public BossPanel Boss;
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Game.TerryHealth, Game.TerryKillTime, Test.FirstInputTime );
+		return HashCode.Combine( Game?.TerryHealth, Game?.PlayerHealth, Game?.Paused,  Game?.TerryKillTime, Test?.FirstInputTime );
 	}
 
 }

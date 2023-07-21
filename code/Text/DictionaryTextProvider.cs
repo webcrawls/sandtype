@@ -6,44 +6,22 @@ namespace Sandtype.Engine.Text;
 public class DictionaryTextProvider : TextProvider
 {
 	
-	public List<string> Words;
+	public string[] Words;
 
-	public DictionaryTextProvider( List<string> words )
+	public DictionaryTextProvider( string[] words )
 	{
 		Words = words;
 	}
 
-	public string GetName()
+	public string[] GetText()
 	{
-		return "Words";
-	}
-
-	public string GetText( TextSize size )
-	{
-		int length = GetSize( size );
-		string output = "";
-		
-		for ( int i = 0; i < length; i++ )
+		int size = 50;
+		string[] words = new string[size];
+		for ( int i = 0; i < size; i++ )
 		{
-			if ( i != 0 ) output += " ";
-			output += Words[Random.Shared.Next(0, Words.Count)];
+			words[i] = Words[Random.Shared.Next( 0, size )];
 		}
 
-		return output;
-	}
-
-	private int GetSize( TextSize size )
-	{
-		switch ( size )
-		{
-			case TextSize.LONG:
-				return 50;
-			case TextSize.MEDIUM:
-				return 25;
-			case TextSize.SHORT:
-				return 10;
-		}
-
-		return 0;
+		return words;
 	}
 }

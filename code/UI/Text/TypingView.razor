@@ -1,88 +1,75 @@
 ﻿@namespace Sandtype.UI.Text
 @attribute [StyleSheet("TypingView.razor.scss")]
 @using System
-@using System.Collections.Generic
-@using System.Security.Principal
-@using Sandbox
 @using Sandbox.UI
 @inherits Sandbox.UI.Panel
 
-<root>
+<root style="background-color: @colorBackground;">
+	<TextInput class="text-input" @ref="Input" style="z-index: 3; color: transparent;"/>
 	<div class="text-container">
 		<div class="text-line">
 			@{
-				// todo unfuck
-				int currentChar = 0;
-				int startWord = Math.Max(0, _inputWords.Count - 3);
-				int endWord = Math.Max(0, _inputWords.Count + 30);
-				for ( int wordIndex = startWord; wordIndex < endWord; wordIndex++ )
+				if ( TargetWords == null || InputWords == null )
 				{
-					if ( currentChar > _charLimit )
-					{
+					return;
+				}
+
+				int perPage = 10;
+				int currentWord = GetCurrentWord();
+				int page = (int)(Math.Ceiling( (float) Math.Max(currentWord + 1, 0) / perPage) );
+				int currentCharacter = 0;
+				int offset = Math.Max(page - 1, 0) * perPage;
+				
+				for ( int wordIndex = offset ; wordIndex < (offset + perPage); wordIndex++ )
+				{
+					if ( wordIndex >= TargetWords.Length )
 						break;
-					}
-
-					if ( wordIndex >= _targetWords.Count )
-					{
-						break;
-					}
-
-					string word = _targetWords[wordIndex];
-					int wordLength = word.Length;
-
-					if ( wordIndex == _currentWord )
-					{
-						int length = Math.Max( wordLength, _currentInput.Length );
-						for ( int letterIndex = 0; letterIndex < length; letterIndex++ )
-						{
-							var input = letterIndex < _currentInput.Length ? _currentInput[letterIndex] : word[letterIndex];
-							input = input == ' ' ? '_' : input;
-							if ( letterIndex == _currentInput.Length )
-							{
-								<label style="color: white;">@input</label>
-							}
-							else if ( letterIndex < word.Length )
-							{
-								if ( input == word[letterIndex] )
-								{
-									<label style="color: black;">@input</label>
-								}
-								else
-								{
-									<label style="color: red;">@input</label>
-								}
-							} else if ( letterIndex >= word.Length )
-							{
-								<label style="color: red;">@input</label>
-							}
-							currentChar += 1;
-						}
-					}
-					else if ( wordIndex < _inputWords.Count )
-					{
-						var currentWord = _inputWords[wordIndex];
-						int length = Math.Max( wordLength, currentWord.Length );
-						for ( int letterIndex = 0; letterIndex < length; letterIndex++ )
-						{
-							<label style="color: green;">@currentWord[letterIndex]</label>
-							currentChar += 1;
-						}
-					}
-					else
-						for ( int letterIndex = 0; letterIndex < word.Length; letterIndex++ )
-						{
-							<label style="color: black;">@word[letterIndex]</label>
-							currentChar += 1;
-						}
-					{
-					}
 					
-					currentChar += 1;
+					var wasTyped = false;
+					var isCurrentWord = wordIndex == currentWord;
+					var targetWord = TargetWords[wordIndex];
+					var inputWord = isCurrentWord ? CurrentInput : wordIndex <= InputWords.Length ? InputWords[wordIndex] : "";
+					var visibleWord = CombineWords( targetWord ?? "", inputWord ?? "" );
+					var cursorPos = inputWord?.Length ?? -1;
 					
-					if ( wordIndex != _targetWords.Count )
+					for ( int charIndex = 0; charIndex < visibleWord.Length; charIndex++ )
 					{
-						<label>@(" ")</label>
+						var targetChar = GetChar( targetWord, charIndex );
+						var inputChar = GetChar( inputWord, charIndex );
+
+						var colorStyle = "";
+						if ( wasTyped )
+						{
+							colorStyle = "var(--typed);";
+						} else if ( charIndex == (cursorPos - (charIndex > targetWord.Length ? 1 : 0) ))
+						{
+							// is the current position
+							colorStyle = colorCaret;
+						} else if ( targetChar == null && inputChar != null )
+						{
+							// input went too long, red styling
+							colorStyle = colorError;
+						} else if (targetChar != null && inputChar == null) {
+							// not yet typed
+							colorStyle = colorMain;
+						} else if ( targetChar != null && inputChar != null && targetChar != inputChar )
+						{
+							// character is a typo
+							colorStyle = colorError;
+						} else if ( targetChar != null && inputChar != null && targetChar == inputChar )
+						{
+							// character is valid
+							colorStyle = colorTyped;
+						}
+						
+						currentCharacter += 1;
+						if ( !(inputChar == ' ' || targetChar == ' ') )
+						{
+							<label style="color: @colorStyle">@(visibleWord[charIndex])</label>
+						}
 					}
+
+					<label>@(" ")</label>
 				}
 			}
 		</div>
@@ -91,47 +78,103 @@
 
 @code {
 
-	private int _charLimit = 70;
 	public TypingTest Test;
+	public TextInput Input;
+	public string colorMain = "#99b898";
+	public string colorTyped = "#fecea8";
+	public string colorError = "#ff6961";
+	public string colorCaret = "#616161";
+	public string colorBackground = "#292929";
+	private string[] TargetWords => Test?.TargetWords;
+	private string[] InputWords => Test?.InputWords;
+	private string CurrentInput => Input?.Text ?? "";
 	
-	// string content
-	private List<string> _targetWords => Test?.TargetWords ?? new List<string>();
-	private List<string> _inputWords => Test?.InputWords ?? new List<string>();
-	public string _currentInput => Test?.CurrentInputText ?? "";
-
-	private int _cursorIndex => _currentInput.Length;
-	private int _currentWord => _inputWords.Count;
-
-	private int _startWord => 0;
-	private int _endWord => 0;
-
-
 	protected override int BuildHash()
 	{
 		HashCode code = new HashCode();
-		_targetWords.ForEach( str => code.Add( str ) );
-		_inputWords.ForEach( str => code.Add( str ) );
-		code.Add( _currentInput );
-		code.Add( _currentWord );
+		if (TargetWords != null)
+			foreach (var word in TargetWords)
+				code.Add( word );
+
+		if (InputWords != null)
+			foreach (var word in InputWords)
+				code.Add( word );
+
+		code.Add( Input?.Text ?? "" );
+		code.Add( TargetWords );
+		code.Add( InputWords );
+		
 		return code.ToHashCode();
 	}
-	
-	private int GetCharsTyped()
-	{
-		int chars = 0;
-		for ( int i = 0; i < _inputWords.Count; i++ )
-		{
-			for ( int j = 0; j < _inputWords[i].Length; j++ )
-			{
-				chars += 1;
-			}
 
-			if ( i != _inputWords.Count )
+	private int GetStartWord()
+	{
+//		return Math.Max( 0, InputWords.Length - FollowStart );
+		return 0;
+	}
+
+	private int GetEndWord()
+	{
+//		return Math.Max( 0, InputWords.Length + 30 );
+		return 10;
+	}
+
+	private string CombineWords( string Input, string Target )
+	{
+		var word = "";
+		for ( int i = 0; i < Math.Max( Input.Length, Target.Length ); i++)
+		{
+			// if index less than input length
+			if ( i < Input.Length )
 			{
-				chars += 1; // count the space
+				word += Input[i];
+				// if index over input
+			} else if ( i >= Input.Length )
+			{
+				word += Target[i];
 			}
 		}
-		return chars + _currentInput.Length;
+		return word;
+	}
+
+	private char? GetChar( string text, int index )
+	{
+		if ( text == null )
+		{
+			return null;
+		}
+
+		if ( index < text.Length )
+		{
+			return text[index];
+		}
+
+		return null;
+	}
+
+	private int GetWordCount()
+	{
+		int count = 0;
+		for ( int i = 0; i < TargetWords.Length; i++ )
+		{
+			if ( TargetWords[i] != null )
+				count += 1;
+		}
+		return count;
+	}
+
+	private int GetCurrentWord()
+	{
+		var word = 0;
+		if ( InputWords == null ) return 0;
+		for ( int i = 0; i < InputWords.Length; i++ )
+		{
+			if ( InputWords[i] != null )
+			{
+				word++;
+			}
+		}
+		return word;
 	}
 
 }

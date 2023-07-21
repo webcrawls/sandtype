@@ -1,10 +1,10 @@
-﻿using Sandbox;
+﻿using System.Runtime.InteropServices.ComTypes;
+using Sandbox;
 using Sandtype.UI;
-using Sandtype.UI.Game;
 
 namespace Sandtype;
 
-public partial class Pawn : AnimatedEntity
+public class Pawn : AnimatedEntity
 {
 
 	public Hud Hud;
@@ -26,6 +26,7 @@ public partial class Pawn : AnimatedEntity
 		// there is no server involvement in the typing game
 
 		Game = Components.Create<TerryGame>();
+		Test = Components.Create<TypingTest>();
 	}
 
 	public override void Simulate( IClient cl )
@@ -33,11 +34,6 @@ public partial class Pawn : AnimatedEntity
 		if ( Client != cl )
 		{
 			return;
-		}
-
-		if ( Test == null )
-		{
-			Test = Components.Create<TypingTest>();
 		}
 
 		SimulateGame();
@@ -49,9 +45,14 @@ public partial class Pawn : AnimatedEntity
 	{
 		// "Simulate"/"Think" our client-side components
 		if ( Sandbox.Game.IsServer ) return;
+		if ( Test == null ) return;
+		if ( !Test.Initialized )
+		{
+			Test.Reset();
+		}
+
 		Game?.Simulate();
 		Test?.Simulate();
-		Hud.Boss.Simulate();
 	}
 	
 	

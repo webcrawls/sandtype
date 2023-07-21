@@ -1,12 +1,13 @@
-﻿namespace Sandtype.Engine.Text;
+﻿using System.Collections.Generic;
+
+namespace Sandtype.Engine.Text;
 
 // todo configurabletextprovider
 public interface TextProvider
 {
 
-	public string GetName();
-	
-	public string GetText( TextSize size );
+
+	public string[] GetText( );
 
 }
 

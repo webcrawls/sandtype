@@ -1,4 +1,6 @@
-PlayerInformation {
+PlayerLose {
+  position: absolute;
+  height: 100%;
   color: black;
   background-color: white;
   border-radius: 20px;
@@ -7,6 +9,7 @@ PlayerInformation {
   flex-direction: column;
   justify-content: center;
   padding: 40px;
+  width: 100%;
   gap: 20px;
 }
 

@@ -13,7 +13,7 @@ public partial class SandtypeGame : GameManager
 		Pawn pawn = new Pawn();
 		client.Pawn = pawn;
 	}
-
+	
 	public override void Simulate( IClient cl )
 	{
 		if ( cl.Pawn is Pawn p )

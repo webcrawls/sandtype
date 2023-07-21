@@ -1,0 +1,27 @@
+﻿@namespace Sandtype.UI.Game
+@attribute [StyleSheet("PlayerWin.razor.scss")]
+@using System
+@using Sandbox.UI
+@inherits Sandbox.UI.Panel
+
+<root>
+	<div class="player-win-line">
+		<p class="player-win-text">Player, you fought valiantly and defeated the menace. Thank you for saving the world.</p>
+	</div>
+	<div class="player-win-line">
+		<p class="player-win-text">Words typed: @Test?.TypedWords</p>
+	</div>
+</root>
+
+
+@code {
+	
+	public TerryGame Game;
+	public TypingTest Test;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( 0 );
+	}
+
+}

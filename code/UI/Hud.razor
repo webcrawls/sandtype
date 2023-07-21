@@ -6,17 +6,16 @@
 @inherits Sandbox.UI.RootPanel
 
 <root>
-	<PlayerInformation class="player" Game="@Game"/>
-	<GameView class="game" Game="@Game" Test="@Test" @ref="GameView"/>
-	<TypingView class="input" @ref="TypingView"/>
-	<BossPanel class="boss" @ref="Boss"/>
+	<PlayerInformation class="player" Game="@Game" Test="@Test"/>
+	<GameView class="game" Game="@Game" Test="@Test" @ref="GameView"/> 
+	<TypingView class="input" @ref="TypingView" Test="@Test"/> 
 </root>
 
 @code {
 
 	public TypingTest Test;
 	public TerryGame Game;
-	public BossPanel Boss;
+	public float Accuracy;
 	
 	public GameView GameView;
 	public TypingView TypingView;

@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-namespace Sandtype.UI.Game;
+namespace Sandtype.UI.Game.Entity;
 
 public abstract class ModeledEntity : ClientWorldEntity
 {
@@ -11,31 +11,20 @@ public abstract class ModeledEntity : ClientWorldEntity
 	protected SceneModel SceneObject;
 	private bool _dead;
 
-	public ModeledEntity( SceneWorld world,
-		Model model )
+	public ModeledEntity( int id, SceneWorld world, Model model ) : base(id)
 	{
 		World = world;
 		Model = model;
 	}
 
-	public bool IsActive()
-	{
-		return !_dead;
-	}
-
-	public void Spawn()
+	public override void Spawn()
 	{
 		SceneObject = new SceneModel( World, Model, Transform.Zero );
+		SceneObject.Rotation = Rotation.Identity.Backward.EulerAngles.ToRotation();
 		_dead = false;
 	}
 
-	public void Despawn()
-	{
-		SceneObject.Delete();
-		_dead = true;
-	}
-
-	public void Delete()
+	public override void Delete()
 	{
 		if ( SceneObject == null ) return;
 		
@@ -46,7 +35,7 @@ public abstract class ModeledEntity : ClientWorldEntity
 	// Think(); is defined by WorldEntity, but
 	// we can use the 'abstract' keyword to
 	// force subclasses to implement it instead :D
-	public virtual void Think()
+	public override void Think()
 	{
 		SceneObject.ColorTint = Color;
 	}
