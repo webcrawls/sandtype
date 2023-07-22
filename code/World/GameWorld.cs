@@ -6,7 +6,7 @@ using Sandtype.Terry;
 
 namespace Sandtype.UI.Game;
 
-public class BetterGameWorld : Panel
+public class GameWorld : Panel
 {
 
 	private static Model _citizenModel = Model.Load( "models/citizen/citizen.vmdl" );
@@ -31,7 +31,7 @@ public class BetterGameWorld : Panel
 		.WithY( 150f )
 		.WithZ( 40 );
 
-	public BetterGameWorld()
+	public GameWorld()
 	{
 		_entities = new List<ClientWorldEntity>();
 		InitializeWorld();

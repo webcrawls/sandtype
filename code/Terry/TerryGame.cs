@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sandbox;
 using Sandtype.Terry;
+using Sandtype.Terry.Action;
 using Sandtype.UI.Game;
 
 namespace Sandtype;
@@ -12,19 +15,26 @@ public class TerryGame : EntityComponent<Pawn>
 	public int TerryHealth = 10;
 	public int PlayerMaxHealth = 10;
 	public int PlayerHealth = 10;
+	public float TerryAnger { get { return _terryAnger;  } }
+	public int ActionCooldown { get { return _actionTimer; } }
 	public bool Paused { get { return _hasEnded; } }
 	
 	public List<GameEntity> Entities;
 
 	public float TerryKillTime;
 
-	private int _terrySpawnCooldown = 100;
-	private BetterGameWorld _gameWorld;
+	private GameWorld _gameWorld;
 
 	private GameEntity _closestBullet = null;
 	private GameEntity _closestEnemy = null;
 	private Queue<GameEntity> _terryDeleteQueue; // not sure if this is the right place to use a queue but it feels good so
 	private bool _hasEnded = false;
+
+	private float _terryAnger = 0.0f;
+	private IDictionary<string, TerryAction> _actions;
+	private int _actionCooldown = 10;
+	private int _actionTimer;
+	private TypingTest _test;
 
 	protected override void OnActivate()
 	{
@@ -35,8 +45,14 @@ public class TerryGame : EntityComponent<Pawn>
 			Entity.Hud.Game = this;
 		}
 
+		_test = Entity.Components.Get<TypingTest>();
+		_actions = new Dictionary<string, TerryAction>();
 		_terryDeleteQueue = new Queue<GameEntity>();
 		Entities = new List<GameEntity>(); // 50 max entities?
+		
+		RegisterAction( new LayoutFlipTerryAction( Entity, this, _test, Entity.Hud ) );
+		RegisterAction( new TerrySpawnAction( Entity, this, _test, Entity.Hud ) );
+		RegisterAction( new LanguageChangeAction( Entity, this, _test, Entity.Hud ) );
 	}
 
 	public void Simulate()
@@ -53,7 +69,7 @@ public class TerryGame : EntityComponent<Pawn>
 		{
 			Entity.Hud.GameView.Boss.TerryHealth = TerryHealth;
 			Entity.Hud.GameView.Boss.TerryMax = TerryMaxHealth;
-			Entity.Hud.GameView.Boss.Simulate();
+			Entity.Hud.GameView.BossHealthBar.ProgressValue = ((float) TerryHealth / TerryMaxHealth) * 100; // Remember this value sucks
 		}
 
 		LoadWorld();
@@ -63,23 +79,14 @@ public class TerryGame : EntityComponent<Pawn>
 		{
 			return;
 		}
+
+		_terryAnger = 1.0f - (float) TerryHealth / TerryMaxHealth;
+		Log.Info( "_terryAnger: "+_terryAnger );
+		
 		TickEntities();
-		TickSpawn();
+		TickActions();
 	}
 
-	private void TickSpawn()
-	{
-		if ( _terrySpawnCooldown > 0 )
-		{
-			_terrySpawnCooldown -= 1;
-		}
-		else
-		{
-			CreateTerry();
-			_terrySpawnCooldown = 100;
-		}
-	}
-	
 	private int FindUnusedId()
 	{
 		int currentId = 0;
@@ -263,10 +270,33 @@ public class TerryGame : EntityComponent<Pawn>
 
 		return i;
 	}
+
+	private void TickActions()
+	{
+		if ( _actionTimer > 0 )
+		{
+			_actionTimer -= 1;
+			return;
+		}
+
+		_actionTimer = (int) Math.Round(((1 - _terryAnger) * 100) + _actionCooldown);
+		Log.Info( 1 - _terryAnger );
+		if ( _actions.Count == 0 )
+		{
+			return;
+		}
+
+		var action = _actions.RandomElementByWeight( p => p.Value.Chance );
+		action.Value.Run();
+	}
+
+	private void RegisterAction( TerryAction terryAction )
+	{
+		_actions[terryAction.Id] = terryAction;
+	}
+}
 	
 	// ideas:
 	// health terrys can be green
 	// some terrys are bigger and have more health
 	// some terrys are small and move fast
-
-}

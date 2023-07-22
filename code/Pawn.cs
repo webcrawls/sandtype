@@ -25,8 +25,8 @@ public class Pawn : AnimatedEntity
 		// we only want these to happen on the client (for now)
 		// there is no server involvement in the typing game
 
-		Game = Components.Create<TerryGame>();
 		Test = Components.Create<TypingTest>();
+		Game = Components.Create<TerryGame>();
 		Test.ResetTest();
 	}
 

@@ -15,11 +15,11 @@ public class DictionaryTextProvider : TextProvider
 
 	public string[] GetText()
 	{
-		int size = 50;
+		int size = 10;
 		string[] words = new string[size];
 		for ( int i = 0; i < size; i++ )
 		{
-			words[i] = Words[Random.Shared.Next( 0, size )];
+			words[i] = Words[Random.Shared.Next( 0, Words.Length )];
 		}
 
 		return words;

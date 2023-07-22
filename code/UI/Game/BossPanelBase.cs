@@ -51,6 +51,12 @@ public class BossPanelBase : Panel
 		); ;
 	}
 
+	public override void Tick()
+	{
+		base.Tick();
+		Simulate();
+	}
+
 	public void Simulate()
 	{
 		if ( TerryHealth == 0 )

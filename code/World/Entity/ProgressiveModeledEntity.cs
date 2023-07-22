@@ -42,6 +42,7 @@ public class ProgressiveModeledEntity : ModeledEntity
 			SceneObject.DirectPlayback.Play( Animation );
 		}
 		Progress = EntityData.Progress;
+		SceneObject.Transform = SceneObject.Transform.WithScale(EntityData.Scale);
 		SceneObject.Position = Vector3.Lerp( Initial, End, Progress, false );
 		SceneObject.Position = SceneObject.Position.WithZ((float) (SceneObject.Position.z +
 		                                                  ((float)Math.Sin( Time.Tick / 3 ) * 1.5)));

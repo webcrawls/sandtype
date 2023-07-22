@@ -28,7 +28,10 @@
 <root style="backdrop-filter: blur(3px);">
 	<div class="game-background"></div>
 	<BossPanel @ref="Boss" style="right: -250px;"/>
-	<BetterGameWorld @ref="World" Game="@Game"/>
+	<GameWorld @ref="World" Game="@Game"/>
+	<div class="game-overlay">
+		<HealthBar @ref="BossHealthBar"/>
+	</div>
 	<div class="game-overlay">
 		<!-- hack because padding doesnt work :D -->
 		<div class="game-overlay-inner">
@@ -48,8 +51,9 @@
 
 	public TypingTest Test;
 	public TerryGame Game;
-	public BetterGameWorld World;
+	public GameWorld World;
 	public BossPanel Boss;
+	public HealthBar BossHealthBar;
 
 	protected override int BuildHash()
 	{
