@@ -3,12 +3,12 @@
   gap: 40px;
   display: flex;
   flex-direction: column;
-  background-image: url("/assets/stars.gif");
+  background-color:  #392b35;
 }
 
 .input {
   border-radius: 20px;
-  border: 5px solid #d26b7d;
+  border: 5px solid #486b7f;
   overflow: hidden;
 }
 
@@ -16,7 +16,7 @@
   height: 100%;
   border-radius: 20px;
   overflow: hidden;
-  border: 5px solid #af4c0f;
+  border: 5px solid #486b7f;
 }
 
 .boss {

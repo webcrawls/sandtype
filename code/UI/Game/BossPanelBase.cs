@@ -48,11 +48,7 @@ public class BossPanelBase : Panel
 				Position = Vector3.Zero.WithX( 30 ),
 				Rotation = Rotation.Identity.Backward.EulerAngles.ToRotation().RotateAroundAxis( Vector3.Up, -50f )
 			}
-		);
-		
-		_panel.Camera.Position = _panel.Camera.Position
-			.WithZ( 60f )
-			.WithX( 15f );
+		); ;
 	}
 
 	public void Simulate()
@@ -67,7 +63,11 @@ public class BossPanelBase : Panel
 			_boss.ColorTint = color;
 		}
 
-		_boss.Update( Time.Delta );
+		_panel.Camera.Position = _panel.Camera.Position
+			.WithZ( 60f )
+			.WithX( 0f );
+
+		_boss.Update( Time.Delta / 2 );
 	}
 
 	
