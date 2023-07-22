@@ -90,7 +90,6 @@ public class TypingTest : EntityComponent<Pawn>
 			{
 				if ( accuracy == 1 )
 				{
-					Log.Info( "Accuracy: "+accuracy+$", word: {word}, targetWord: {targetWord}, {extraInaccuracy}" );
 					game.CreateBullet();
 				}
 			}

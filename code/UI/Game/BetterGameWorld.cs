@@ -10,6 +10,7 @@ public class BetterGameWorld : Panel
 {
 
 	private static Model _citizenModel = Model.Load( "models/citizen/citizen.vmdl" );
+	private static Model _bulletModel = Cloud.Model( "facepunch/wooden_crate" );
 
 	/// <summary>
 	/// The TerryGame instance. Must be set by external game logic.
@@ -100,7 +101,8 @@ public class BetterGameWorld : Panel
 			{
 				var start = gameEntity.MovementType == MovementType.TO_START ? _start : _end;
 				var end = gameEntity.MovementType == MovementType.TO_START ? _end : _start;
-				var entity = new ProgressiveModeledEntity( gameEntity.EntityId, start, end, _sceneWorld, _citizenModel );
+				var entity = new ProgressiveModeledEntity( gameEntity.EntityId, start, end, _sceneWorld,
+					gameEntity.ModelType == ModelType.TERRY ? _citizenModel : _bulletModel );
 				
 				entity.Spawn();
 				entity.EntityData = gameEntity;

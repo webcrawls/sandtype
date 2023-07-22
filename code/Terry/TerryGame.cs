@@ -120,7 +120,6 @@ public class TerryGame : EntityComponent<Pawn>
 
 	public void CreateBullet()
 	{
-		Log.Info( "Create Bullet" );
 		Entities.Add( new Bullet( FindUnusedId() ) );
 	}
 
@@ -141,11 +140,8 @@ public class TerryGame : EntityComponent<Pawn>
 		var delta = progress - closestProgress;
 		var range = 0.1;
 
-		Log.Info( "Delta: "+delta );
-
 		if ( delta <= range && delta >= -range )
 		{
-			Log.Info( $"Bullet Hit: {delta}!" );
 			_terryDeleteQueue.Enqueue( bullet );
 			if ( _closestEnemy == null )
 			{
@@ -204,11 +200,8 @@ public class TerryGame : EntityComponent<Pawn>
 			if ( entity == _closestEnemy ) _closestEnemy = null;
 			if ( entity == _closestBullet ) _closestBullet = null;
 			
-			Log.Info( "Removing "+entity );
 			Entities.Remove(entity);
 		}
-		
-		Log.Info( "queue: "+_terryDeleteQueue.Count );
 		
 		// safety reset
 		if ( EnemyCount() == 0 )
@@ -216,8 +209,6 @@ public class TerryGame : EntityComponent<Pawn>
 			_closestEnemy = null;
 		}
 		
-		Log.Info( "Closest bullet: "+_closestBullet+": "+_closestBullet?.Progress );
-		Log.Info( "Closest enemy: "+_closestEnemy+": "+_closestEnemy?.Progress );
 	}
 
 	private void LoadWorld()
@@ -237,7 +228,6 @@ public class TerryGame : EntityComponent<Pawn>
 	{
 		_terryDeleteQueue.Enqueue( bullet );
 		_terryDeleteQueue.Enqueue( enemy );
-		Log.Info( "Enemy hit" );
 	}
 
 	private void HandleBossHit( GameEntity bullet )
@@ -250,7 +240,6 @@ public class TerryGame : EntityComponent<Pawn>
 		}
 		
 		_terryDeleteQueue.Enqueue( bullet );
-		Log.Info( "Boss hit" );
 	}
 
 	private void HandleEnemyReached( GameEntity enemy )
