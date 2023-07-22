@@ -66,6 +66,8 @@ public class BossPanelBase : Panel
 			var color = Color.Lerp( EndColor, StartColor, (float) TerryHealth / TerryMax );
 			_boss.ColorTint = color;
 		}
+
+		_boss.Update( Time.Delta );
 	}
 
 	
