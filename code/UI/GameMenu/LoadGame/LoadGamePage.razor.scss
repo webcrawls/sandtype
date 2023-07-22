@@ -1,0 +1,9 @@
+﻿LoadGamePage {
+    .savedgames {
+        overflow-y: scroll;
+        flex-shrink: 1;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        gap: 10px;
+    }
+}

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Sandbox;
-using Sandbox.Internal;
 using Sandtype.Engine.Text;
-using Sandtype.UI.Text;
 
 namespace Sandtype;
 
@@ -14,14 +10,13 @@ public class TypingTest : EntityComponent<Pawn>
 	
 	public string[] TargetWords;
 	public string[] InputWords;
-	public int TypedWords { get { return _typedWords; } }
+	public int TypedWords;
 	public List<float> AccuracyValues;
 	public bool Initialized { get; set; }
 	public float AverageAccuracy => AccuracyValues.Sum() / AccuracyValues.Count;
 	public string CurrentInputText;
 	public float FirstInputTime;
 	public TextProvider Provider;
-	private int _typedWords = 0;
 
 	public TypingTest()
 	{
@@ -29,21 +24,18 @@ public class TypingTest : EntityComponent<Pawn>
 		AccuracyValues = new List<float>();
 	}
 
-	public void Reset()
+	public void SetTest(string provider)
 	{
-		if ( Entity.Hud.TypingView == null || Entity.Hud.TypingView.Input == null)
-		{
-			return;
-		}
-		
+		Provider = new DictionaryFileTextProvider( provider );
+		ResetTest();
+	}
+
+	public void ResetTest()
+	{
 		TargetWords = Provider.GetText();
 		InputWords = new string[TargetWords.Length];
+		TypedWords = 0;
 
-		Entity.Hud.Test = this;
-		Entity.Hud.TypingView.Input.Text = "";
-		Entity.Hud.TypingView.Input.AddEventListener( "onspace" , CheckWord);
-		Entity.Hud.TypingView.Input.AddEventListener( "ontab", Reset );
-		Entity.Hud.TypingView.Input.AddEventListener( "onchanged", ReadInput );
 		Initialized = true;
 
 		string compiledText = "";
@@ -54,35 +46,13 @@ public class TypingTest : EntityComponent<Pawn>
 		}
 	}
 
-	public void Simulate()
-	{
-		UpdateHud();
-	}
-
-	
-	
 	protected override void OnActivate()
 	{
 		base.OnActivate();
-		Reset();
+		ResetTest();
 	}
 
-	private void UpdateHud()
-	{
-		if ( !Game.IsClient )
-		{
-			return;
-		}
-
-		if ( Entity.Hud.Test == null )
-		{
-			Entity.Hud.Test = this;
-		}
-		
-		Entity.Hud.Accuracy = AverageAccuracy;
-	}
-	
-	public void CheckWord()
+	public void NextWord()
 	{
 		var word = CurrentInputText;
 		
@@ -109,28 +79,30 @@ public class TypingTest : EntityComponent<Pawn>
 		var accuracy = (accurateCharacters / targetWord.Length);
 
 		AccuracyValues.Add( accuracy );
-		InputWords[_typedWords] = word;
+		InputWords[TypedWords] = word;
 		CurrentInputText = "";
-		Entity.Hud.TypingView.Input.Text = "";
-		_typedWords = CountWords();
+		TypedWords = CountWords();
 
-		var game = Entity.Components.Get<TerryGame>();
-		if ( game != null )
+		if ( Entity != null )
 		{
-			if ( accuracy == 1 )
+			var game = Entity.Components.Get<TerryGame>();
+			if ( game != null )
 			{
-				Log.Info( "Accuracy: "+accuracy+$", word: {word}, targetWord: {targetWord}, {extraInaccuracy}" );
-				game.CreateBullet();
+				if ( accuracy == 1 )
+				{
+					Log.Info( "Accuracy: "+accuracy+$", word: {word}, targetWord: {targetWord}, {extraInaccuracy}" );
+					game.CreateBullet();
+				}
 			}
 		}
 	}
 
-	private void ReadInput()
+	public void SetInput(string content)
 	{
-		CurrentInputText = Entity.Hud.TypingView.Input.Text;
+		CurrentInputText = content;
 	}
 
-	private int CountWords()
+	public int CountWords()
 	{
 		for ( int i = 0; i < InputWords.Length; i++ )
 		{

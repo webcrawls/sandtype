@@ -1,11 +1,16 @@
 ﻿@namespace Sandtype.UI.Text
-@attribute [StyleSheet("TypingView.razor.scss")]
+@attribute [StyleSheet( "TypingView.razor.scss" )]
 @using System
 @using Sandbox.UI
 @inherits Sandbox.UI.Panel
 
 <root style="background-color: @colorBackground;">
-	<TextInput class="text-input" @ref="Input" style="z-index: 3; color: transparent;"/>
+	<TextInput @ontab="@(HandleTab)"
+	           @onspace="@(HandleSpace)"
+	           @onchanged="@(HandleChanged)"
+	           @ref="Input"
+	           class="text-input"
+	           style="z-index: 3; color: transparent;"/>
 	<div class="text-container">
 		<div class="text-line">
 			@{
@@ -107,17 +112,16 @@
 		return code.ToHashCode();
 	}
 
-	private int GetStartWord()
+	public override void Tick()
 	{
-//		return Math.Max( 0, InputWords.Length - FollowStart );
-		return 0;
+		base.Tick();
+		
+		if ( !Input.HasFocus )
+		{
+			Input.Focus();
+		}
 	}
 
-	private int GetEndWord()
-	{
-//		return Math.Max( 0, InputWords.Length + 30 );
-		return 10;
-	}
 
 	private string CombineWords( string Input, string Target )
 	{
@@ -152,17 +156,6 @@
 		return null;
 	}
 
-	private int GetWordCount()
-	{
-		int count = 0;
-		for ( int i = 0; i < TargetWords.Length; i++ )
-		{
-			if ( TargetWords[i] != null )
-				count += 1;
-		}
-		return count;
-	}
-
 	private int GetCurrentWord()
 	{
 		var word = 0;
@@ -175,6 +168,23 @@
 			}
 		}
 		return word;
+	}
+
+	private void HandleTab()
+	{
+		Input.Text = "";
+		Test?.ResetTest();
+	}
+
+	private void HandleSpace()
+	{
+		Input.Text = "";
+		Test?.NextWord();
+	}
+
+	private void HandleChanged()
+	{
+		Test?.SetInput( Input.Text ?? "" );
 	}
 
 }

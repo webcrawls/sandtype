@@ -27,6 +27,7 @@ public class Pawn : AnimatedEntity
 
 		Game = Components.Create<TerryGame>();
 		Test = Components.Create<TypingTest>();
+		Test.ResetTest();
 	}
 
 	public override void Simulate( IClient cl )
@@ -48,11 +49,15 @@ public class Pawn : AnimatedEntity
 		if ( Test == null ) return;
 		if ( !Test.Initialized )
 		{
-			Test.Reset();
+			Test.ResetTest();
 		}
 
+		if ( Hud.Test == null )
+		{
+			Hud.Test = Test;
+		}
+		
 		Game?.Simulate();
-		Test?.Simulate();
 	}
 	
 	

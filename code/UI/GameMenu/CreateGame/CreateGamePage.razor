@@ -1,0 +1,85 @@
+@using System
+@using Sandbox;
+@using Sandbox.MenuSystem;
+@using Sandbox.UI;
+@namespace Sandbox.UI.GameMenu.CreateGame
+@inherits Panel
+
+<root class="layout">
+
+    <div class="navbar">
+
+        <div class="left">
+            <a class="button" href="/"> Home </a>
+            <span class="block">&gt;</span>
+            <span class="block">Create A Game</span>
+        </div>
+
+        <div class="right">
+        </div>
+    </div>
+
+    <div class="body columned">
+
+        @if (ShowMapOption)
+        {
+            <div class="right">
+                <h2>Map</h2>
+                <MapButton MapIdent=@Map OnClicked="@OnMapClicked"></MapButton>
+            </div>
+        }
+
+    </div>
+    
+    <div class="navbar">
+    
+        <div class="left"></div>
+
+        <div class="right">
+            <a class="button" href="/"> Cancel </a>
+            <span class="button" onclick=@StartGame>Start Game</span>
+        </div>
+
+    </div>
+
+</root>
+
+@code
+{
+    public string Map { get; set; } = "facepunch.square";
+    bool ShowMapOption = true;
+    int MaxPlayersSupported = 1;
+
+    protected override void OnParametersSet()
+    {
+        MaxPlayersSupported = Game.Menu.Package.GetMeta("MaxPlayers", 1);
+
+        ShowMapOption = Game.Menu.Package.MapSelectionMode != DataModel.Game.MapSelect.Hidden;
+        ShowMapOption = ShowMapOption && Game.Menu.Package.MapSelectionMode != DataModel.Game.MapSelect.Empty;
+    }
+
+    public void StartGame()
+    {
+        _ = Game.Menu.StartServerAsync( 0, "Terry Teaches Typing", Map );
+        this.Navigate( "/active" );
+    }
+
+    void OnMapClicked()
+    {
+        Game.Overlay.ShowPackageSelector( "type:map sort:popular", OnMapSelected );
+    }
+
+    void OnMapSelected( Package map )
+    {
+        Map = map.FullIdent;
+        StateHasChanged();
+    }
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if (!IsVisible)
+            return;
+    }
+}

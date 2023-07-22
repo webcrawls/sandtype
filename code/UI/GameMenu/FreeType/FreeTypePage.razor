@@ -1,0 +1,69 @@
+@using System
+@using System.Globalization
+@using System.Linq
+@using System.Threading.Tasks
+@using Sandbox;
+@using Sandtype.UI.Game;
+@using Sandtype.UI.Text;
+@using Sandbox.UI;
+@using Sandtype.Engine.Text
+@namespace Sandtype.UI.GameMenu
+@attribute [StyleSheet]
+
+@inherits Panel
+
+<root style="flex-direction: column;">
+
+	<div class="game-text">
+		<p>@Game.Menu.Package.Title</p>
+		<p>@Test.TypedWords/@Test.TargetWords.Length</p>
+	</div>
+
+    <div class="controls" style="height: 100%; overflow: hidden;">
+
+	    <TypingView @ref="View" Test="@Test"/>
+	    <BossPanel style="right: -450px;"/>
+    </div>
+    <div class="controls">
+
+        <div class="right">
+            <a class="button" href="/"> Main Menu </a>
+	        <div class="button" @onclick="@ResetTest"> Reset </div>
+	        <TextEntryDropDown @ref="DropDown" @onchange="@UpdateText"/>
+	        <p class="game-text">TAB to reset</p>
+        </div>
+	    
+    </div>
+</root>
+
+@code
+{
+
+	private TypingView View;
+	private TypingTest Test;
+	private TextEntryDropDown DropDown;
+
+	public FreeTypePage() : base()
+	{
+		Test = new TypingTest();
+		Test.ResetTest();
+	}
+	
+	private void ResetTest()
+	{
+		Test.ResetTest();
+	}
+
+	private void UpdateText()
+	{
+		Log.Info( DropDown );
+		Test.SetTest( (string) DropDown.Selected.Value );
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Test.TypedWords );
+	}
+
+
+}

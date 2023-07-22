@@ -36,7 +36,7 @@ public class TextInput : TextEntry
 			CreateEvent( "onspace" );
 		}
 		
-		CreateEvent( "onchanged" );
+		CreateEvent( "onchanged");
 		
 		base.OnButtonTyped( e );
 	}

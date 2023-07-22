@@ -7,6 +7,5 @@ public class TerryBot : GameEntity
 		ModelType = ModelType.TERRY;
 		Speed = 0.005f;
 		MovementType = MovementType.TO_END;
-
 	}
 }

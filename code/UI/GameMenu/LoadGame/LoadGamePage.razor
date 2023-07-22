@@ -1,0 +1,49 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.DataModel.Game;
+@attribute [StyleSheet]
+@namespace Sandtype.UI.GameMenu
+
+<root style="flex-direction: column;">
+
+    <div class="navbar">
+
+        <div class="left">
+            <a class="button" href="/"> Home </a>
+            <span class="block">&gt;</span>
+            <span class="block">Load Game</span>
+        </div>
+
+        <div class="right">
+        </div>
+
+    </div>
+
+    <div class="savedgames">
+        @foreach (var s in Game.Menu.SavedGames)
+        {
+            <SavedGameCard @onclick=@(() => Select( s ) ) SavedGame=@s></SavedGameCard>
+        }
+    </div>
+
+</root>
+
+@code
+{
+    private async void Select( SavedGame savedGame )
+    {
+	    if ( savedGame == null ) return;
+	    
+        var networkType = Game.Menu.Package.GetMeta<NetworkType>("GameNetworkType");
+	    var maxSupportedPlayers = Game.Menu.Package.GetMeta<int>( "MaxPlayers" );
+	    var maxPlayers = savedGame.Metadata.GetValueOrDefault( "MaxPlayers", maxSupportedPlayers );
+
+	    if ( networkType == NetworkType.Singleplayer )
+		    maxPlayers = 1;
+
+	    await Game.Menu.CreateLobbyAsync( maxPlayers, "game", true );
+	    Game.Menu.Lobby.SavedGame = savedGame.Name;
+	    Game.Menu.Lobby.Map = savedGame.Map;
+	    await Game.Menu.EnterServerAsync();
+    }
+}
