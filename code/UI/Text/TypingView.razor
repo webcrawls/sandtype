@@ -4,6 +4,7 @@
 @using Sandbox.UI
 @inherits Sandbox.UI.Panel
 
+<!-- God this whole ass file is a mess, please excuse it :pray: -->
 <root style="background-color: @colorBackground;">
 	<TextInput @ontab="@(HandleTab)"
 	           @onspace="@(HandleSpace)"
@@ -41,6 +42,7 @@
 					{
 						var targetChar = GetChar( targetWord, charIndex );
 						var inputChar = GetChar( inputWord, charIndex );
+						var visibleChar = inputChar ?? targetChar ?? '.';
 
 						var colorStyle = "";
 						if ( wasTyped )
@@ -70,7 +72,7 @@
 						currentCharacter += 1;
 						if ( !(inputChar == ' ' || targetChar == ' ') )
 						{
-							<label style="color: @colorStyle">@(visibleWord[charIndex])</label>
+							<label style="color: @colorStyle">@(visibleChar)</label>
 						}
 					}
 
