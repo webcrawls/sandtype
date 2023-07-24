@@ -36,6 +36,11 @@ public class TextInput : TextEntry
 		{
 			CreateEvent( "onspace" );
 		}
+
+		if ( e.Pressed && e.Button == "escape" )
+		{
+			CreateEvent( "onescape" );
+		}
 		
 		CreateEvent( "onchanged");
 		

@@ -18,7 +18,7 @@ It currently features a "freetype" mode, and a "boss battle".
     - nameplate to show stats above each player
     - save/load each player's stats (s&box stats service?)
 - **In-world interactions**
-    > I think s&box shines when games take plcae in the 3D world, so I don't want the game to only be 2D
+    > I think s&box shines when games take place in the 3D world, so I don't want the game to only be 2D
     - NPC system (dialog, test giver, etc)
     - Physical keyboard/computer to sit at
 

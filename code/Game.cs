@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Sandbox;
-using Sandtype.game.entity;
+using Sandtype.Entity.NPC;
+using Sandtype.Entity.Pawn;
 using Sandtype.UI;
-
+using Sandtype.Util;
 namespace Sandtype;
-
 public partial class SandtypeGame : GameManager
 {
 
@@ -18,8 +17,7 @@ public partial class SandtypeGame : GameManager
 
 	public override void PostLevelLoaded()
 	{
-		_testNPC = new TestNPC();
-		_testNPC.Position = FindSpawn();
+		SetupNPCs();
 	}
 
 	public override void ClientJoined( IClient client )
@@ -42,6 +40,28 @@ public partial class SandtypeGame : GameManager
 			_testNPC?.Simulate( cl );
 			p.Simulate( cl );
 		}
+	}
+
+	private void SetupNPCs()
+	{
+		var rootPoint = FindSpawn();
+		rootPoint = rootPoint.WithZ( rootPoint.z - 35f );
+
+		var testPoint = rootPoint;
+		var settingsPoint = rootPoint.WithY( rootPoint.y - 150f );
+		var informerPoint = rootPoint.WithY( rootPoint.y - 350f );
+
+		var testNPC = new TestNPC();
+		testNPC.Position = testPoint;
+		testNPC.Spawn();
+
+		var settingsNPC = new SettingsNPC();
+		settingsNPC.Position = settingsPoint;
+		settingsNPC.Spawn();
+
+		var informerNPC = new InformerNPC();
+		informerNPC.Position = informerPoint;
+		informerNPC.Spawn();
 	}
 	
 	private void InitializeHud( )

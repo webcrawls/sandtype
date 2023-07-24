@@ -2,10 +2,12 @@
 @attribute [StyleSheet( "TypingView.razor.scss" )]
 @using System
 @using Sandbox.UI
+@using Sandtype.Entity.Pawn.Test
+@using Sandtype.UI.Theme
 @inherits Sandbox.UI.Panel
 
 <!-- God this whole ass file is a mess, please excuse it :pray: -->
-<root style="background-color: @colorBackground;">
+<root style="background-color: @Theme.ColorBackground;">
 	<TextInput @ontab="@(HandleTab)"
 	           @onspace="@(HandleSpace)"
 	           @onchanged="@(HandleChanged)"
@@ -51,22 +53,22 @@
 						} else if ( charIndex == (cursorPos - (charIndex > targetWord.Length ? 1 : 0) ))
 						{
 							// is the current position
-							colorStyle = colorCaret;
+							colorStyle = Theme.ColorCaret;
 						} else if ( targetChar == null && inputChar != null )
 						{
 							// input went too long, red styling
-							colorStyle = colorError;
+							colorStyle = Theme.ColorError;
 						} else if (targetChar != null && inputChar == null) {
 							// not yet typed
-							colorStyle = colorMain;
+							colorStyle = Theme.ColorMain;
 						} else if ( targetChar != null && inputChar != null && targetChar != inputChar )
 						{
 							// character is a typo
-							colorStyle = colorError;
+							colorStyle = Theme.ColorError;
 						} else if ( targetChar != null && inputChar != null && targetChar == inputChar )
 						{
 							// character is valid
-							colorStyle = colorTyped;
+							colorStyle = Theme.ColorTyped;
 						}
 						
 						currentCharacter += 1;
@@ -87,11 +89,7 @@
 
 	public TypingTest Test;
 	public TextInput Input;
-	public string colorMain = "#99b898";
-	public string colorTyped = "#fecea8";
-	public string colorError = "#ff6961";
-	public string colorCaret = "#616161";
-	public string colorBackground = "#292929";
+	public Theme Theme = Theme.Themes["default"];
 	private string[] TargetWords => Test?.TargetWords;
 	private string[] InputWords => Test?.InputWords;
 	private string CurrentInput => Input?.Text ?? "";

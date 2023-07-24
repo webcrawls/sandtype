@@ -1,13 +1,24 @@
 ﻿@namespace Sandtype.UI.Game
 @using System
+@using Sandbox.Razor
+@using Sandtype.Entity.Pawn.Test
+@using Sandtype.Test
+@using Sandtype.Test.World
 @inherits Sandbox.UI.Panel
 
 <style>
+	GameView {
+	position: absolute;
+	top:  0;
+	left: 0;;
+	width: 100%;
+		height:  100%;
+	}
+
 	.game-background {
 		position:absolute;
 		width:  100%;
 		height:  100%;
-		background-image: url("/assets/stars.gif");
 		z-index: -1;
 	}
 
@@ -27,8 +38,7 @@
 
 <root style="backdrop-filter: blur(3px);">
 	<div class="game-background"></div>
-	<BossPanel @ref="Boss" style="right: -250px;"/>
-	<GameWorld @ref="World" Game="@Game"/>
+	@GameWorld
 	<div class="game-overlay">
 		<HealthBar @ref="BossHealthBar"/>
 	</div>
@@ -49,10 +59,9 @@
 
 @code {
 
+	public GameWorld? GameWorld { get; set; }
 	public TypingTest Test;
 	public TerryGame Game;
-	public GameWorld World;
-	public BossPanel Boss;
 	public HealthBar BossHealthBar;
 
 	protected override int BuildHash()

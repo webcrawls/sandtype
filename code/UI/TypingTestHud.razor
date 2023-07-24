@@ -1,0 +1,35 @@
+﻿@namespace Sandtype.UI
+@using Sandbox.UI
+@using Sandtype.Entity.Pawn.Test;
+@using Sandtype.UI.Text
+@using Sandtype.UI.Boss;
+@using Sandtype.UI.Game;;
+@attribute [StyleSheet("TypingTestHud.razor.scss")]
+@inherits Sandbox.UI.Panel
+
+<style>
+	.typing-test-hud {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.22);
+		backdrop-filter: blur(10px);
+		display:flex;
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
+	.typing-test {
+		height: 30%;
+	}
+</style>
+
+<root class="typing-test-hud">
+	<BossPanel/>
+</root>
+
+@code {
+	
+}
