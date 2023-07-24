@@ -14,6 +14,5 @@ public class LayoutFlipTerryAction : TerryAction
 	public override void Run()
 	{
 		base.Run();
-		Hud.LayoutType += 1;
 	}
 }

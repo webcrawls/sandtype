@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Sandbox;
-using Sandtype.Engine.Text;
+using Sandtype.Text;
 
 namespace Sandtype;
 
-public class TypingTest : EntityComponent<Pawn>
+public class TypingTest
 {
 	
 	public string[] TargetWords;
@@ -51,12 +51,6 @@ public class TypingTest : EntityComponent<Pawn>
 		}
 	}
 
-	protected override void OnActivate()
-	{
-		base.OnActivate();
-		ResetTest();
-	}
-
 	public void NextWord()
 	{
 		var word = CurrentInputText;
@@ -95,19 +89,6 @@ public class TypingTest : EntityComponent<Pawn>
 			TargetWords = Provider.GetText();
 			TypedWords = 0;
 			ClearInputWords();
-			return;
-		}
-
-		if ( Entity != null )
-		{
-			var game = Entity.Components.Get<TerryGame>();
-			if ( game != null )
-			{
-				if ( accuracy == 1 )
-				{
-					game.CreateBullet();
-				}
-			}
 		}
 	}
 

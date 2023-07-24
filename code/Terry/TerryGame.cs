@@ -40,37 +40,31 @@ public class TerryGame : EntityComponent<Pawn>
 	{
 		base.OnActivate();
 
-		if ( Game.IsClient )
-		{
-			Entity.Hud.Game = this;
-		}
-
-		_test = Entity.Components.Get<TypingTest>();
 		_actions = new Dictionary<string, TerryAction>();
 		_terryDeleteQueue = new Queue<GameEntity>();
 		Entities = new List<GameEntity>(); // 50 max entities?
 		
-		RegisterAction( new LayoutFlipTerryAction( Entity, this, _test, Entity.Hud ) );
-		RegisterAction( new TerrySpawnAction( Entity, this, _test, Entity.Hud ) );
-		RegisterAction( new LanguageChangeAction( Entity, this, _test, Entity.Hud ) );
+		///RegisterAction( new LayoutFlipTerryAction( Entity, this, _test, Entity.Hud ) );
+		///RegisterAction( new TerrySpawnAction( Entity, this, _test, Entity.Hud ) );
+		///RegisterAction( new LanguageChangeAction( Entity, this, _test, Entity.Hud ) );
 	}
 
 	public void Simulate()
 	{
-		_gameWorld = Entity?.Hud?.GameView?.World;
-		if ( Entity != null && Entity.Hud != null && Entity.Hud.Game == null )
-		{
-			Entity.Hud.Game = this;
-		}
-
-		
-		// would love to stop being stupid about this ;-)
-		if ( Entity != null && Entity.Hud != null && Entity.Hud.GameView != null && Entity.Hud.GameView.Boss != null )
-		{
-			Entity.Hud.GameView.Boss.TerryHealth = TerryHealth;
-			Entity.Hud.GameView.Boss.TerryMax = TerryMaxHealth;
-			Entity.Hud.GameView.BossHealthBar.ProgressValue = ((float) TerryHealth / TerryMaxHealth) * 100; // Remember this value sucks
-		}
+		//_gameWorld = Entity?.Hud?.GameView?.World;
+		//if ( Entity != null && Entity.Hud != null && Entity.Hud.Game == null )
+		//{
+		//	Entity.Hud.Game = this;
+		//}
+//
+		//
+		//// would love to stop being stupid about this ;-)
+		//if ( Entity != null && Entity.Hud != null && Entity.Hud.GameView != null && Entity.Hud.GameView.Boss != null )
+		//{
+		//	Entity.Hud.GameView.Boss.TerryHealth = TerryHealth;
+		//	Entity.Hud.GameView.Boss.TerryMax = TerryMaxHealth;
+		//	Entity.Hud.GameView.BossHealthBar.ProgressValue = ((float) TerryHealth / TerryMaxHealth) * 100; // Remember this value sucks
+		//}
 
 		LoadWorld();
 		_gameWorld?.Tick();
@@ -220,10 +214,10 @@ public class TerryGame : EntityComponent<Pawn>
 
 	private void LoadWorld()
 	{
-		if ( _gameWorld == null && Entity?.Hud != null && Entity?.Hud?.GameView != null )
-		{
-			_gameWorld = Entity.Hud.GameView.World;
-		} 
+		//if ( _gameWorld == null && Entity?.Hud != null && Entity?.Hud?.GameView != null )
+		//{
+		//	_gameWorld = Entity.Hud.GameView.World;
+		//} 
 	}
 	
 	private void HandleEnd(GameEntity gameEntity)

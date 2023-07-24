@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Sandtype.Engine.Text;
+namespace Sandtype.Text;
 
+/// <summary>
+/// Provides a static string of text.
+/// </summary>
 public class QuoteTextProvider : TextProvider
 {
 
@@ -16,6 +18,11 @@ public class QuoteTextProvider : TextProvider
 	public string GetName()
 	{
 		return "Static";
+	}
+
+	public void SetSize( int size )
+	{
+		// The size of the quote will be static, this does nothing.
 	}
 
 	public string[] GetText()

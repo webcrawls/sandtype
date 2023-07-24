@@ -1,4 +1,5 @@
 ﻿using System;
+using Sandbox.Component;
 using Sandbox.UI;
 
 namespace Sandtype.UI.Text;

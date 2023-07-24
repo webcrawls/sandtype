@@ -1,4 +1,5 @@
-﻿using Sandbox.UI;
+﻿using Sandbox.Component;
+using Sandbox.UI;
 using Sandtype.Terry;
 
 namespace Sandtype.UI.Game.Entity;
@@ -13,6 +14,7 @@ public class ClientWorldEntity
 	public ClientWorldEntity( int entityId )
 	{
 		EntityId = entityId;
+		new Glow();
 	}
 
 	public bool IsActive()

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Sandtype.Engine.Text;
+using Sandtype.Text;
 using Sandtype.UI;
-using Sandtype.UI.Game;
 
 namespace Sandtype.Terry.Action;
 
