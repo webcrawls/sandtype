@@ -48,7 +48,7 @@ public class BossPanelBase : Panel
 				Position = Vector3.Zero.WithX( 30 ),
 				Rotation = Rotation.Identity.Backward.EulerAngles.ToRotation().RotateAroundAxis( Vector3.Up, -50f )
 			}
-		); ;
+		);
 	}
 
 	public override void Tick()
