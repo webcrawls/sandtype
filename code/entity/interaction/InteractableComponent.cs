@@ -10,7 +10,6 @@ public class InteractableComponent : EntityComponent<Entity>
 	{
 		var now = Time.Now;
 		var delta = now - _lastInteractTime;
-		Log.Info( delta );
 		if ( delta <= 0.5 ) return;
 		_lastInteractTime = Time.Now;
 		OnInteract( cl );

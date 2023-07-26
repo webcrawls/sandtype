@@ -1,8 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Sandbox;
+using Sandbox.Services;
+using Sandtype.Entity.Pawn.data;
+using Sandtype.Entity.Pawn.Hud;
 using Sandtype.Entity.Pawn.Select;
-using Sandtype.Entity.Pawn.Test;
+using Sandtype.Test;
 using Sandtype.UI.Theme;
 
 namespace Sandtype.Entity.Pawn;
@@ -46,11 +50,9 @@ public partial class Pawn : AnimatedEntity
 	[Net, Predicted, Browsable( false )]
 	public Rotation EyeLocalRotation { get; set; }
 
-	public bool InTest => Components.Get<TypingTestComponent>() != null;
-
 	public Theme Theme = Theme.Themes["default"];
 
-public BBox Hull
+	public BBox Hull
 	{
 		get => new
 		(
@@ -61,8 +63,21 @@ public BBox Hull
 
 	[BindComponent] public PawnController Controller { get; }
 	[BindComponent] public PawnAnimator Animator { get; }
+	[BindComponent] public ClientRaceManager RaceServer { get; }
 	
 	public override Ray AimRay => new Ray( EyePosition, EyeRotation.Forward );
+
+	public PawnData PawnData
+	{
+		get { return _pawnData; }
+		set
+		{
+			_pawnData = value;
+			PawnData.SaveData( Client?.SteamId ?? 0l, _pawnData );
+		}
+	}
+
+	private PawnData _pawnData;
 	
 	/// <summary>
 	/// Called when the entity is first created 
@@ -76,6 +91,7 @@ public BBox Hull
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
+		_pawnData = new PawnData();
 
 		Components.Create<PawnSelectComponent>();
 		
@@ -85,14 +101,17 @@ public BBox Hull
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
+		_pawnData = PawnData.LoadData( Client.SteamId );
 		Components.Create<PawnSelectGlowComponent>();
 		Components.Create<PawnSelectComponent>();
+		Components.Create<HudComponent>();
 	}
 	
 	public void Respawn()
 	{
 		Components.Create<PawnController>();
 		Components.Create<PawnAnimator>();
+		Components.Create<ClientRaceManager>();
 	}
 
 	public void DressFromClient( IClient cl )

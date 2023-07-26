@@ -1,0 +1,57 @@
+﻿@namespace Sandtype.UI.Hud.Pages
+@using System
+@using Sandbox
+@using Sandbox.UI
+@using Sandtype.Entity.Pawn
+@using Sandtype.Test
+@inherits Panel
+
+<root>
+	<div class="race-index">
+		<label>@Index. </label>
+	</div>
+	<div class="race-button">
+		<button class="race-button">Join Game</button>
+	</div>
+	<label>@(RaceData.OwnerName)</label>
+</root>
+
+<style>
+TypingRaceElement {
+	background-color: white;
+	color: black;
+	width: 100%;
+	font-weight: bolder;
+	min-height: 110px;
+	font-size: 30px;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.race-index {
+	width: 70px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.race-button {
+	width: 250px;
+	background-color: gray;
+	color: white;
+	border-radius: 20px;
+}
+</style>
+
+@code {
+
+	public int Index { get; set; }
+	public RaceData RaceData { get; set; }
+
+	public void JoinGame()
+	{
+		
+	}
+
+}

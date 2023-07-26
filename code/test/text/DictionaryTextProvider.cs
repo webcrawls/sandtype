@@ -10,7 +10,7 @@ public class DictionaryTextProvider : TextProvider
 {
 	
 	public string[] Words;
-	public int Size { get; private set; }
+	public int Size { get; private set; } = 50;
 
 	public DictionaryTextProvider( string[] words )
 	{
@@ -22,12 +22,12 @@ public class DictionaryTextProvider : TextProvider
 		Size = size;
 	}
 
-	public string[] GetText()
+	public List<string> GetText()
 	{
-		string[] words = new string[Size];
+		var words = new List<string>();
 		for ( int i = 0; i < Size; i++ )
 		{
-			words[i] = Words[Random.Shared.Next( 0, Words.Length )];
+			words.Add(Words[Random.Shared.Next( 0, Words.Length )]);
 		}
 
 		return words;

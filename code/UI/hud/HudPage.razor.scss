@@ -1,0 +1,84 @@
+﻿.hud-page {
+  position: relative;
+  pointer-events: all;
+  height: 100%;
+  border-radius: 20px;
+  border: 2px solid white;
+  width: 100%;
+  overflow: hidden;
+  transform: translateX(0%);
+  transition: transform 0.75s;
+
+  &:intro {
+    transform: translateX(-100%);
+  }
+
+  &:outro {
+    transform: translateX(-100%);
+  }
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/stars.gif");
+  z-index: -2;
+}
+
+.blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(3px);
+  z-index: -1;
+}
+
+
+.body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  padding: 40px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  
+  .section {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.controls {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  color: white;
+  opacity: 0.25;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  
+  &:hover {
+    opacity: 1;
+    background-color: rgba(16, 16, 16, 0.49);
+  }
+  z-index: 1;
+}

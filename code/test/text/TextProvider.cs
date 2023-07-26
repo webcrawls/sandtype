@@ -1,4 +1,6 @@
-﻿namespace Sandtype.Test.Text;
+﻿using System.Collections.Generic;
+
+namespace Sandtype.Test.Text;
 
 /// <summary>
 /// Provides an array of text from a source.
@@ -16,7 +18,7 @@ public interface TextProvider
 	/// Generates an array of text and returns it. Depending on the provider, this may be random every time.
 	/// </summary>
 	/// <returns>An array of text.</returns>
-	public string[] GetText( );
+	public List<string> GetText( );
 
 }
 

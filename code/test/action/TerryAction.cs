@@ -1,6 +1,4 @@
-﻿using Sandtype.Entity.Pawn.Test;
-
-namespace Sandtype.Test.Action;
+﻿namespace Sandtype.Test.Action;
 using Entity.Pawn;
 using Test;
 using UI;

@@ -3,10 +3,10 @@ using Sandbox.UI.Construct;
 
 namespace Sandtype.Entity.NPC;
 
-public class NPCNametag : WorldPanel
+public class NametagPanel : WorldPanel
 {
 
-	public NPCNametag(string name)
+	public NametagPanel(string name)
 	{
 		StyleSheet.Load( "/ui/styles/WorldLabel.scss" );
 		Add.Label( name );

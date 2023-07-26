@@ -51,7 +51,6 @@ public class PawnSelectComponent : EntityComponent<Pawn>, ITickable
 			{
 				foreach ( var interactable in interactables )
 				{
-					Log.Info( "INteractables" );
 					interactable.HandleInteract( Entity.Client );
 				}
 			}

@@ -1,7 +1,4 @@
 ﻿namespace Sandtype.Test.Action;
-using Sandtype.Entity.Pawn.Test;
-using Entity.Pawn;
-using UI;
 
 public class TerrySpawnAction : TerryAction
 {

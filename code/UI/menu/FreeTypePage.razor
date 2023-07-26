@@ -4,7 +4,7 @@
 @using Sandtype.UI.Game;
 @using Sandtype.UI.Boss;
 @using Sandbox.UI;
-@using Sandtype.Entity.Pawn.Test
+@using Sandtype.Test
 @namespace Sandtype.UI.Menu
 @attribute [StyleSheet]
 
@@ -14,7 +14,7 @@
 
 	<div class="game-text">
 		<p>@Game.Menu.Package.Title</p>
-		<p>@Test.TypedWords/@Test.TargetWords.Length</p>
+		<p>@Test.TypedWords/@Test.TargetWords.Count</p>
 	</div>
 
     <div class="controls" style="height: 100%; overflow: hidden;">

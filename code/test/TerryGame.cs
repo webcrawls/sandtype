@@ -1,6 +1,4 @@
-﻿using Sandtype.Entity.Pawn.Test;
-
-namespace Sandtype.Test;
+﻿namespace Sandtype.Test;
 using Entity.Pawn;
 using System;
 using System.Collections.Generic;
@@ -249,7 +247,6 @@ public class TerryGame : EntityComponent<Pawn>, ITickable
 		}
 
 		_actionTimer = (int) Math.Round(((1 - _terryAnger) * 100) + _actionCooldown);
-		Log.Info( 1 - _terryAnger );
 		if ( _actions.Count == 0 )
 		{
 			return;

@@ -1,55 +1,43 @@
-﻿using Sandtype.Entity.Interaction;
-using Sandtype.Entity.Pawn.Hud;
+﻿using Sandtype.Entity.Pawn.Hud;
+using Sandtype.UI.Hud.Pages;
 
 namespace Sandtype.Entity.NPC;
 using Sandbox;
 using Sandbox.UI;
-using Sandbox.UI.Construct;
 
 public class SettingsNPC : AnimatedEntity, IUse
 {
 
 	private WorldPanel _namePanel; // clientonly
 	private bool _spokenTo = false;
+	private SettingsHud _hud;
 
 	public override void Spawn()
 	{
 		base.Spawn();
-		Model = Cloud.Model( "mml.cirno" );
+		Model = Cloud.Model( "facepunch.tv" );
 		Scale = 2.0f;
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
 		EnableSolidCollisions = false;
-		var c = new ClothingContainer();
-		var hat = new Clothing()
-		{
-			Model = Cloud.Model( "tfassets.hardhat001" ).ResourcePath,
-			Category = Clothing.ClothingCategory.Hat
-		};
-		c.Toggle(hat);
-		c.DressEntity( this );
 		Tags.Add( "npc" );
 	}
 
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-		_namePanel = new NPCNametag("Cirno the Configurator");
+		Components.Add( new NametagComponent("the configuration box (Opens two i dont know why)") );
 	}
-
-	[GameEvent.Tick.Client]
-	public void ClientTick()
-	{
-		_namePanel.Position = Position.WithZ( Position.z + 50f );
-	}
-
+	
 	public bool OnUse( Entity user )
 	{
 		if ( Game.IsClient )
 		{
-			user.Components.Create<SettingsHudComponent>();
+			_hud = new SettingsHud();
+			user.Components.Get<HudComponent>().Hud.MiddleSection.AddChild( _hud );
+			Log.Info( "Opening hud" );
 		}
 		return true;
 	}

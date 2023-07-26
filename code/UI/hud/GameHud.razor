@@ -1,0 +1,18 @@
+﻿@namespace Sandtype.UI.Hud
+@using Sandbox.UI
+@attribute [StyleSheet]
+@inherits Sandbox.UI.RootPanel
+
+<root>
+	<div class="hud-section" @ref="TopSection"><GameNav/></div>
+	<div class="hud-section" style="height: 100%;" @ref="MiddleSection"></div>
+	<div class="hud-section" @ref="BottomSection"></div>
+</root>
+
+@code {
+
+	public Panel TopSection;
+	public Panel MiddleSection;
+	public Panel BottomSection;
+
+}

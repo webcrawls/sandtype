@@ -17,7 +17,6 @@ public class TextDialogGiver : InteractableComponent
 	protected override void OnInteract( IClient cl )
 	{
 		base.OnInteract( cl );
-		Log.Info( "bandling" );
 		var text = new TextDialogComponent();
 		text.Text = Text;
 		cl.Pawn.Components.Add( text );

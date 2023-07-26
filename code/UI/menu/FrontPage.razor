@@ -5,39 +5,43 @@
 @using Sandtype.UI.Game;
 @attribute [StyleSheet]
 
-<root style="flex-direction: column;">
+<root style="flex-direction: row;">
+	<div style="flex-direction: column; width: 100%;">
 
-	<div class="game-title">
-		@Game.Menu.Package.Title
+		<div class="game-title">
+			@Game.Menu.Package.Title
+		</div>
+
+		<div class="controls">
+
+			@if ( Game.InGame )
+			{
+				<a class="button" href="/active">Current Game</a>
+				<a class="button" onclick=@LeaveGame>Leave Game</a>
+				<span style="height: 20px;"></span>
+			}
+			else
+			{
+				<a class="button" @onclick=@StartFreeType>Free Type</a>
+				<a class="button" @onclick=@StartGame>Play</a>
+				<a class="button" href="/readme">README.md</a>
+			}
+
+			<span style="height: 20px;"></span>
+
+			<a class="button" @onclick=@Game.Menu.Close>Quit</a>
+
+		</div>
 	</div>
-
-    <div class="controls">
-
-        @if ( Game.InGame )
-        {
-            <a class="button" href="/active">Current Game</a>
-            <a class="button" onclick=@LeaveGame>Leave Game</a>
-            <span style="height: 20px;"></span>
-        }
-        else
-        {
-            <a class="button" @onclick=@StartFreeType>Free Type</a>
-	        <a class="button" @onclick=@StartGame>Play</a>
-	        <a class="button" href="/readme">README.md</a>
-        }
-
-        <span style="height: 20px;"></span>
-
-        <a class="button" @onclick=@Game.Menu.Close>Quit</a>
-
-    </div>
-
-	<BossPanel/>
-	
+	<div style="width: 100%;">
+		<MapButton MapIdent="@Map" OnClicked="@OpenMapSelector"/>
+	</div>
+	<BossPanel MovementMode="@MovementMode.FROM_TO" style="z-index: -2"/>
 </root>
-
 @code
 {
+	private string Map = "aero.roblox_baseplate";
+	
     void LeaveGame()
     {
         Game.Menu.LeaveServer("Leaving");
@@ -45,14 +49,23 @@
 
 	void StartGame()
 	{
-		_ = Game.Menu.StartServerAsync( 1, "Typing with Terry", "facepunch.construct");
+		_ = Game.Menu.StartServerAsync( 5, "Typing with Terry", Map);
 		this.Navigate( "/active" );
 	}
 	
 	void StartFreeType()
 	{
 		this.Navigate( "/type" );
+	}
 
+	void OnMapSelected(Package package)
+	{
+		Map = package.FullIdent;
+	}
+
+	void OpenMapSelector()
+	{
+		Game.Overlay.ShowPackageSelector( "type:map sort:popular", OnMapSelected );
 	}
 
 }

@@ -1,20 +1,21 @@
-﻿using Sandtype.Entity.Interaction;
+﻿using Sandtype.Entity.Pawn.Hud;
+using Sandtype.UI.Hud.Pages;
 
 namespace Sandtype.Entity.NPC;
 using Sandbox;
 using Sandbox.UI;
-using Sandbox.UI.Construct;
 
-public class TestNPC : AnimatedEntity, IUse
+public class RaceNPC : AnimatedEntity, IUse
 {
 
 	private WorldPanel _namePanel; // clientonly
 	private bool _spokenTo = false;
+	private RaceHud _hud;
 
 	public override void Spawn()
 	{
 		base.Spawn();
-		Model = Cloud.Model( "mml.cirno" );
+		Model = Cloud.Model( "mdlresrc.devcom_bubble" );
 		Scale = 2.0f;
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
@@ -27,12 +28,16 @@ public class TestNPC : AnimatedEntity, IUse
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-		Components.Add( new NametagComponent("the test giver") );
-		Components.Add( new TestGiver() );
+		Components.Add( new NametagComponent("Type race") );
 	}
-
+	
 	public bool OnUse( Entity user )
 	{
+		if ( Game.IsClient )
+		{
+			_hud = new RaceHud();
+			user.Components.Get<HudComponent>().Hud.MiddleSection.AddChild( _hud );
+		}
 		return true;
 	}
 

@@ -1,22 +1,23 @@
-﻿using Sandtype.Entity.Interaction;
-using Sandtype.Entity.Pawn.Hud;
+﻿using Sandtype.Entity.Pawn.Hud;
+using Sandtype.UI.Hud.Pages;
 
 namespace Sandtype.Entity.NPC;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-public class InformerNPC : AnimatedEntity, IUse
+public class ShopNPC : AnimatedEntity, IUse
 {
 
 	private WorldPanel _namePanel; // clientonly
 	private bool _spokenTo = false;
+	private ShopHud _hud;
 
 	public override void Spawn()
 	{
 		base.Spawn();
-		Model = Cloud.Model( "mml.cirno" );
-		Scale = 2.0f;
+		Model = Cloud.Model( "jammie.hula_toy" );
+		Scale = 10f;
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
@@ -28,20 +29,21 @@ public class InformerNPC : AnimatedEntity, IUse
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-		_namePanel = new NPCNametag("Yo, press E");
+		Components.Add( new NametagComponent("Da Shop") );
 	}
 
-	[GameEvent.Tick.Client]
-	public void ClientTick()
+	[GameEvent.Tick.Server]
+	private void OnTick()
 	{
-		_namePanel.Position = Position.WithZ( Position.z + 50f );
+		Rotation = Rotation.RotateAroundAxis( Vector3.Up, 1f );
 	}
 
 	public bool OnUse( Entity user )
 	{
-		if ( Game.IsClient )
+		if ( Game.IsClient && (_hud == null || !_hud.IsValid) )
 		{
-			user.Components.Create<SettingsHudComponent>();
+			_hud = new ShopHud();
+			user.Components.Get<HudComponent>().Hud.MiddleSection.AddChild( _hud );
 		}
 		return true;
 	}

@@ -1,9 +1,7 @@
-﻿@namespace Sandtype.UI
+﻿@namespace Sandtype.UI.Hud
 @using Sandbox.UI
-@using Sandtype.Entity.Pawn.Test;
-@using Sandtype.UI.Text
-@using Sandtype.UI.Boss;
-@using Sandtype.UI.Game;;
+@using Sandtype.UI.Boss
+@using Sandtype.UI.Player
 @attribute [StyleSheet("TypingTestHud.razor.scss")]
 @inherits Sandbox.UI.Panel
 
@@ -28,6 +26,7 @@
 
 <root class="typing-test-hud">
 	<BossPanel/>
+	<PlayerPanel/>
 </root>
 
 @code {

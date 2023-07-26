@@ -1,0 +1,68 @@
+﻿@namespace Sandtype.UI.Hud.Pages
+@using System
+@using Sandbox
+@using Sandbox.UI
+@using Sandtype.Entity.Pawn
+@inherits Panel
+
+<root>
+	<HudPage @PageName="helolo">
+		<Page>
+			<div class="column">
+				<div class="settings-header">
+					<h1 class="settings-title">Info</h1>
+					<button style="background-color: #eb8484; color: #4d1212;" class="settings-button" @onclick="@( () => { Delete(); })">close</button>
+				</div>
+				<div class="section">
+					<h1>Hello! Thanks for trying out Typing with Terry.</h1>
+					<h1>I would love to hear feedback from players, feel free to reach me using the links below.</h1>
+				</div>
+				<div class="section badges" style="flex-direction: row;">
+					<h1 class="badge">github.com/webcrawls</h1>
+					<h1 class="badge" style="background-color: #7289da; color: #302e67;">discord.gg/jDbwF7Qbyv</h1>
+					<h1 class="badge" style="background-image: linear-gradient(45deg, turquoise, blue); background-size: 255%; background-position: -50%; color: #481a00;">webcrawls.github.io</h1>
+				</div>
+				<div class="section">
+					<h1>todo:</h1>
+					<h1>- multiplayer</h1>
+					<h1>- better game</h1>
+					<h1>- fun</h1>
+				</div>
+			</div>
+			<div class="column">
+				<div class="section">
+					<h1 class="settings-title">Latest Changes (7/25/2023)</h1>
+					<h1 class="settings-title">- added player data system, stats now save</h1>
+					<h1 class="settings-title">- added shop system, spend your "words typed" to unlock themes & stuff</h1>
+					<h1 class="settings-title">- tried to make stats service work, not sure if it did</h1>
+					<h1 class="settings-title">- improved styling</h1>
+				</div>
+			</div>
+		</Page>
+	</HudPage>
+</root>
+
+<style>
+	.badges {
+		display: flex;
+		gap: 20px;
+		flex-direction: column;
+	}
+
+	.badge {
+		border-radius: 5px;
+		background-color: white;
+		color: gray;
+		padding: 5px 10px;
+		width: 100%;
+	}
+</style>
+
+@code {
+	
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( (Game.LocalClient.Pawn as Pawn).Theme );
+	}
+
+}

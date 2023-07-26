@@ -1,8 +1,9 @@
 ﻿@namespace Sandtype.UI.Text
 @attribute [StyleSheet( "TypingView.razor.scss" )]
 @using System
+@using System.Collections.Generic
 @using Sandbox.UI
-@using Sandtype.Entity.Pawn.Test
+@using Sandtype.Test
 @using Sandtype.UI.Theme
 @inherits Sandbox.UI.Panel
 
@@ -30,13 +31,13 @@
 				
 				for ( int wordIndex = offset ; wordIndex < (offset + perPage); wordIndex++ )
 				{
-					if ( wordIndex >= TargetWords.Length )
+					if ( wordIndex >= TargetWords.Count )
 						break;
 					
 					var wasTyped = false;
 					var isCurrentWord = wordIndex == currentWord;
 					var targetWord = TargetWords[wordIndex];
-					var inputWord = isCurrentWord ? CurrentInput : wordIndex <= InputWords.Length ? InputWords[wordIndex] : "";
+					var inputWord = isCurrentWord ? CurrentInput : wordIndex <= InputWords.Count ? InputWords[wordIndex] : "";
 					var visibleWord = CombineWords( targetWord ?? "", inputWord ?? "" );
 					var cursorPos = inputWord?.Length ?? -1;
 					
@@ -90,8 +91,8 @@
 	public TypingTest Test;
 	public TextInput Input;
 	public Theme Theme = Theme.Themes["default"];
-	private string[] TargetWords => Test?.TargetWords;
-	private string[] InputWords => Test?.InputWords;
+	private List<string> TargetWords => Test?.TargetWords;
+	private List<string> InputWords => Test?.InputWords;
 	private string CurrentInput => Input?.Text ?? "";
 	
 	protected override int BuildHash()
@@ -160,7 +161,7 @@
 	{
 		var word = 0;
 		if ( InputWords == null ) return 0;
-		for ( int i = 0; i < InputWords.Length; i++ )
+		for ( int i = 0; i < InputWords.Count; i++ )
 		{
 			if ( InputWords[i] != null )
 			{

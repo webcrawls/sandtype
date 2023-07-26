@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sandtype.Test.Text;
 
@@ -8,11 +10,11 @@ namespace Sandtype.Test.Text;
 public class QuoteTextProvider : TextProvider
 {
 
-	public string[] Text;
+	public List<string> Text;
 
 	public QuoteTextProvider( String text )
 	{
-		Text = text.Split( " " );
+		Text = text.Split( " " ).ToList();
 	}
 
 	public string GetName()
@@ -25,7 +27,7 @@ public class QuoteTextProvider : TextProvider
 		// The size of the quote will be static, this does nothing.
 	}
 
-	public string[] GetText()
+	public List<string> GetText()
 	{
 		return Text;
 	}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sandtype.Entity.Pawn.Test;
+namespace Sandtype.Test;
 using Sandtype.Test.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,8 @@ public class TypingTest
 {
 
 	public Action<float> WordTypedAction;
-	public string[] TargetWords;
-	public string[] InputWords;
+	public List<string> TargetWords;
+	public List<string> InputWords;
 	public int TypedWords;
 	public int RealTypedWords { get { return _realTypedWords; } }
 	public List<float> AccuracyValues;
@@ -34,14 +34,14 @@ public class TypingTest
 	public void SetTest(string provider)
 	{
 		Provider = new DictionaryFileTextProvider( provider );
+		Provider.SetSize( 50 );
 		ResetTest();
 	}
 
 	public void ResetTest()
 	{
 		TargetWords = Provider.GetText();
-		Log.Info( TargetWords );
-		InputWords = new string[TargetWords.Length];
+		InputWords = new();
 		TypedWords = 0;
 		StartTime = Time.Now;
 
@@ -86,9 +86,8 @@ public class TypingTest
 		CurrentInputText = "";
 		TypedWords = CountWords();
 		_realTypedWords += 1;
-		if ( (TypedWords ) == (TargetWords.Length) )
+		if ( (TypedWords ) == (TargetWords.Count) )
 		{
-			Log.Info( "Refreshing text..." );
 			TargetWords = Provider.GetText();
 			TypedWords = 0;
 			ClearInputWords();
@@ -105,7 +104,7 @@ public class TypingTest
 	public int CountWords()
 	{
 		int words = 0;
-		for ( int i = 0; i < InputWords.Length; i++ )
+		for ( int i = 0; i < InputWords.Count; i++ )
 		{
 			if ( InputWords[i] == null )
 			{
@@ -124,7 +123,7 @@ public class TypingTest
 		
 		// https://stackoverflow.com/questions/24950412/how-wpm-calculate-in-typing-speed-apps
 		int typed = 0;
-		for ( int i = 0; i < InputWords.Length; i++ )
+		for ( int i = 0; i < InputWords.Count; i++ )
 		{
 			var word = InputWords[i];
 			var target = TargetWords[i];
@@ -158,7 +157,7 @@ public class TypingTest
 
 	private void ClearInputWords()
 	{
-		for ( int i = 0; i < InputWords.Length; i++ )
+		for ( int i = 0; i < InputWords.Count; i++ )
 		{
 			InputWords[i] = null;
 		}

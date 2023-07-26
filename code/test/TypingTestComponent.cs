@@ -1,13 +1,11 @@
 ﻿using Sandbox;
-using Sandbox.Razor;
-using Sandtype.Entity.Pawn.Hud;
-using Sandtype.Test;
+using Sandtype.Entity.Pawn;
 using Sandtype.Test.World;
-using Sandtype.UI;
 using Sandtype.UI.Game;
+using Sandtype.UI.Hud;
 using Sandtype.UI.Text;
 
-namespace Sandtype.Entity.Pawn.Test;
+namespace Sandtype.Test;
 
 public class TypingTestComponent : EntityComponent<Pawn>, ISingletonComponent, ITickable
 {
@@ -71,6 +69,7 @@ public class TypingTestComponent : EntityComponent<Pawn>, ISingletonComponent, I
 	{
 		if ( !accuracy.AlmostEqual(1f) ) return;
 		_game.CreateBullet();
+		Entity.PawnData = Entity.PawnData.WithWordsTyped( Entity.PawnData.WordsTyped + 1 );
 	}
 }
 

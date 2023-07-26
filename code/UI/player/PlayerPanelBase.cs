@@ -5,10 +5,11 @@ using System.Runtime.CompilerServices;
 using System.Timers;
 using Sandbox;
 using Sandbox.UI;
+using Sandtype.Entity.Pawn;
 
-namespace Sandtype.UI.Boss;
+namespace Sandtype.UI.Player;
 
-public class BossPanelBase : Panel
+public class PlayerPanelBase : Panel
 {
 
 	// todo mostly ok but still unfuck
@@ -18,7 +19,6 @@ public class BossPanelBase : Panel
 	public int TerryMax = 10;
 
 	public bool DressFromClient = false;
-	public MovementMode MovementMode = MovementMode.STATIC;
 	public Vector3 MovementFrom = Vector3.Zero.WithX( 30 );
 	public Vector3 MovementTo = Vector3.Zero.WithX( 100 );
 
@@ -36,7 +36,7 @@ public class BossPanelBase : Panel
 	private SceneModel _boss;
 	private ScenePanel _panel;
 	
-	public BossPanelBase()
+	public PlayerPanelBase()
 	{
 		Style.BackgroundColor = Color.Transparent;
 
@@ -66,15 +66,16 @@ public class BossPanelBase : Panel
 		_boss = new SceneModel( world, model, Transform.Zero with
 			{
 				Position = MovementFrom,
-				Rotation = Rotation.Identity.Backward.EulerAngles.ToRotation().RotateAroundAxis( Vector3.Up, -50f )
+				Rotation = Rotation.Identity.Forward.EulerAngles.ToRotation().RotateAroundAxis( Vector3.Up, -120f )
 			}
 		);
 
-		if ( DressFromClient )
+		if ( true )
 		{
 			var c = new ClothingContainer();
-			c.LoadFromClient( Sandbox.Game.LocalClient );
-			c.DressSceneObject( _boss );
+			c.Toggle(  ResourceLibrary.Get<Clothing>(1846461341) );
+			var models = c.DressSceneObject( _boss );
+			Log.Info( "models: " + models.Count );
 		}
 	}
 
@@ -100,32 +101,27 @@ public class BossPanelBase : Panel
 			.WithZ( 60f )
 			.WithX( 0f );
 
-		if ( MovementMode == MovementMode.STATIC )
-		{
-			return;
-		}
-
-		if ( MovementMode == MovementMode.FROM_TO )
-		{
-			if ( _movementTick >= _movementMax )
-			{
-				_movementTick = 0;
-				_movementIndex += 1;
-				if ( _movementIndex >= _list.Count )
-				{
-					_movementIndex = 0;
-				}
-			}
-			else
-			{
-				_movementTick += 1;
-			}
-			
-			var progress = (float) _movementTick / _movementMax;
-			_boss.Position = Vector3.Lerp( _list[_movementIndex].Key, _list[_movementIndex].Value, EaseIn(progress) );
-		}
-		
-		_boss.Update( Time.Delta / 2 );
+//		if ( MovementMode == MovementMode.FROM_TO )
+//		{
+//			if ( _movementTick >= _movementMax )
+//			{
+//				_movementTick = 0;
+//				_movementIndex += 1;
+//				if ( _movementIndex >= _list.Count )
+//				{
+//					_movementIndex = 0;
+//				}
+//			}
+//			else
+//			{
+//				_movementTick += 1;
+//			}
+//			
+//			var progress = (float) _movementTick / _movementMax;
+//			_boss.Position = Vector3.Lerp( _list[_movementIndex].Key, _list[_movementIndex].Value, EaseIn(progress) );
+//		}
+//		
+//		_boss.Update( Time.Delta / 2 );
 	}
 
 	private float EaseIn( float f )
@@ -133,10 +129,4 @@ public class BossPanelBase : Panel
 		return f * f;
 	}
 	
-}
-
-public enum MovementMode
-{
-	FROM_TO,
-	STATIC
 }

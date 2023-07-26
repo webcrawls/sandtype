@@ -1,0 +1,36 @@
+﻿@namespace Sandtype.UI.Hud
+@using System
+@using Sandbox.UI
+@using Sandtype.Entity.Pawn
+@using Sandtype.Entity.Pawn.data
+@attribute [StyleSheet]
+@inherits Sandbox.UI.Panel
+
+<div class="hud-nav">
+	<h1 class="nav-section hud-title" style="align-items: flex-start">Typing with Terry</h1>
+	<div class="nav-section">
+		<div class="hud-container">
+			<p>Welcome to TWT! Updates coming soon:)</p>
+		</div>
+	</div>
+	<!--<h1 class="nav-section hud-title" style="justify-content: flex-end;">WPM: @_wpm</h1>-->
+	<h1 class="nav-section hud-title" style="justify-content: flex-end;">Words Typed: @_wordsTyped</h1>
+</div>
+
+@code {
+
+	private Pawn _pawn => (Sandbox.Game.LocalClient as Pawn);
+	private PawnData _pawnData => _pawn?.PawnData;
+	private long _wordsTyped => _pawnData?.WordsTyped ?? 0;
+	private float _wpm => _pawnData?.WPM ?? 0.0f;
+
+	public GameNav( )
+	{
+	}
+	
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _wordsTyped, _wpm );
+	}
+	
+}
