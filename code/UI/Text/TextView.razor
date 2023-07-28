@@ -73,7 +73,7 @@
 </root>
 
 @code {
-	
+
 	public TextTheme Theme = new();
 	public string CurrentInput = "";
 	public IList<string> TargetTokens = new List<string>();
@@ -100,6 +100,7 @@
 			code.Add( str );
 		}
 		code.Add( CurrentInput );
+		code.Add( Theme );
 		var res=  code.ToHashCode();
 		return res;
 	}

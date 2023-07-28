@@ -1,0 +1,16 @@
+﻿@using Sandbox.UI
+@inherits Panel
+@implements IGamePage
+@namespace TerryTyper.UI.Hud.Page.Info
+@attribute [StyleSheet]
+
+<root>
+	<div class="info-section">
+		<label class="badge">WIP</label>
+	</div>
+</root>
+
+@code {
+	public string Name => "Stats";
+	public bool ShouldScroll => false;
+}

@@ -1,0 +1,78 @@
+﻿@namespace TerryTyper.UI.Race
+@using System
+@using System.Collections
+@using System.Collections.Generic
+@using Sandbox
+@using TerryTyper.UI.Hud
+@using TerryTyper.UI.Text
+@using TerryTyper.UI.Race.Player
+@using Sandbox.UI
+@using TerryTyper.Race
+@using TerryTyper.Util
+@inherits Panel
+@implements TerryTyper.UI.Hud.Page.IGamePage
+@attribute [StyleSheet]
+
+<root>
+	@if ( Race == null )
+	{
+		<h1>NO race.</h1>
+	}
+	else
+	{
+		<div class="players">
+			@foreach ( var player in Race.Components.GetAll<RacePlayer>() )
+			{
+				<RacePlayerItem Race="@Race" Player="@player"/>
+			}
+		</div>
+		<div class="player">
+			<TextInput @ref="_input" class="text-input" space.changed="@HandleSpace" onchanged="@HandleChanged"/>
+		</div>
+	}
+</root>
+
+@code {
+
+	public RaceEntity Race => RaceEntity.GetJoinedRace( Game.LocalClient.SteamId );
+	public string Name => Race?.Name ?? "No race, join one!";
+	private TextInput _input;
+	public bool ShouldScroll => false;
+
+	public override void Tick()
+	{
+		base.Tick();
+		if ( Race == null )
+		{
+			if ( _input == null ) return;
+			_input.TargetTokens = new List<string>() { "No", "race", "yet!"};
+			return;
+		}
+		_input.TargetTokens = Race.Target;
+		StateHasChanged();
+	}
+
+	private void HandleChanged( PanelEvent e )
+	{
+		RaceEntity.InputGameCmd( _input.Text );
+	}
+	
+	private void HandleSpace(PanelEvent e)
+	{
+		RaceEntity.SubmitGameCmd( );
+	}
+
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		if ( Race == null ) return code.ToHashCode();
+		foreach (RacePlayer player in Race.Players )
+		{
+			code.Add( player.SteamId );
+		}
+	
+		var res = code.ToHashCode();
+		return res;
+	}
+
+}

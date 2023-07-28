@@ -2,12 +2,12 @@
   "Title": "Typing With Terry",
   "Type": "game",
   "Org": "webcrawls",
-  "Ident": "terry_typer",
+  "Ident": "sandtype",
   "Tags": null,
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "Resources": null,
+  "Resources": "\n*.svg\n*.json\n*.scss\n*.gif",
   "MenuResources": "",
   "HasCode": true,
   "CodePath": "/code/",
@@ -37,7 +37,7 @@
     "LaunchConfigs": [
       {
         "Name": "robloxia",
-        "GameIdent": "webcrawls.terry_typer#local",
+        "GameIdent": "webcrawls.sandtype#local",
         "MapName": "poppinski.rbx_happyhome",
         "MaxPlayers": 15,
         "GameSettings": {},
@@ -47,7 +47,7 @@
       },
       {
         "Name": "robloxplate",
-        "GameIdent": "webcrawls.terry_typer#local",
+        "GameIdent": "webcrawls.sandtype#local",
         "MapName": "aero.roblox_baseplate",
         "MaxPlayers": 10,
         "GameSettings": {},

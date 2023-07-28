@@ -8,7 +8,7 @@
 <root>
 	<div class="wrapper">
 		<div class="info">
-			<h1>hello! thanks for playing!</h1>
+			<p>@_currency wt</p>
 		</div>
 		<div class="spacer"><img class="logo-icon" src="/assets/gif/logo.gif"/></div>
 		<div class="control">
@@ -21,10 +21,11 @@
 
 	private string _tabAction => Input.GetButtonOrigin( "menu" );
 	private bool _isSet = false;
+	private long _currency => TyperGame.Entity?.GamePawn.Data?.Currency ?? 0l;
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( _tabAction );
+		return HashCode.Combine( _tabAction, _currency );
 	}
 
 }

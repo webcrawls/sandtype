@@ -1,0 +1,74 @@
+﻿@namespace TerryTyper.UI.Race.Player
+@using System
+@using System.Collections.Generic
+@using Sandbox
+@using Sandbox.UI
+@using TerryTyper.Race
+@using TerryTyper.UI.Text
+@using TerryTyper.UI.Race.Player
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="race-overlay">
+		<RacePlayerLine Progress="@(_progress)"/>
+	</div>
+	<div class="overlay" style="background-color: @Theme.ColorBackgroundAlt;">
+		<div class="avatar-wrapper">
+			@if ( _winner )
+			{
+				<img class="winner" src="/assets/svg/crown.svg"/>
+			}
+			<div class="avatar-container">
+				<img class="avatar" src="avatar:@(_steamId)"/>
+			</div>
+		</div>
+		<p>@_name</p>
+	</div>
+	<TextView Theme="@TextTheme.Themes[Player.Theme]"@ref="View"/>
+</root>
+
+@code {
+
+	public RacePlayer Player;
+	public RaceEntity Race;
+	private TextView View;
+	private string _name => Player.Name;
+	private bool _winner => Player.Winner;
+	private long _steamId => Player.SteamId;
+	private float _progress => Player.Input.Count / (float) Math.Max(1, Race.Target.Count);
+
+	public TextTheme Theme = new();
+
+	public override void Tick()
+	{
+		base.Tick();
+		View.CurrentInput = Player.CurrentInput;
+		View.InputTokens = Player.Input;
+		View.TargetTokens = Race.Target;
+		StateHasChanged();
+	}
+
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		foreach (string input in Player.Input )
+		{
+			code.Add( input );
+		}
+		foreach (string input in Race.Target )
+		{
+			code.Add( input );
+		}
+		
+		code.Add( Player.CurrentInput );
+		code.Add( _progress );
+		code.Add( _winner );
+		code.Add( _name );
+
+		var res = code.ToHashCode();
+
+		return res;
+	}
+
+}

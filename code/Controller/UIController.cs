@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using TerryTyper.UI.Hud;
+using TerryTyper.UI.Hud.Page;
 
 namespace TerryTyper.Controller;
 
@@ -8,12 +9,80 @@ public class UIController : EntityComponent<GameManager>
 {
 
 	public RootHud Hud;
-	public Panel MenuPanel { get { return _menuPanel; } set {SetMenu( value );} }
-	public Panel PagePanel { get { return _pagePanel; } set {SetPage( value );} }
 
-	private Panel _menuPanel;
-	private Panel _pagePanel;
+	public GameMenu MenuPanel { get { return _menuPanel; } set {SetMenu( value );} }
+	public RootGamePage PagePanel { get { return _pagePanel; } set {SetPage( value );} }
+
+	private GameMenu _menuPanel;
+	private RootGamePage _pagePanel;
+
+	public void PageNavigate(string route)
+	{
+		OpenPage();
+		Log.Info( "Trying to navigate "+route );
+		_pagePanel.Navigate( route );
+	}
+
+	public void OpenMenu()
+	{
+		Log.Info( "OPening Menu: "+MenuPanel );
+		if ( MenuPanel == null )
+		{
+			MenuPanel = new GameMenu();
+		}
+	}
+
+	public void OpenPage()
+	{
+		Log.Info( "OPening Menu: "+PagePanel );
+		if ( PagePanel== null )
+		{
+			PagePanel = new RootGamePage();
+		}
+	}
+
 	
+	public void CloseMenu()
+	{
+		if ( MenuPanel != null )
+		{
+			MenuPanel = null;
+		}
+	}
+
+	public void ClosePage()
+	{
+		if ( PagePanel != null )
+		{
+			PagePanel = null;
+		}
+	}
+
+	public void ToggleMenu()
+	{
+		if ( MenuPanel == null )
+		{
+			MenuPanel = new GameMenu();
+		}
+		else
+		{
+			MenuPanel.Delete();
+			MenuPanel = null;
+		}
+	}
+
+	public void TogglePage()
+	{
+		if ( PagePanel == null )
+		{
+			PagePanel = new RootGamePage();
+		}
+		else
+		{
+			PagePanel.Delete();
+			PagePanel = null;
+		}
+	}
 
 	protected override void OnActivate()
 	{
@@ -25,9 +94,10 @@ public class UIController : EntityComponent<GameManager>
 	{
 		base.OnDeactivate();
 		Hud.Delete();
+		Hud = null;
 	}
-
-	private void SetMenu( Panel panel )
+	
+	private void SetMenu( GameMenu panel )
 	{
 		if ( MenuPanel != null && MenuPanel.IsValid )
 		{
@@ -42,7 +112,7 @@ public class UIController : EntityComponent<GameManager>
 		_menuPanel = panel;
 	}
 
-	private void SetPage( Panel panel )
+	private void SetPage( RootGamePage panel )
 	{
 		if ( PagePanel != null && PagePanel.IsValid )
 		{
@@ -56,4 +126,6 @@ public class UIController : EntityComponent<GameManager>
 		
 		_pagePanel = panel;
 	}
+
+
 }

@@ -1,0 +1,63 @@
+﻿@using System
+@using System.Collections.Generic
+@using Sandbox.UI
+@using TerryTyper.Controller
+@inherits Panel
+@implements IGamePage
+@namespace TerryTyper.UI.Hud.Page.Info
+@attribute [StyleSheet]
+
+<root>
+	<div class="shop-section">
+		<h1 class="title">Themes</h1>
+		<div class="shop-items">
+			@foreach ( var theme in _themes )
+			{
+				@if ( _unlockedThemes.Contains( theme ) )
+				{
+					<ShopItem Name="@(theme+(theme == _theme ? "(selected)" : ""))" Price="@(0)" ClickAction="@( SelectThemeAction( theme ) )"/>
+				}
+				else
+				{
+					<ShopItem Name="@theme" Price=@(5) ClickAction="@(UnlockThemeAction( theme ))"/>
+				}
+			}
+		</div>
+	</div>
+</root>
+
+@code {
+	public string Name => "Shop";
+	public bool ShouldScroll => true;
+	private DataController _data => TyperGame.Entity.GamePawn.Data;
+	private long _currency => _data.Currency;
+	private string _theme => _data.SelectedTheme;
+	private IList<string> _unlockedThemes => _data.UnlockedThemes;
+	private IList<string> _themes = new List<string>() { "default", "red", "pastel" };
+
+	public override void Tick()
+	{
+		base.Tick();
+	}
+
+	private Action UnlockThemeAction( string theme )
+	{
+		return () =>
+		{
+			if ( _unlockedThemes.Contains( theme ) ) return;
+			if ( _currency < 5 ) return;
+			_data.Currency -= 5;
+			_data.UnlockTheme( theme );
+		};
+	}
+
+	private Action SelectThemeAction( string theme )
+	{
+		return () =>
+		{
+			if ( !_unlockedThemes.Contains( theme ) ) return;
+			_data.SelectedTheme = theme;
+		};
+	}
+
+}

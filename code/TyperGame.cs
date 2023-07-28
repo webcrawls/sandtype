@@ -10,17 +10,14 @@ namespace TerryTyper
 	public partial class TyperGame : GameManager
 	{
 		public static TyperGame Entity => Current as TyperGame;
-		[BindComponent] public ServerRaceManager RaceManager { get; } // serveronly
-		public UIController UI { get; set; } // clientonly
+		public UIController UI { get; private set; } // clientonly
+		public Pawn GamePawn => Game.LocalPawn as Pawn; // clientonly
 
 		public TyperGame()
 		{
 			if ( Game.IsClient )
 			{
 				UI = Components.Create<UIController>();
-			} else if ( Game.IsServer )
-			{
-				Components.Create<ServerRaceManager>();
 			}
 		}
 		
@@ -46,46 +43,5 @@ namespace TerryTyper
 				pawn.Transform = tx;
 			}
 		}
-
-		[ConCmd.Server("tw_join")]
-		public static void JoinGameCmd(long raceId)
-		{
-//			Entity.RaceManager.AddPlayer( ConsoleSystem.Caller.Pawn as Pawn, raceId );
-		}
-
-		[ConCmd.Server("tw_input")]
-		public static void InputGameCmd(string input)
-		{
-			Entity.RaceManager.HandleInput( ConsoleSystem.Caller.Pawn as Pawn, input );
-		}
-
-		[ConCmd.Server("tw_submit")]
-		public static void SubmitGameCmd(string input)
-		{
-			Entity.RaceManager.HandleSubmit( ConsoleSystem.Caller.Pawn as Pawn );
-		}
-
-		[ConCmd.Server("tw_create")]
-		public static void CreateGameCmd()
-		{
-			Entity.RaceManager.CreateRace( ConsoleSystem.Caller.Pawn as Pawn );
-		}
-
-		
-		[ConCmd.Server("tw_delete")]
-		public static void DeleteGameCmd(long raceId)
-		{
-			Entity.RaceManager.DeleteRace( ConsoleSystem.Caller.Pawn as Pawn, raceId );
-		}
-
-		[ConCmd.Server("tw_leave")]
-		public static void LeaveGameCmd()
-		{
-			//var pawn = ConsoleSystem.Caller.Pawn as Pawn;
-			//var race = Entity.RaceManager.GetJoinedRace( pawn.Client.SteamId );
-			//if ( race == null ) return;
-			//Entity.RaceManager.RemovePlayer( pawn, race.RaceId );
-		}
-
 	}
 }

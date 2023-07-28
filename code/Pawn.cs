@@ -1,9 +1,5 @@
-﻿using System;
-using Sandbox;
+﻿using Sandbox;
 using TerryTyper.Controller;
-using TerryTyper.Race;
-using TerryTyper.UI.Hud;
-using TerryTyper.UI.Race;
 
 namespace TerryTyper;
 
@@ -16,7 +12,9 @@ namespace TerryTyper;
 /// </summary>
 public partial class Pawn : AnimatedEntity
 {
-	
+
+	public DataController Data { get; set; }
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -26,12 +24,18 @@ public partial class Pawn : AnimatedEntity
 		EnableShadowInFirstPerson = true;
 	}
 
+	public override void ClientSpawn()
+	{
+		base.ClientSpawn();
+		Data = Components.Create<DataController>();
+	}
+
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 		SimulateInput( cl );
 	}
-	
+
 	public void DressFromClient( IClient cl )
 	{
 		var c = new ClothingContainer();
@@ -42,14 +46,19 @@ public partial class Pawn : AnimatedEntity
 	[ClientRpc]
 	public void ShowRaceHud()
 	{
-		var page = new ActiveRacePage();
-		TyperGame.Entity.UI.PagePanel = page;
+		TyperGame.Entity.UI.PageNavigate( "/race" );
 	}
 
 	[ClientRpc]
 	public void HideRaceHud()
 	{
-		TyperGame.Entity.UI.PagePanel = null;
+		TyperGame.Entity.UI.ClosePage();
+	}
+
+	[ClientRpc]
+	public void WordTyped()
+	{
+		Data.Currency += 1;
 	}
 
 	public void Respawn()

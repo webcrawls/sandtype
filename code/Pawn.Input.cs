@@ -75,14 +75,7 @@ public partial class Pawn : AnimatedEntity
 			{
 				if ( Input.Pressed( "menu" ) )
 				{
-					if ( TyperGame.Entity.UI.MenuPanel != null )
-					{
-						TyperGame.Entity.UI.MenuPanel = null;
-					}
-					else
-					{
-						TyperGame.Entity.UI.MenuPanel = new GameMenu();
-					}
+					TyperGame.Entity.UI.ToggleMenu();
 				}
 			}
 		}

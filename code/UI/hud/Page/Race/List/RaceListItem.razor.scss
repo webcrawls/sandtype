@@ -1,0 +1,83 @@
+RaceListItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color:  #f0f6e8;
+  min-height: 150px;
+  border-radius: 20px;
+  overflow: hidden;
+  
+  .race-list-item-header {
+    display: flex;
+    flex-direction: row;
+    background-color: #6461c2;
+    padding: 10px;
+    gap: 10px;
+    align-items: center;
+    
+    .avatar {
+      border-radius: 100%;
+    }
+    
+    .name {
+      white-space: nowrap;
+      flex-grow: 1;
+      color: white;
+      text-overflow: ellipsis;
+    }
+    
+    .control {
+      .create {
+        background-color: #2ba9b4;
+        color: #f0f6e8;
+        border-radius: 10px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    }
+  }
+  
+  .info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+
+    .race-join {
+      background-color: #93d4b5;
+      color:  #634b7d;
+      border-radius: 10px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .race-leave {
+      background-color: #93d4b5;
+      color:  #634b7d;
+      border-radius: 10px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+
+  .first {
+
+  }
+
+  .selected {
+
+  }
+
+  .joined {
+
+  }
+
+  .odd {
+
+  }
+
+  .even {
+
+  }
+  
+}

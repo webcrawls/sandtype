@@ -14,8 +14,8 @@ public class TextInputBase : TextEntry
 	public Action TabPressed;
 	public Action SpacePressed;
 	public Action EscapePressed;
-	
-	public TextTheme Theme = new();
+
+	public TextTheme Theme => TextTheme.Themes[TyperGame.Entity.GamePawn.Data.SelectedTheme];
 	public IList<string> TargetTokens = new List<string>();
 	public IList<string> InputTokens = new List<string>(); 
 
@@ -63,6 +63,21 @@ public class TextInputBase : TextEntry
 
 public class TextTheme
 {
+
+	public static IDictionary<string, TextTheme> Themes = new Dictionary<string, TextTheme>()
+	{
+		{ "default", new TextTheme() },
+		{"red", new TextTheme()
+		{
+			ColorBackground = "#201727",
+			ColorBackgroundAlt = "#261b2e",
+			ColorTyped = "#fd724e",
+			ColorCaret = "#fd724e",
+			ColorMain = "#5f2f45",
+			ColorError = "#a02f40"
+		}}
+	};
+
 	public string Id = "default";
 	public string Font = "Poppins";
 	public int FontSize = 30;
