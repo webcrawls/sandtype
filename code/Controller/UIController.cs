@@ -21,6 +21,20 @@ public class UIController : EntityComponent<GameManager>
 		OpenPage();
 		_pagePanel.Navigate( route );
 	}
+	
+	public void ToggleUI()
+	{
+		bool hasOpen = MenuPanel != null || PagePanel != null;
+		if ( hasOpen )
+		{
+			CloseMenu();
+			ClosePage();
+		}
+		else
+		{
+			OpenMenu();
+		}
+	}
 
 	public void OpenMenu()
 	{
