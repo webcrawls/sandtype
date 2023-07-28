@@ -10,21 +10,29 @@ namespace TerryTyper.UI.Text;
 /// </summary>
 public class TextInputBase : TextEntry
 {
-	public Action EnterPressed;
-	public Action TabPressed;
-	public Action SpacePressed;
-	public Action EscapePressed;
-
-	public TextTheme Theme => TextTheme.Themes[TyperGame.Entity.GamePawn.Data.SelectedTheme];
+	public TextView View;
+	public TextTheme Theme;
 	public IList<string> TargetTokens = new List<string>();
-	public IList<string> InputTokens = new List<string>(); 
+	public IList<string> InputTokens = new List<string>();
+	private int _currentIndex => InputTokens.Count;
+	private string _currentTarget => _currentIndex < TargetTokens.Count ? TargetTokens[_currentIndex] : "";
 
 	public TextInputBase()
 	{
 		TargetTokens = "Hello World My Name Jeff".Split( " " );
 		CaretColor = Color.Transparent;
 	}
-	
+
+	public override void Tick()
+	{
+		base.Tick();
+		View.Theme = Theme;
+		View.CurrentInput = Text;
+		View.TargetTokens = TargetTokens;
+		View.InputTokens = InputTokens;
+		StateHasChanged();
+	}
+
 	public override void OnButtonTyped( ButtonEvent e )
 	{
 		if ( e.Pressed && e.Button == "enter" )
@@ -41,8 +49,8 @@ public class TextInputBase : TextEntry
 
 		if ( e.Pressed && e.Button == "space" )
 		{
-			string input = Text;
-			InputTokens.Add( input );
+			string input = Text.Replace( " ", "" );
+			InputTokens.Add( input.Trim() );
 			CreateValueEvent( "space", input );
 			Text = "";
 			return;
@@ -59,34 +67,9 @@ public class TextInputBase : TextEntry
 		base.OnButtonTyped( e );
 	}
 
-}
-
-public class TextTheme
-{
-
-	public static IDictionary<string, TextTheme> Themes = new Dictionary<string, TextTheme>()
+	protected override int BuildHash()
 	{
-		{ "default", new TextTheme() },
-		{"red", new TextTheme()
-		{
-			ColorBackground = "#201727",
-			ColorBackgroundAlt = "#261b2e",
-			ColorTyped = "#fd724e",
-			ColorCaret = "#fd724e",
-			ColorMain = "#5f2f45",
-			ColorError = "#a02f40"
-		}}
-	};
-
-	public string Id = "default";
-	public string Font = "Poppins";
-	public int FontSize = 30;
-	
-	public string ColorMain = "#fbf5ef";
-	public string ColorTyped = "#f2d3ab";
-	public string ColorError = "#c69fa5";
-	public string ColorCaret = "#8b6d9c";
-	public string ColorBackgroundAlt = "#494d7e";
-	public string ColorBackground = " #272744 ";
+		return HashCode.Combine( Text );
+	}
 
 }

@@ -10,24 +10,3 @@
 		<TextView @ref="View"></TextView>
 	</div>
 </root>
-
-@code {
-
-	public TextView View;
-
-	public override void Tick()
-	{
-		base.Tick();
-		View.Theme = Theme;
-		View.CurrentInput = Text;
-		View.TargetTokens = TargetTokens;
-		View.InputTokens = InputTokens;
-		StateHasChanged();
-	}
-
-	protected override int BuildHash()
-	{
-		return HashCode.Combine( Text );
-	}
-
-}

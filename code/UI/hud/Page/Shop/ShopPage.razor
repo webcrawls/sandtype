@@ -2,6 +2,7 @@
 @using System.Collections.Generic
 @using Sandbox.UI
 @using TerryTyper.Controller
+@using TerryTyper.UI.Text
 @inherits Panel
 @implements IGamePage
 @namespace TerryTyper.UI.Hud.Page.Info
@@ -11,16 +12,15 @@
 	<div class="shop-section">
 		<h1 class="title">Themes</h1>
 		<div class="shop-items">
-			@foreach ( var theme in _themes )
+			@foreach ( var theme in _themes.Values )
 			{
-				@if ( _unlockedThemes.Contains( theme ) )
-				{
-					<ShopItem Name="@(theme+(theme == _theme ? "(selected)" : ""))" Price="@(0)" ClickAction="@( SelectThemeAction( theme ) )"/>
-				}
-				else
-				{
-					<ShopItem Name="@theme" Price=@(5) ClickAction="@(UnlockThemeAction( theme ))"/>
-				}
+				bool unlocked = _unlockedThemes.Contains( theme.Id );
+				int price = 5;
+				string name = theme.Name;
+				<ShopItem Unlocked="@(unlocked)"
+				          Name="@(name + (_theme == theme.Id ? " (Selected)" : ""))"
+				          Price="@(price)"
+				          ClickAction="@( SelectThemeAction( theme.Id ) )"/>
 			}
 		</div>
 	</div>
@@ -33,29 +33,31 @@
 	private long _currency => _data.Currency;
 	private string _theme => _data.SelectedTheme;
 	private IList<string> _unlockedThemes => _data.UnlockedThemes;
-	private IList<string> _themes = new List<string>() { "default", "red", "pastel" };
+	private IDictionary<string, TextTheme> _themes = TextTheme.DefaultThemes;
 
 	public override void Tick()
 	{
 		base.Tick();
+		Log.Info( _unlockedThemes );
 	}
 
-	private Action UnlockThemeAction( string theme )
+	private void UnlockTheme( string theme )
 	{
-		return () =>
-		{
-			if ( _unlockedThemes.Contains( theme ) ) return;
-			if ( _currency < 5 ) return;
-			_data.Currency -= 5;
-			_data.UnlockTheme( theme );
-		};
+		if ( _unlockedThemes.Contains( theme ) ) return;
+		if ( _currency < 5 ) return;
+		_data.Currency -= 5;
+		_data.UnlockTheme( theme );
 	}
 
 	private Action SelectThemeAction( string theme )
 	{
 		return () =>
 		{
-			if ( !_unlockedThemes.Contains( theme ) ) return;
+			if ( !_unlockedThemes.Contains( theme ) )
+			{
+				UnlockTheme( theme );
+				return;
+			};
 			_data.SelectedTheme = theme;
 		};
 	}

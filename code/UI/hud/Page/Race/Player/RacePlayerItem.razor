@@ -13,7 +13,7 @@
 	<div class="race-overlay">
 		<RacePlayerLine Progress="@(_progress)"/>
 	</div>
-	<div class="overlay" style="background-color: @Theme.ColorBackgroundAlt;">
+	<div class="overlay">
 		<div class="avatar-wrapper">
 			@if ( _winner )
 			{
@@ -25,7 +25,7 @@
 		</div>
 		<p>@_name</p>
 	</div>
-	<TextView Theme="@TextTheme.Themes[Player.Theme]"@ref="View"/>
+	<TextView class="text-race-view" Theme="@_theme" @ref="View"/>
 </root>
 
 @code {
@@ -37,8 +37,8 @@
 	private bool _winner => Player.Winner;
 	private long _steamId => Player.SteamId;
 	private float _progress => Player.Input.Count / (float) Math.Max(1, Race.Target.Count);
-
-	public TextTheme Theme = new();
+	private TextTheme _theme => TextTheme.DefaultThemes[Player.Theme];
+	private TextTheme _currentTheme = null;
 
 	public override void Tick()
 	{
@@ -46,6 +46,14 @@
 		View.CurrentInput = Player.CurrentInput;
 		View.InputTokens = Player.Input;
 		View.TargetTokens = Race.Target;
+		if ( _theme != _currentTheme )
+		{
+			if ( _currentTheme != null )
+				StyleSheet.Remove( _currentTheme.Stylesheet );
+			_currentTheme = _theme;
+			View.Theme = _currentTheme;
+			StyleSheet.Load( _currentTheme.Stylesheet );
+		}
 		StateHasChanged();
 	}
 
@@ -69,6 +77,13 @@
 		var res = code.ToHashCode();
 
 		return res;
+	}
+	
+	private void UpdateTheme(TextTheme theme)
+	{
+		StyleSheet.Remove( _theme.Stylesheet );
+		StyleSheet.Load( theme.Stylesheet );
+		View.Theme = theme;
 	}
 
 }

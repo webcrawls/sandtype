@@ -5,11 +5,12 @@
 @attribute [StyleSheet]
 
 <root @onclick=@(() => ClickAction?.Invoke())>
-	<label>@Name @(Price == 0 ? "" : ""+Price)</label>
+	<label>@Name @(!Unlocked ? (Price == 0 ? "" : "🔒 (" + Price + "wt)") : "")</label>
 </root>
 
 @code {
 
+	public bool Unlocked = false;
 	public Action ClickAction;
 	public string Name = "";
 	public int Price = 0;

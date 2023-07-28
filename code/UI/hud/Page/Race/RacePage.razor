@@ -27,7 +27,7 @@
 			}
 		</div>
 		<div class="player">
-			<TextInput @ref="_input" class="text-input" space.changed="@HandleSpace" onchanged="@HandleChanged"/>
+			<TextInput Theme="@_theme" @ref="_input" class="text-input" space.changed="@HandleSpace" onchanged="@HandleChanged"/>
 		</div>
 	}
 </root>
@@ -37,6 +37,7 @@
 	public RaceEntity Race => RaceEntity.GetJoinedRace( Game.LocalClient.SteamId );
 	public string Name => Race?.Name ?? "No race, join one!";
 	private TextInput _input;
+	private TextTheme _theme => TextTheme.DefaultThemes[TyperGame.Entity.GamePawn.Data.SelectedTheme];
 	public bool ShouldScroll => false;
 
 	public override void Tick()
@@ -48,6 +49,7 @@
 			_input.TargetTokens = new List<string>() { "No", "race", "yet!"};
 			return;
 		}
+		_input.Theme = _theme;
 		_input.TargetTokens = Race.Target;
 		StateHasChanged();
 	}
