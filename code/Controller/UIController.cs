@@ -19,13 +19,11 @@ public class UIController : EntityComponent<GameManager>
 	public void PageNavigate(string route)
 	{
 		OpenPage();
-		Log.Info( "Trying to navigate "+route );
 		_pagePanel.Navigate( route );
 	}
 
 	public void OpenMenu()
 	{
-		Log.Info( "OPening Menu: "+MenuPanel );
 		if ( MenuPanel == null )
 		{
 			MenuPanel = new GameMenu();
@@ -34,7 +32,6 @@ public class UIController : EntityComponent<GameManager>
 
 	public void OpenPage()
 	{
-		Log.Info( "OPening Menu: "+PagePanel );
 		if ( PagePanel== null )
 		{
 			PagePanel = new RootGamePage();

@@ -57,7 +57,6 @@ public partial class RaceEntity : Entity
 		}
 		
 		var race = GetRace( raceId );
-		Log.Info( raceId );
 		if ( race == null ) return;
 		race.AddPlayer( caller );
 		var player = race.GetPlayer( caller.Client.SteamId );
