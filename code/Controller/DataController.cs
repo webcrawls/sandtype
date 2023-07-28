@@ -67,8 +67,7 @@ public class DataController : EntityComponent<Pawn>, ISingletonComponent
 	private void LoadPlayerData()
 	{
 		_steamId = Entity.Client.SteamId;
-		_data = FileSystem.Data.ReadJson<PlayerData>( _filename );
-		Log.Info( _data );
+		_data = FileSystem.Data.ReadJson<PlayerData>( _filename ) ?? new PlayerData();
 	}
 
 	private void SavePlayerData()
