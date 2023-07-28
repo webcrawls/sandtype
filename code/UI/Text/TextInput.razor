@@ -1,0 +1,32 @@
+﻿@namespace TerryTyper.UI.Text
+@using System
+@using Sandbox.Razor
+@using Sandbox.UI
+@attribute [StyleSheet]
+@inherits TextInputBase
+
+<root>
+	<div class="view-container">
+		<TextView @ref="View"></TextView>
+	</div>
+</root>
+
+@code {
+
+	public TextView View;
+
+	public override void Tick()
+	{
+		base.Tick();
+		View.Theme = Theme;
+		View.CurrentInput = Text;
+		View.TargetTokens = TargetTokens;
+		View.InputTokens = InputTokens;
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Text );
+	}
+
+}

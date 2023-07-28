@@ -1,0 +1,31 @@
+﻿@namespace TerryTyper.UI.Hud
+@using System
+@using Sandbox.Razor
+@using Sandbox.UI
+@attribute [StyleSheet]
+@inherits TerryTyper.UI.Hud.RootHudBase
+
+<root>
+	<GameNav/>
+	<div class="game-body">
+		<div class="game-menu-wrapper" @ref="MenuWrapper">
+			
+		</div>
+		<div class="game-page-wrapper" @ref="PageWrapper">
+			
+		</div>
+	</div>
+</root>
+
+@code {
+
+	public Panel MenuWrapper;
+	public Panel PageWrapper;
+	public bool ShowMenu = false;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( ShowMenu );
+	}
+
+}

@@ -1,41 +1,64 @@
-﻿.hud-nav {
-  background-color: rgba(0, 112, 255, 0.25);
-  backdrop-filter: blur(4px);
-  padding: 10px;
-  margin-left: 40px;
-  margin-right: 40px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+GameNav {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-}
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100px;
 
-.hud-title {
-  font-family: Poppins;
-  font-weight: bold;
-  font-size: 40px;
-}
+  .wrapper {
+    font-family: Poppins;
+    font-weight: bold;
+    font-color: white;
+    background-color: rgba(99, 75, 125, 0.7);
+    backdrop-filter: blur(4px);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    font-size: 40px;
+    text-stroke: 3px black;
+    width: 100%;
+    overflow: hidden;
 
-.hud-section {
-  flex-grow: 1;
-  margin-left: 40px;
-  margin-right: 40px;
-}
-
-.nav-section {
-  height: 100%;
-  display: flex;
-  width: 100%;
-}
-
-.hud-container {
-  background-color: white;
-  color: gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  border-radius: 10px;
-  height: 100%;
+    display: flex;
+    flex-direction: row;
+    
+    .spacer {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .info {
+      padding: 15px;
+      flex-grow: 1;
+      width: 100%;
+      background-color:  #6461c2;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .control {
+      padding: 15px;
+      flex-grow: 1;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .logo-icon {
+    height: 120px;
+  }
+  
+  .menu-button {
+    background-color: white;
+    border-radius: 10px;
+    color: white;
+    text-stroke: 6px black;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+  }
 }

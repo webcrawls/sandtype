@@ -1,0 +1,34 @@
+GameMenu {
+  background-color: #f0f6e8;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 20px;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+  pointer-events: all;
+  
+  &:intro {
+    opacity: 0;
+  }
+
+  &:outro {
+    opacity: 0;
+  }
+
+  .header {
+    font-family: Poppins;
+    font-size: 30px;
+    color: #372448;
+    padding: 6px;
+    padding-top: 12px;
+    border-bottom: 3px solid #634b7d;
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    border-radius: 20px;
+  }
+}

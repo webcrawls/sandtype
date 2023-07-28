@@ -1,0 +1,32 @@
+ActiveRacePage {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  
+  .players {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+  }
+  
+  .player {
+    min-height: 30%;
+  }
+  
+  .text-input {
+    width: 100%;
+  }
+}
+
+.active-race-header {
+  background-color: rgba(52, 52, 65, 0.63);
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  font-size: 35px;
+  font-weight: bold;
+  padding-left: 20px;
+  font-family: Poppins;
+  color: white;
+}

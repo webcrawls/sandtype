@@ -1,7 +1,0 @@
-﻿todo
-
-* fix health bars
-* multiplayer support
-* fix freetype
-* make nametag a component (use aabb for height?)
-* "Keybind to use" on IUse hover

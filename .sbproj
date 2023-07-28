@@ -1,14 +1,14 @@
 {
-  "Title": "Terry Teaches Typing",
+  "Title": "Typing With Terry",
   "Type": "game",
   "Org": "webcrawls",
-  "Ident": "sandtype",
-  "Tags": "typing test stats",
+  "Ident": "terry_typer",
+  "Tags": null,
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "Resources": "\nfonts/JetBrainsMono.ttf\n*.scss\ntext/english_1k.json\ntext/english_10k.json\ntext/english_25k.json\ntext/english_400k.json\ntext/code_csharp.json\nassets/stone.mp3",
-  "MenuResources": "\nfonts/JetBrainsMono.ttf\ntext/english_1k.json\ntext/english_10k.json\ntext/english_25k.json\ntext/code_csharp.json\nUI/GameMenu/FreeType/FreeTypePage.razor.scss\nUI/GameMenu/Front/FrontPage.razor.scss\nUI/GameMenu/LoadGame/SavedGameCard.razor.scss\nUI/GameMenu/LoadGame/LoadGamePage.razor.scss\nUI/GameMenu/Settings/SettingsPage.razor.scss\nUI/GameMenu/DefaultLoadingPanel.razor.scss\nUI/GameMenu/DefaultGameMenu.razor.scss\nUI/GameMenu/CreateGame/MapButton.razor.scss\nassets/stars.gif\nUI/Text/TypingView.razor.scss\ntext/code_javascript_1k.json\ntext/code_python_1k.json\ntext/english_450k.json\ntext/english_5k.json\ntext/french.json\n*.scss",
+  "Resources": null,
+  "MenuResources": "",
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [],
@@ -27,85 +27,34 @@
     "LeaderboardType": "None",
     "ProjectTemplate": null,
     "CsProjName": "",
-    "LaunchConfigs": [
-      {
-        "Name": "default",
-        "GameIdent": "webcrawls.sandtype#local",
-        "MapName": "aero.roblox_baseplate",
-        "MaxPlayers": 1,
-        "GameSettings": {},
-        "Addons": "sugmagaming.fireparticle",
-        "PreLaunchCommand": "",
-        "PostLaunchCommand": ""
-      }
-    ],
     "Compiler": {
-      "RootNamespace": "Sandtype",
+      "RootNamespace": "TerryTyper",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
       "NoWarn": "1701;1702;1591;",
       "References": [],
       "DistinctReferences": []
     },
-    "Collision": {
-      "Defaults": {
-        "solid": "Collide",
-        "trigger": "Trigger",
-        "ladder": "Ignore",
-        "water": "Trigger",
-        "npc": "Ignore"
+    "LaunchConfigs": [
+      {
+        "Name": "robloxia",
+        "GameIdent": "webcrawls.terry_typer#local",
+        "MapName": "poppinski.rbx_happyhome",
+        "MaxPlayers": 15,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": ""
       },
-      "Pairs": [
-        {
-          "a": "solid",
-          "b": "solid",
-          "r": "Collide"
-        },
-        {
-          "a": "trigger",
-          "b": "playerclip",
-          "r": "Ignore"
-        },
-        {
-          "a": "trigger",
-          "b": "solid",
-          "r": "Trigger"
-        },
-        {
-          "a": "solid",
-          "b": "trigger",
-          "r": "Collide"
-        },
-        {
-          "a": "playerclip",
-          "b": "solid",
-          "r": "Collide"
-        },
-        {
-          "a": "npc",
-          "b": "npc",
-          "r": "Ignore"
-        },
-        {
-          "a": "water",
-          "b": "npc",
-          "r": "Ignore"
-        },
-        {
-          "a": "ladder",
-          "b": "npc",
-          "r": "Ignore"
-        },
-        {
-          "a": "trigger",
-          "b": "npc",
-          "r": "Ignore"
-        },
-        {
-          "a": "solid",
-          "b": "npc",
-          "r": "Ignore"
-        }
-      ]
-    }
+      {
+        "Name": "robloxplate",
+        "GameIdent": "webcrawls.terry_typer#local",
+        "MapName": "aero.roblox_baseplate",
+        "MaxPlayers": 10,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": ""
+      }
+    ]
   }
 }
