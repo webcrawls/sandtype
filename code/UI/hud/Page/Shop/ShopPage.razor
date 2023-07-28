@@ -35,12 +35,6 @@
 	private IList<string> _unlockedThemes => _data.UnlockedThemes;
 	private IDictionary<string, TextTheme> _themes = TextTheme.DefaultThemes;
 
-	public override void Tick()
-	{
-		base.Tick();
-		Log.Info( _unlockedThemes );
-	}
-
 	private void UnlockTheme( string theme )
 	{
 		if ( _unlockedThemes.Contains( theme ) ) return;

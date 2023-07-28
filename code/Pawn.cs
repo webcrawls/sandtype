@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.Services;
 using TerryTyper.Controller;
 
 namespace TerryTyper;
@@ -58,6 +59,7 @@ public partial class Pawn : AnimatedEntity
 	[ClientRpc]
 	public void WordTyped()
 	{
+		Stats.Increment( "words_typed", 1 );
 		Data.Currency += 1;
 	}
 
