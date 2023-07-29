@@ -42,6 +42,17 @@ RaceListItem {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
+    
+    .race-info {
+      flex-direction: row;
+      gap: 5px;
+      align-items: center;
+      .race-info-icon {
+        height: 40px;
+        width: 40px;
+        opacity: 0.8;
+      }
+    }
 
     .race-join {
       background-color: #93d4b5;

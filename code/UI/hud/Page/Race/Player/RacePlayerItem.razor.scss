@@ -9,6 +9,23 @@ RacePlayerItem {
   margin: 30px;
   max-height: 200px;
   
+  .text-view-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+    .text-view-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
   .overlay-wrapper {
     padding-left: 30px;
     padding-right: 30px;

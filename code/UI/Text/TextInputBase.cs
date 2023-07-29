@@ -14,6 +14,7 @@ public class TextInputBase : TextEntry
 	public TextTheme Theme;
 	public IList<string> TargetTokens = new List<string>();
 	public IList<string> InputTokens = new List<string>();
+	public bool Enabled = false;
 	private int _currentIndex => InputTokens.Count;
 	private string _currentTarget => _currentIndex < TargetTokens.Count ? TargetTokens[_currentIndex] : "";
 

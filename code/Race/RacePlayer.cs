@@ -11,9 +11,9 @@ public partial class RacePlayer : EntityComponent<RaceEntity>
 	[Net, Change(nameof(HandleNameChange))] public string SteamName { get; set; }
 	[Net] public long SteamId { get; set; }
 	[Net] public string Name { get; set; }
+	[Net] public bool Complete { get; set; }
 	[Net] public IList<string> Input { get; set; }
 	[Net] public string CurrentInput { get; set; }
-	[Net] public bool Winner { get; set; }
 	[Net] public string Theme { get; set; }
 
 	public RacePlayer()
@@ -31,14 +31,15 @@ public partial class RacePlayer : EntityComponent<RaceEntity>
 		input.Add( CurrentInput );
 		Input = input;
 		CurrentInput = "";
-		if ( Input.Count == Entity.Target.Count )
-		{
-			Winner = true;
-		}
 	}
 
 	private bool CheckInputAccuracy()
 	{
+		if ( Input.Count >= Entity.Target.Count )
+		{
+			return false;
+		}
+		
 		var target = Entity.Target[Input.Count];
 		var input = CurrentInput;
 
@@ -67,12 +68,5 @@ public partial class RacePlayer : EntityComponent<RaceEntity>
 	{
 		Name = "Racer " + SteamName;
 	}
-
-	private bool EnsurePlayer()
-	{
-		if ( SteamId != Game.LocalClient.SteamId ) return false;
-		return true;
-	}
-
 	
 }

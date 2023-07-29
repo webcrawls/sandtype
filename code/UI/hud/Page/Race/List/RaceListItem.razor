@@ -21,11 +21,28 @@
 		</div>
 	</div>
 	<div class="info">
-		<label>🧑 @Race.Players?.Count Players</label>
+		<div class="race-info">
+			@if ( Race.State == RaceState.NOT_YET_STARTED )
+			{
+				<img class="race-info-icon" src="/assets/svg/ellipsis-solid.svg"/>
+			} else if ( Race.State == RaceState.COUNTING_DOWN )
+			{
+				<img class="race-info-icon" src="/assets/svg/clock-solid.svg"/>
+			} else if ( Race.State == RaceState.RUNNING )
+			{
+				<img class="race-info-icon" src="/assets/svg/person-running-solid.svg"/>
+			} else if ( Race.State == RaceState.ENDED )
+			{
+				<img class="race-info-icon" src="/assets/svg/flag-checkered-solid.svg"/>
+			}
+			<label class="race-info-text">@Race.Players?.Count Players</label>
+		</div>
 		@if ( IsInGame() )
 		{
 			<button class="race-leave" @onclick=@(() => LeaveAction?.Invoke())>Leave</button>
-		} else {
+		}
+		else
+		{
 			<button class="race-join" @onclick=@(() => SelectedAction?.Invoke())>Join</button>
 		}
 	</div>
@@ -40,6 +57,12 @@
 	public Action SelectedAction;
 	public Action LeaveAction;
 	public Action DeleteAction;
+
+	public override void Tick()
+	{
+		base.Tick();
+		Log.Info( Race.State );
+	}
 
 	protected string GetActiveClasses()
 	{

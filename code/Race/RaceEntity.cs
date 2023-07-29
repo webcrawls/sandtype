@@ -21,7 +21,7 @@ public partial class RaceEntity : Entity
 		}
 		
 		var raceEntity = new RaceEntity();
-		raceEntity.Owner = caller;
+		raceEntity.GameOwner = caller;
 		raceEntity.Spawn();
 	}
 
@@ -83,6 +83,16 @@ public partial class RaceEntity : Entity
 		player.SubmitInput();
 	}
 
+	[ConCmd.Server("tw_forcestart")]
+	public static void ForceStartGameCmd()
+	{
+		var caller = ConsoleSystem.Caller;
+		var race = GetJoinedRace( caller.SteamId );
+		if ( race == null ) return;
+		if ( race.OwnerId != caller.SteamId ) return;
+		race.StartGame();
+	}
+
 	public static RaceEntity GetRace( int raceId )
 	{
 		return FindByIndex( raceId ) as RaceEntity;
@@ -101,29 +111,33 @@ public partial class RaceEntity : Entity
 		return null;
 	}
 
-	public Pawn Owner;
-
-	public List<RacePlayer> Players => Components.GetAll<RacePlayer>().ToList();
-
-	public int RaceId => NetworkIdent;
-	
 	[Net] public long OwnerId { get; set; }
 	[Net] public IList<long> QuitPlayers { get; set; }
 	[Net] public IList<long> Winners { get; set; }
 	[Net] public IList<string> Target { get; set; }
 	[Net] public string OwnerName { get; set; }
-	[Net] public bool Started { get; set; }
+	[Net] public RaceState State { get; set; }
+	[Net] public float TimeUntilStart { get; set; }
+
+
+	public Pawn GameOwner; 
+	public int RaceId => NetworkIdent;
+	public List<RacePlayer> Players => Components.GetAll<RacePlayer>().ToList();
+
+	private bool _countdownStarted = false;
+	private TimeUntil _timeUntilStart = 0f;
 	
 	public override void Spawn()
 	{
 		base.Spawn();
+		State = RaceState.NOT_YET_STARTED;
 		Transmit = TransmitType.Always;
-		OwnerName = Owner?.Client.Name ?? "Unknown";
-		OwnerId = Owner?.Client.SteamId ?? 0;
+		OwnerName = GameOwner?.Client.Name ?? "Unknown";
+		OwnerId = GameOwner?.Client.SteamId ?? 0;
 		Name = OwnerName + "'s Race";
 		QuitPlayers = new List<long>();
 		Winners = new List<long>();
-		Target = new DictionaryFileTextProvider( "text/english_1k.json" ).GetText();
+		Target = new List<string>();
 		Tags.Add( "race" );
 	}
 
@@ -147,13 +161,77 @@ public partial class RaceEntity : Entity
 		cmp.Theme = "default";
 		cmp.Name = pawn.Client.Name;
 		pawn.ShowRaceHud(To.Single( pawn ));
+		StartCountdown();
 	}
 	
 	public void RemovePlayer( Pawn pawn )
 	{
 		var player = GetPlayer( pawn.Client.SteamId );
 		if ( player == null ) return;
-		Components.Remove( player );
+		player.Remove();
 		pawn.HideRaceHud(To.Single( pawn ));
 	}
+
+	public void StartCountdown()
+	{
+		if ( _countdownStarted ) return;
+		_countdownStarted = true;
+		_timeUntilStart = 7.5f;
+		State = RaceState.COUNTING_DOWN;
+	}
+	
+	[GameEvent.Tick.Server]
+	private void TickServer()
+	{
+		if ( State == RaceState.COUNTING_DOWN )
+		{
+			TickCountdown();
+			return;
+		}
+
+		foreach ( var player in Players )
+		{
+			if ( player.Input.Count >= Target.Count )
+			{
+				AddWinner( player.SteamId );
+				player.Complete = true;
+				State = RaceState.ENDED;
+			}
+		}
+	}
+
+	private void AddWinner( long steamId )
+	{
+		var winners = new List<long>( Winners );
+		winners.Add( steamId );
+		Winners = winners;
+	}
+
+	private void TickCountdown()
+	{
+		var timeUntil = _timeUntilStart;
+		if ( timeUntil <= 0 )
+		{
+			StartGame();
+		}
+		else
+		{
+			TimeUntilStart = timeUntil;
+		}
+	}
+
+	private void StartGame()
+	{
+		State = RaceState.RUNNING;
+		Target = new DictionaryFileTextProvider( "text/english_1k.json" ).GetText();
+	}
+	
+}
+
+public enum RaceState
+{
+	NOT_YET_STARTED,
+	COUNTING_DOWN,
+	RUNNING,
+	ENDED
 }

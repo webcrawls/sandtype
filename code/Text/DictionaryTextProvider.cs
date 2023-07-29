@@ -7,7 +7,7 @@ public class DictionaryTextProvider : TextProvider
 {
 	
 	public string[] Words;
-	public int Size = 50;
+	public int Size = 10;
 
 	public DictionaryTextProvider( string[] words )
 	{

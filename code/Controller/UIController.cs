@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using Sandbox.UI;
+using TerryTyper.Race;
 using TerryTyper.UI.Hud;
 using TerryTyper.UI.Hud.Page;
 
@@ -33,6 +34,10 @@ public class UIController : EntityComponent<GameManager>
 		else
 		{
 			OpenMenu();
+			if ( RaceEntity.GetJoinedRace( Game.LocalClient.SteamId ) != null )
+			{
+				PageNavigate( "/race" );
+			}
 		}
 	}
 

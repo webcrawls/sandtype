@@ -25,7 +25,15 @@
 		</div>
 		<p>@_name</p>
 	</div>
-	<TextView class="text-race-view" Theme="@_theme" @ref="View"/>
+	<div class="text-view-container">
+		<div class="text-view-overlay">
+			@if ( Race.State == RaceState.COUNTING_DOWN )
+			{
+				<h1>Waiting to start...</h1>
+			}
+		</div>
+		<TextView class="text-race-view" Theme="@_theme" @ref="View"/>
+	</div>
 </root>
 
 @code {
@@ -34,7 +42,7 @@
 	public RaceEntity Race;
 	private TextView View;
 	private string _name => Player.Name;
-	private bool _winner => Player.Winner;
+	private bool _winner => Race.Winners.Contains( Player.SteamId );
 	private long _steamId => Player.SteamId;
 	private float _progress => Player.Input.Count / (float) Math.Max(1, Race.Target.Count);
 	private TextTheme _theme => TextTheme.DefaultThemes[Player.Theme];
@@ -46,6 +54,7 @@
 		View.CurrentInput = Player.CurrentInput;
 		View.InputTokens = Player.Input;
 		View.TargetTokens = Race.Target;
+		View.Enabled = Race.State == RaceState.RUNNING;
 		if ( _theme != _currentTheme )
 		{
 			if ( _currentTheme != null )
@@ -73,17 +82,11 @@
 		code.Add( _progress );
 		code.Add( _winner );
 		code.Add( _name );
+		code.Add( Race.State );
 
 		var res = code.ToHashCode();
 
 		return res;
 	}
 	
-	private void UpdateTheme(TextTheme theme)
-	{
-		StyleSheet.Remove( _theme.Stylesheet );
-		StyleSheet.Load( theme.Stylesheet );
-		View.Theme = theme;
-	}
-
 }

@@ -18,6 +18,38 @@ RacePage {
   .text-input {
     width: 100%;
   }
+  
+  .starting-overlay {
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: green;
+    font-family: Poppins;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .starting-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      .done-text {
+        color: gray;
+      }
+      
+      .start-button {
+        padding-left: 40px;
+        padding-right: 40px;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #3968ff;
+        color: white;
+      }
+    }
+  }
 }
 
 .active-race-header {
