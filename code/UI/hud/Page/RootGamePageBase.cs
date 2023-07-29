@@ -1,7 +1,6 @@
-﻿using Sandbox;
-using Sandbox.UI;
+﻿using Sandbox.UI;
 using TerryTyper.UI.Hud.Page.Info;
-using TerryTyper.UI.Race;
+using TerryTyper.UI.Hud.Page.Race;
 
 namespace TerryTyper.UI.Hud.Page;
 

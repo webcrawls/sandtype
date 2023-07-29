@@ -7,7 +7,7 @@ using Sandbox.Menu;
 using Sandbox.UI;
 using TerryTyper.Race;
 
-namespace TerryTyper.UI.Race;
+namespace TerryTyper.UI.Hud.Page.Race.List;
 
 public class RaceListBase : Panel
 {

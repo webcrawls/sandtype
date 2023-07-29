@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Sandbox;
-using TerryTyper.UI.Race;
-using TerryTyper.UI.Text;
 
 namespace TerryTyper.Race;
 

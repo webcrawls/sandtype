@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sandbox.UI;
+using TerryTyper.Controller;
 
 namespace TerryTyper.UI.Text;
 
@@ -36,6 +37,7 @@ public class TextInputBase : TextEntry
 
 	public override void OnButtonTyped( ButtonEvent e )
 	{
+		AudioController.PlayKey(TyperGame.Entity.GamePawn);
 		if ( e.Pressed && e.Button == "enter" )
 		{
 			CreateEvent( "onenter" );
