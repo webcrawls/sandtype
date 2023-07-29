@@ -73,12 +73,6 @@
 	private TextTheme _theme = TextTheme.DefaultTheme;
 	private int _cursorPos => (InputTokens.Sum( s => s.Length ) + InputTokens.Count) + CurrentInput.Length;
 
-	public override void Tick()
-	{
-		base.Tick();
-		Log.Info( _cursorPos );
-	}
-
 	protected override int BuildHash()
 	{
 		var code = new HashCode();
