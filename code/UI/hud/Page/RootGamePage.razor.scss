@@ -23,18 +23,21 @@ RootGamePage {
   .wrapper {
     height: 100%;
     width: 100%;
-    padding-top: 75px;
-    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
     
-      .navigator-body {
+
+    .navigator-body {
         height: 100%;
     }
   }
   
   .container {
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    overflow: hidden;
     width: 100%;
   }
   
@@ -48,12 +51,9 @@ RootGamePage {
   .header {
     font-family: Poppins;
     font-weight: bold;
-    font-color: white;
+    color: white;
     font-size: 30px;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 20px;
+    padding: 20px;
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: space-between;
     align-items: center;

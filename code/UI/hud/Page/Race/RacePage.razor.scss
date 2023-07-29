@@ -4,6 +4,26 @@ RacePage {
   flex-direction: column;
   height: 100%;
   
+  .no-race-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    
+    .no-race-text {
+      background-color: white;
+      font-size: 40px;
+      color: gray;
+      font-style: italic;
+      font-weight: bold;
+      padding-left: 100px;
+      padding-right: 100px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      border-radius: 20px;
+    }
+  }
+  
   .players {
     display: flex;
     flex-direction: column;
