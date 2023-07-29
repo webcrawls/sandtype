@@ -6,9 +6,8 @@ namespace TerryTyper.Race;
 public partial class RacePlayer : EntityComponent<RaceEntity>
 {
 
-	[Net, Change(nameof(HandleNameChange))] public string SteamName { get; set; }
+	[Net] public string SteamName { get; set; }
 	[Net] public long SteamId { get; set; }
-	[Net] public string Name { get; set; }
 	[Net] public bool Complete { get; set; }
 	[Net] public IList<string> Input { get; set; }
 	[Net] public string CurrentInput { get; set; }
@@ -63,9 +62,4 @@ public partial class RacePlayer : EntityComponent<RaceEntity>
 		CurrentInput = input;
 	}
 
-	private void HandleNameChange()
-	{
-		Name = "Racer " + SteamName;
-	}
-	
 }

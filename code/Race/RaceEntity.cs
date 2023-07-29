@@ -160,7 +160,7 @@ public partial class RaceEntity : Entity
 		cmp.Input = new List<string>();
 		cmp.CurrentInput = "";
 		cmp.Theme = "default";
-		cmp.Name = pawn.Client.Name;
+		cmp.Name = "Racer " + pawn.Client.Name;
 		pawn.ShowRaceHud(To.Single( pawn ));
 		StartCountdown();
 	}

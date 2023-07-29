@@ -43,7 +43,7 @@
 	public RaceEntity Race;
 	
 	private TextView _view;
-	private string _name => Player.Name;
+	private string _name => Player.SteamName;
 	private bool _winner => Race.Winners.Contains( Player.SteamId );
 	private long _steamId => Player.SteamId;
 	private float _progress => Player.Input.Count / (float) Math.Max(1, Race.Target.Count);
