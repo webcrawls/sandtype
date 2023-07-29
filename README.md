@@ -2,7 +2,7 @@
 
 Typing with Terry is a typing game built for the s&box platform.
 
-> _Terry is the name of s&box's default "citizen" model._
+> _⁉️ Terry is the name of s&box's default "citizen" model._
 
 ## ✨ Features
 
