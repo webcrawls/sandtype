@@ -1,0 +1,27 @@
+﻿@namespace TerryTyper.UI.Hud.Page
+@using System
+@using Sandbox.UI
+@inherits GamePageBase
+@attribute [StyleSheet]
+
+<root>
+	<div class="container">
+		<div class="header">
+			<h1>@PageName</h1>
+			<button class="exit-button" @onclick=@(HandleClose)>X</button>
+		</div>
+		<div>
+			<div slot="navigator-canvas">
+			</div>
+		</div>
+	</div>
+</root>
+
+@code {
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(PageName);
+	}
+
+}

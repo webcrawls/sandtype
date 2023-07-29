@@ -1,0 +1,29 @@
+﻿GameControls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 125px;
+  padding: 30px;
+  
+  .control-button  {
+    background-color: #2ba9b4;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72px;
+    height: 72px;
+    padding: 10px;
+    border-radius: 10px;
+    
+    &:hover {
+      cursor: pointer;
+    }
+    
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

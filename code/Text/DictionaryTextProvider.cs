@@ -7,6 +7,7 @@ public class DictionaryTextProvider : TextProvider
 {
 	
 	public string[] Words;
+	public int Size = 10;
 
 	public DictionaryTextProvider( string[] words )
 	{
@@ -15,9 +16,8 @@ public class DictionaryTextProvider : TextProvider
 
 	public string[] GetText()
 	{
-		int size = 10;
-		string[] words = new string[size];
-		for ( int i = 0; i < size; i++ )
+		string[] words = new string[Size];
+		for ( int i = 0; i < Size; i++ )
 		{
 			words[i] = Words[Random.Shared.Next( 0, Words.Length )];
 		}

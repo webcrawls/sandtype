@@ -1,0 +1,31 @@
+﻿@namespace TerryTyper.UI.Hud
+@using System
+@using Sandbox
+@using Sandbox.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="wrapper">
+		<div class="info">
+			<p>@_currency wt</p>
+		</div>
+		<div class="spacer"><img class="logo-icon" src="/assets/gif/logo.gif"/></div>
+		<div class="control">
+			<h1 class="menu-button">press @_tabAction</h1>
+		</div>
+	</div>
+</root>
+
+@code {
+
+	private string _tabAction => Input.GetButtonOrigin( "menu" );
+	private bool _isSet = false;
+	private long _currency => TyperGame.Entity?.GamePawn.Data?.Currency ?? 0l;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _tabAction, _currency );
+	}
+
+}

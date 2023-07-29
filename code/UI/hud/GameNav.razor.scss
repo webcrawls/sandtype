@@ -1,0 +1,64 @@
+GameNav {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100px;
+
+  .wrapper {
+    font-family: Poppins;
+    font-weight: bold;
+    font-color: white;
+    background-color: rgba(99, 75, 125, 0.7);
+    backdrop-filter: blur(4px);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    font-size: 40px;
+    text-stroke: 3px black;
+    width: 100%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+    
+    .spacer {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .info {
+      padding: 15px;
+      flex-grow: 1;
+      width: 100%;
+      background-color:  #6461c2;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .control {
+      padding: 15px;
+      flex-grow: 1;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .logo-icon {
+    height: 120px;
+  }
+  
+  .menu-button {
+    background-color: white;
+    border-radius: 10px;
+    color: white;
+    text-stroke: 6px black;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+  }
+}

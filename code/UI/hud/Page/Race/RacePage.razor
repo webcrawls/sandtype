@@ -1,0 +1,101 @@
+﻿@namespace TerryTyper.UI.Race
+@using System
+@using System.Collections
+@using System.Collections.Generic
+@using Sandbox
+@using TerryTyper.UI.Hud
+@using TerryTyper.UI.Text
+@using TerryTyper.UI.Race.Player
+@using Sandbox.UI
+@using TerryTyper.Race
+@using TerryTyper.Util
+@inherits Panel
+@implements TerryTyper.UI.Hud.Page.IGamePage
+@attribute [StyleSheet]
+
+<root>
+	@if ( Race == null )
+	{
+		<div class="no-race-container">
+			<label class="no-race-text">Not in a race.</label>
+		</div>
+	}
+	else
+	{
+		<div class="players">
+			@foreach ( var player in Race.Components.GetAll<RacePlayer>() )
+			{
+				<RacePlayerItem Race="@Race" Player="@player"/>
+			}
+		</div>
+		<div class="player">
+			@if ( Race.State == RaceState.COUNTING_DOWN )
+			{
+				<div class="starting-overlay">
+					<div class="starting-container">
+						<h1>@Math.Round( Race.TimeUntilStart, 2 )s</h1>
+						<button class="start-button" @onclick=@(() => RaceEntity.ForceStartGameCmd())>Force Start</button>
+					</div>
+				</div>
+			} else if ( LocalPlayer.Complete )
+			{
+				<div class="starting-overlay">
+					<div class="starting-container">
+						<h1 class="done-text">congratulations</h1>
+					</div>
+				</div>
+			}
+			<TextInput Enabled="@(Race.State == RaceState.RUNNING)" Theme="@_theme" @ref="_input" class="text-input" space.changed="@HandleSpace" onchanged="@HandleChanged"/>
+		</div>
+	}
+</root>
+
+@code {
+
+	public RaceEntity Race => RaceEntity.GetJoinedRace( Game.LocalClient.SteamId );
+	public RacePlayer LocalPlayer => Race.GetPlayer( Game.LocalClient.SteamId );
+	public string Name => Race?.Name ?? "No race, join one!";
+	private TextInput _input;
+	private TextTheme _theme => TextTheme.DefaultThemes[TyperGame.Entity.GamePawn.Data.SelectedTheme];
+	public bool ShouldScroll => false;
+
+	public override void Tick()
+	{
+		base.Tick();
+		if ( Race == null )
+		{
+			if ( _input == null ) return;
+			_input.TargetTokens = new List<string>();
+			return;
+		}
+		_input.Theme = _theme;
+		_input.TargetTokens = Race.Target;
+		StateHasChanged();
+	}
+
+	private void HandleChanged( PanelEvent e )
+	{
+		RaceEntity.InputGameCmd( _input.Text );
+	}
+	
+	private void HandleSpace(PanelEvent e)
+	{
+		RaceEntity.SubmitGameCmd( );
+	}
+
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		if ( Race == null ) return code.ToHashCode();
+		foreach (RacePlayer player in Race.Players )
+		{
+			code.Add( player.SteamId );
+		}
+		code.Add( Race.TimeUntilStart );
+		code.Add( Race.State );
+	
+		var res = code.ToHashCode();
+		return res;
+	}
+
+}

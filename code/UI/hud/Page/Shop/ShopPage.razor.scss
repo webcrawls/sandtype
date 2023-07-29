@@ -1,0 +1,38 @@
+ShopPage {
+  font-family: Poppins;
+  display: flex;
+  flex-direction: column;
+  padding-left: 100px;
+  padding-right: 100px;
+  font-size: 30px;
+  gap: 20px;
+  
+  .shop-section {
+    background-color: #f0f6e8;
+    color: #251a36;
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    
+    .title {
+      
+    }
+    
+    label {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  .shop-items {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-header {
+    font-weight: bold;
+  }
+}

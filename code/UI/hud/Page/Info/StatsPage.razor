@@ -1,0 +1,26 @@
+﻿@using System
+@using Sandbox
+@using Sandbox.Services
+@using Sandbox.UI
+@inherits Panel
+@implements IGamePage
+@namespace TerryTyper.UI.Hud.Page.Info
+@attribute [StyleSheet]
+
+<root>
+	<div class="info-section">
+		<label>Words Typed: @_wordsTyped</label>
+	</div>
+</root>
+
+@code {
+	public string Name => "Stats";
+	public bool ShouldScroll => false;
+	private int _wordsTyped => (int)Stats.LocalPlayer.Get( "words_typed" ).Value;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _wordsTyped );
+	}
+
+}

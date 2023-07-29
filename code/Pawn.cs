@@ -1,64 +1,71 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using Sandbox;
-using Sandtype.UI;
+﻿using Sandbox;
+using Sandbox.Services;
+using TerryTyper.Controller;
 
-namespace Sandtype;
+namespace TerryTyper;
 
-public class Pawn : AnimatedEntity
+/// <summary>
+/// In the darkest hour,
+/// Garry's words bring truth and light
+/// He will save us all
+///
+/// https://github.com/orgs/sboxgame/discussions/975
+/// </summary>
+public partial class Pawn : AnimatedEntity
 {
 
-	public Hud Hud;
-	public TerryGame Game;
-	public TypingTest Test;
+	public DataController Data { get; set; }
 
-	public Pawn()
+	public override void Spawn()
 	{
-		if ( Sandbox.Game.IsClient )
-		{
-			Hud = new Hud();
-			Sandbox.Game.RootPanel = Hud;
-		}
+		base.Spawn();
+		SetModel( "models/citizen/citizen.vmdl" );
+		EnableDrawing = true;
+		EnableHideInFirstPerson = true;
+		EnableShadowInFirstPerson = true;
 	}
-	
+
 	public override void ClientSpawn()
 	{
-		// we only want these to happen on the client (for now)
-		// there is no server involvement in the typing game
-
-		Test = Components.Create<TypingTest>();
-		Game = Components.Create<TerryGame>();
-		Test.ResetTest();
+		base.ClientSpawn();
+		Data = Components.Create<DataController>();
 	}
 
 	public override void Simulate( IClient cl )
 	{
-		if ( Client != cl )
-		{
-			return;
-		}
-
-		SimulateGame();
-
 		base.Simulate( cl );
+		SimulateInput( cl );
 	}
 
-	private void SimulateGame()
+	public void DressFromClient( IClient cl )
 	{
-		// "Simulate"/"Think" our client-side components
-		if ( Sandbox.Game.IsServer ) return;
-		if ( Test == null ) return;
-		if ( !Test.Initialized )
-		{
-			Test.ResetTest();
-		}
-
-		if ( Hud.Test == null )
-		{
-			Hud.Test = Test;
-		}
-		
-		Game?.Simulate();
+		var c = new ClothingContainer();
+		c.LoadFromClient( cl );
+		c.DressEntity( this );
 	}
-	
-	
+
+	[ClientRpc]
+	public void ShowRaceHud()
+	{
+		TyperGame.Entity.UI.PageNavigate( "/race" );
+	}
+
+	[ClientRpc]
+	public void HideRaceHud()
+	{
+		TyperGame.Entity.UI.ClosePage();
+	}
+
+	[ClientRpc]
+	public void WordTyped()
+	{
+		Stats.Increment( "words_typed", 1 );
+		Data.Currency += 1;
+	}
+
+	public void Respawn()
+	{
+		ResetInput();
+	}
+
 }

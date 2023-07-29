@@ -1,0 +1,121 @@
+﻿@namespace TerryTyper.UI.Text
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using Sandbox.Razor
+@using Sandbox.UI
+@attribute [StyleSheet]
+@inherits Panel
+
+<root>
+	@{
+		int perPage = 10;
+		int currentWord = InputTokens.Count;
+		int page = (int)(Math.Ceiling( (float)Math.Max( currentWord + 1, 0 ) / perPage ));
+		int currentCharacter = 0;
+		int offset = Math.Max( page - 1, 0 ) * perPage;
+
+		for ( int wordIndex = offset; wordIndex < (offset + perPage); wordIndex++ )
+		{
+			if ( wordIndex >= TargetTokens.Count )
+				break;
+
+			var isCurrentWord = wordIndex == currentWord;
+			var targetWord = TargetTokens[wordIndex];
+			var inputWord = isCurrentWord ? CurrentInput : wordIndex < InputTokens.Count ? InputTokens[wordIndex] : "";
+
+			for ( int charIndex = 0; charIndex < Math.Max( inputWord?.Length ?? 0, targetWord?.Length??0); charIndex++ )
+			{
+				var targetChar = GetChar( targetWord, charIndex );
+				var inputChar = GetChar( inputWord, charIndex );
+				var visibleChar = inputChar ?? targetChar ?? '.';
+				visibleChar = visibleChar == ' ' ? '_' : visibleChar; // force spaces to show as underscores
+				var charClass = "";
+				if ( currentCharacter == _cursorPos )
+				{
+					// is the current position
+					charClass = "cursor";
+				}
+				else if ( targetChar == null && inputChar != null )
+				{
+					charClass = "error";
+				}
+				else if ( targetChar != null && inputChar == null )
+				{
+					charClass = "untyped";
+				}
+				else if ( targetChar != null && inputChar != null && targetChar != inputChar )
+				{
+					charClass = "error";
+				}
+				else if ( targetChar != null && inputChar != null && targetChar == inputChar )
+				{
+					charClass = "typed";
+				}
+
+				<label class="@charClass">@( visibleChar )</label>
+				currentCharacter += 1;
+			}
+			
+			<label class="@currentCharacter">@( _cursorPos == (currentCharacter) ? "_" : " " )</label>
+			currentCharacter += 1;
+		}
+	}
+</root>
+
+@code {
+	
+	public TextTheme Theme { get { return _theme; } set { UpdateTheme(value); } }
+	public string CurrentInput = "";
+	public IList<string> TargetTokens = new List<string>();
+	public IList<string> InputTokens = new List<string>();
+	public bool Enabled;
+	private TextTheme _theme = TextTheme.DefaultTheme;
+	private int _cursorPos => (InputTokens.Sum( s => s.Length ) + InputTokens.Count) + CurrentInput.Length;
+
+	public override void Tick()
+	{
+		base.Tick();
+		Log.Info( _cursorPos );
+	}
+
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		foreach (string str in TargetTokens)
+		{
+			code.Add( str );
+		}
+		foreach (string str in InputTokens)
+		{
+			code.Add( str );
+		}
+		code.Add( CurrentInput );
+		code.Add( _theme.Name );
+		var res=  code.ToHashCode();
+		return res;
+	}
+
+	private char? GetChar( string text, int index )
+	{
+		if ( text == null )
+		{
+			return null;
+		}
+
+		if ( index < text.Length )
+		{
+			return text[index];
+		}
+
+		return null;
+	}
+	
+	private void UpdateTheme(TextTheme theme)
+	{
+		StyleSheet.Remove( _theme.Stylesheet );
+		StyleSheet.Load( theme.Stylesheet );
+		_theme = theme;
+	}
+
+}

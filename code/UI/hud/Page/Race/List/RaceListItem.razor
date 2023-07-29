@@ -1,0 +1,105 @@
+﻿@namespace TerryTyper.UI.Race
+@attribute [StyleSheet]
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using Sandbox
+@using Sandbox.UI
+@using TerryTyper.Race
+@using TerryTyper.UI.Race.Player
+@inherits Panel
+
+<root class="@GetActiveClasses()">
+	<div class="race-list-item-header">
+		<img class="avatar" src="avatar:@Race.OwnerId"/>
+		<h1 class="name">@Race.OwnerName</h1>
+		<div class="control">
+			@if ( Race.OwnerId == Game.LocalClient.SteamId )
+			{
+				<button class="create" @onclick=@(() => DeleteAction.Invoke())>x</button>
+			}
+		</div>
+	</div>
+	<div class="info">
+		<div class="race-info">
+			@if ( Race.State == RaceState.NOT_YET_STARTED )
+			{
+				<img class="race-info-icon" src="/assets/svg/ellipsis-solid.svg"/>
+			} else if ( Race.State == RaceState.COUNTING_DOWN )
+			{
+				<img class="race-info-icon" src="/assets/svg/clock-solid.svg"/>
+			} else if ( Race.State == RaceState.RUNNING )
+			{
+				<img class="race-info-icon" src="/assets/svg/person-running-solid.svg"/>
+			} else if ( Race.State == RaceState.ENDED )
+			{
+				<img class="race-info-icon" src="/assets/svg/flag-checkered-solid.svg"/>
+			}
+			<label class="race-info-text">@Race.Players?.Count Players</label>
+		</div>
+		@if ( IsInGame() )
+		{
+			<button class="race-leave" @onclick=@(() => LeaveAction?.Invoke())>Leave</button>
+		}
+		else
+		{
+			<button class="race-join" @onclick=@(() => SelectedAction?.Invoke())>Join</button>
+		}
+	</div>
+</root>
+
+@code {
+
+	public int SelectedIndex;
+	public int Index;
+	public RaceEntity Race;
+	public RacePlayer Player;
+	public Action SelectedAction;
+	public Action LeaveAction;
+	public Action DeleteAction;
+
+	public override void Tick()
+	{
+		base.Tick();
+		Log.Info( Race.State );
+	}
+
+	protected string GetActiveClasses()
+	{
+		string classes = "";
+		if ( SelectedIndex == Index )
+		{
+			classes += " selected";
+		}
+
+		if ( IsInGame() )
+		{
+			classes += " joined";
+		}
+
+		if ( IsFirst() )
+		{
+			classes += " first";
+		}
+		
+		classes += (IsEven() ? " even" : " odd");
+
+		return classes;
+	}
+
+	protected bool IsFirst()
+	{
+		return Index == 0;
+	}
+
+	protected bool IsEven()
+	{
+		return Index % 2 == 0;
+	}
+
+	protected bool IsInGame()
+	{
+		return Race.Players?.Where( player => player.SteamId == Game.LocalClient.SteamId ).Count() > 0;
+	}
+
+}

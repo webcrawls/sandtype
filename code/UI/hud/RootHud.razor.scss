@@ -1,0 +1,23 @@
+﻿RootHud {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 40px;
+  
+  .game-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .game-menu-wrapper {
+    width: 30%;
+    height: 100%;
+  }
+
+  .game-page-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+}

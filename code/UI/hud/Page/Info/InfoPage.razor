@@ -1,0 +1,24 @@
+﻿@using Sandbox.UI
+@inherits Panel
+@implements IGamePage
+@namespace TerryTyper.UI.Hud.Page.Info
+@attribute [StyleSheet]
+
+<root>
+	<div class="info-section">
+		<label class="info-header">about</label>
+		<label>Typing with Terry is a typing-focused s&box gamemode.</label>
+		<label>Players may race eachother through the menu, collect 'wt' as they complete words, and unlock themes and upgrades.</label>
+		<label>Please understand that this gamemode is in heavy development, and things may break in unexpected ways.</label>
+		<label>If you've encountered an issue and would like to discuss it, feel free to contact me via the links below :)</label>
+	</div>
+	<div class="info-section">
+		<label class="badge">github.com/webcrawls</label>
+		<label class="badge">discord.gg/jDbwF7Qbyv (@@webcrawls)</label>
+	</div>
+</root>
+
+@code {
+	public string Name => "Info";
+	public bool ShouldScroll => true;
+}

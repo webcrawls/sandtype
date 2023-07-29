@@ -1,0 +1,92 @@
+﻿@namespace TerryTyper.UI.Race.Player
+@using System
+@using System.Collections.Generic
+@using Sandbox
+@using Sandbox.UI
+@using TerryTyper.Race
+@using TerryTyper.UI.Text
+@using TerryTyper.UI.Race.Player
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="race-overlay">
+		<RacePlayerLine Progress="@(_progress)"/>
+	</div>
+	<div class="overlay">
+		<div class="avatar-wrapper">
+			@if ( _winner )
+			{
+				<img class="winner" src="/assets/svg/crown.svg"/>
+			}
+			<div class="avatar-container">
+				<img class="avatar" src="avatar:@(_steamId)"/>
+			</div>
+		</div>
+		<p>@_name</p>
+	</div>
+	<div class="text-view-container">
+		<div class="text-view-overlay">
+			@if ( Race.State == RaceState.COUNTING_DOWN )
+			{
+				<h1>Waiting to start...</h1>
+			}
+		</div>
+		<TextView class="text-race-view" Theme="@_theme" @ref="View"/>
+	</div>
+</root>
+
+@code {
+
+	public RacePlayer Player;
+	public RaceEntity Race;
+	private TextView View;
+	private string _name => Player.Name;
+	private bool _winner => Race.Winners.Contains( Player.SteamId );
+	private long _steamId => Player.SteamId;
+	private float _progress => Player.Input.Count / (float) Math.Max(1, Race.Target.Count);
+	private TextTheme _theme => TextTheme.DefaultThemes[Player.Theme];
+	private TextTheme _currentTheme = null;
+
+	public override void Tick()
+	{
+		base.Tick();
+		View.CurrentInput = Player.CurrentInput;
+		View.InputTokens = Player.Input;
+		View.TargetTokens = Race.Target;
+		View.Enabled = Race.State == RaceState.RUNNING;
+		if ( _theme != _currentTheme )
+		{
+			if ( _currentTheme != null )
+				StyleSheet.Remove( _currentTheme.Stylesheet );
+			_currentTheme = _theme;
+			View.Theme = _currentTheme;
+			StyleSheet.Load( _currentTheme.Stylesheet );
+		}
+		StateHasChanged();
+	}
+
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		foreach (string input in Player.Input )
+		{
+			code.Add( input );
+		}
+		foreach (string input in Race.Target )
+		{
+			code.Add( input );
+		}
+		
+		code.Add( Player.CurrentInput );
+		code.Add( _progress );
+		code.Add( _winner );
+		code.Add( _name );
+		code.Add( Race.State );
+
+		var res = code.ToHashCode();
+
+		return res;
+	}
+	
+}
