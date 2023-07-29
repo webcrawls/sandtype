@@ -26,10 +26,14 @@
 		<div class="text-view-overlay">
 			@if ( Race.State == RaceState.COUNTING_DOWN )
 			{
-				<h1>Waiting to start...</h1>
+				<label>Waiting to start...</label>
+			}
+			@if ( _winner )
+			{
+				<label>completed in @(Math.Round(Player.CompleteTime - Race.StartTime, 2))s</label>
 			}
 		</div>
-		<TextView class="text-race-view" Theme="@_theme" @ref="View"/>
+		<TextView class="text-race-view @(Race.State == RaceState.ENDED ? "text-race-hidden" : "")" Theme="@_theme" @ref="_view"/>
 	</div>
 </root>
 
@@ -37,7 +41,8 @@
 
 	public RacePlayer Player;
 	public RaceEntity Race;
-	private TextView View;
+	
+	private TextView _view;
 	private string _name => Player.Name;
 	private bool _winner => Race.Winners.Contains( Player.SteamId );
 	private long _steamId => Player.SteamId;
@@ -48,16 +53,16 @@
 	public override void Tick()
 	{
 		base.Tick();
-		View.CurrentInput = Player.CurrentInput;
-		View.InputTokens = Player.Input;
-		View.TargetTokens = Race.Target;
-		View.Enabled = Race.State == RaceState.RUNNING;
-		if ( _theme != _currentTheme )
+		_view.CurrentInput = Player.CurrentInput;
+		_view.InputTokens = Player.Input;
+		_view.TargetTokens = Race.Target;
+		_view.Enabled = Race.State == RaceState.RUNNING;
+		if ( _theme.Id != _currentTheme?.Id )
 		{
 			if ( _currentTheme != null )
 				StyleSheet.Remove( _currentTheme.Stylesheet );
 			_currentTheme = _theme;
-			View.Theme = _currentTheme;
+			_view.Theme = _currentTheme;
 			StyleSheet.Load( _currentTheme.Stylesheet );
 		}
 		StateHasChanged();

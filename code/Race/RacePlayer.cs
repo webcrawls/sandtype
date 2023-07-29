@@ -13,6 +13,7 @@ public partial class RacePlayer : EntityComponent<RaceEntity>
 	[Net] public IList<string> Input { get; set; }
 	[Net] public string CurrentInput { get; set; }
 	[Net] public string Theme { get; set; }
+	[Net] public float CompleteTime { get; set; }
 
 	public RacePlayer()
 	{

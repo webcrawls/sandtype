@@ -118,6 +118,7 @@ public partial class RaceEntity : Entity
 	[Net] public string OwnerName { get; set; }
 	[Net] public RaceState State { get; set; }
 	[Net] public float TimeUntilStart { get; set; }
+	[Net] public float StartTime { get; set; }
 
 
 	public Pawn GameOwner; 
@@ -189,22 +190,36 @@ public partial class RaceEntity : Entity
 			return;
 		}
 
-		foreach ( var player in Players )
+		// if the race is running
+		if ( State == RaceState.RUNNING
+		     // or, the race has ended but not all players have finished
+		     || (State == RaceState.ENDED && Winners.Count != Players.Count))
 		{
-			if ( player.Input.Count >= Target.Count )
+			foreach ( var player in Players )
 			{
-				AddWinner( player.SteamId );
-				player.Complete = true;
-				State = RaceState.ENDED;
+				CheckPlayerInput(player);
 			}
 		}
+		
 	}
 
-	private void AddWinner( long steamId )
+	private void CheckPlayerInput( RacePlayer player )
 	{
+		if ( Winners.Contains( player.SteamId ) ) return;
+		if ( player.Input.Count >= Target.Count )
+			AddWinner( player );
+	}
+	
+	private void AddWinner( RacePlayer player )
+	{
+		player.CompleteTime = Time.Now;
+		player.Complete = true;
 		var winners = new List<long>( Winners );
-		winners.Add( steamId );
+		winners.Add( player.SteamId );
 		Winners = winners;
+
+		if ( State != RaceState.ENDED )
+			State = RaceState.ENDED;
 	}
 
 	private void TickCountdown()
@@ -223,6 +238,7 @@ public partial class RaceEntity : Entity
 	private void StartGame()
 	{
 		State = RaceState.RUNNING;
+		StartTime = Time.Now;
 		Target = new DictionaryFileTextProvider( "text/english_1k.json" ).GetText();
 	}
 	
