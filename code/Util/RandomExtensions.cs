@@ -28,7 +28,6 @@ public static class RandomExtensions
         
 	}
 
-#nullable enable
 	public static T RandomElement<T>(this IEnumerable<T> sequence)
 	{
 		var l = sequence.ToList();

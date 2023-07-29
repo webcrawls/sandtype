@@ -1,0 +1,33 @@
+{
+  "UI": true,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/keypress01.vsnd",
+    "sounds/keypress010.vsnd",
+    "sounds/keypress02.vsnd",
+    "sounds/keypress03.vsnd",
+    "sounds/keypress04.vsnd",
+    "sounds/keypress05.vsnd",
+    "sounds/keypress06.vsnd",
+    "sounds/keypress07.vsnd",
+    "sounds/keypress08.vsnd",
+    "sounds/keypress09.vsnd",
+    "sounds/keypress10.vsnd",
+    "sounds/keypress11.vsnd",
+    "sounds/keypress12.vsnd",
+    "sounds/keypress13.vsnd",
+    "sounds/keypress14.vsnd",
+    "sounds/keypress15.vsnd",
+    "sounds/keypress16.vsnd",
+    "sounds/keypress17.vsnd",
+    "sounds/keypress18.vsnd",
+    "sounds/keypress19.vsnd",
+    "sounds/keypress20.vsnd",
+    "sounds/keypress21.vsnd"
+  ],
+  "MaximumDistance": 1143.9335,
+  "MinimumDistance": 57.196674
+}

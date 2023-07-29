@@ -56,6 +56,14 @@
 	public Action LeaveAction;
 	public Action DeleteAction;
 
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		code.Add( Race.State );
+		code.Add( Race.Players.Count );
+		return code.ToHashCode();
+	}
+
 	protected string GetActiveClasses()
 	{
 		string classes = "";
