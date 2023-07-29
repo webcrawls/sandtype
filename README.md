@@ -1,10 +1,12 @@
-# sandtype
+# ⌨ Typing with Terry
 
-> Check out [the dev branch](https://github.com/webcrawls/sandtype/tree/dev) for the latest changes!
+Typing with Terry is a typing game built for the s&box platform.
 
-sandtype (aka `s&type`) is a typing test game for the [s&box](#) game platform.
+> _Terry is the name of s&box's default "citizen" model._
 
-This project started as an excuse to learn the s&box dev tools and C# programming.
-I'm hoping to make it a fun, relaxing typing gamemode that can help you practice.
+## ✨ Features
 
-https://asset.party/webcrawls/sandtype
+- Multiplayer races using s&box's networking system.
+- Currency & shop system
+  - "wt" is gained by typing accurate words
+  - Unlockable themes
