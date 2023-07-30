@@ -1,13 +1,12 @@
 ﻿@namespace TerryTyper.UI.Hud.Menu
 @using System
 @using Sandbox.UI
-@using TerryTyper.Controller
 @attribute [StyleSheet]
 @inherits Sandbox.UI.Panel
 
 <root>
 	<img @onclick=@(ToggleMute) class="volume-icon" src="@_volumeIcon"/>
-	<SliderControl @ref="_slider" class="slider"/>
+	<SliderControl @ref="_slider" class="slider" @onchange="@HandleSliderChange"/>
 </root>
 
 @code {
@@ -16,18 +15,16 @@
 	private SliderControl _slider;
 	private string _volumeIcon = "";
 	
-	protected override void OnAfterTreeRender( bool firstTime )
-	{
-		base.OnAfterTreeRender( firstTime );
-		// seed _slider with initial AudioController value.
-		_slider.ShowTextEntry = true;
-		_slider.Value = AudioController.KeyVolume;
-	}
-
 	public override void Tick()
 	{
-		AudioController.KeyVolume = _slider.Value;
+		_slider.OnValueChanged = ( v ) => TyperGame.Entity.GamePawn.Audio.Volume = (int) v;
+		_slider.Value = TyperGame.Entity.GamePawn.Audio.Volume;
 		_volumeIcon = GetIcon();
+	}
+
+	private void HandleSliderChange( float value )
+	{
+		Log.Info( value );
 	}
 
 	private void ToggleMute()

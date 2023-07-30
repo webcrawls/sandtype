@@ -13,8 +13,8 @@ namespace TerryTyper;
 /// </summary>
 public partial class Pawn : AnimatedEntity
 {
-
 	public DataController Data { get; set; }
+	public AudioController Audio { get; set; }
 
 	public override void Spawn()
 	{
@@ -29,6 +29,7 @@ public partial class Pawn : AnimatedEntity
 	{
 		base.ClientSpawn();
 		Data = Components.Create<DataController>();
+		Audio = Components.Create<AudioController>();
 	}
 
 	public override void Simulate( IClient cl )
