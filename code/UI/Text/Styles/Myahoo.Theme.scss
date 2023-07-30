@@ -1,0 +1,32 @@
+﻿TextView {
+  background-color: white;
+  font-size: 40px;
+  font-family: ComicMono;
+  background-image: url("/assets/gif/hamster.gif");
+  background-repeat: no-repeat;
+  background-position: 80%, -50%;
+  
+  .cursor {
+    color: #93d4b5;
+  }
+  
+  .error {
+    color: #c45d9f;
+  }
+  
+  .typed {
+    color: #634b7d;
+  }
+  
+  .untyped {
+    color: #6461c2;    
+  }
+}
+
+.text-race-view {
+  background-color: white;
+  font-size: 30px;
+  background-image: url("/assets/gif/hamster.gif");
+  background-repeat: no-repeat;
+  background-position: 80%, -100%;
+}

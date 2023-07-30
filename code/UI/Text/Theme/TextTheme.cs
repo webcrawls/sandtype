@@ -48,7 +48,19 @@ public class TextTheme
 					Name = "Obamium",
 					Stylesheet = "/UI/Text/Styles/Obamium.Theme.scss"
 				}
+			},
+			{
+				"myahoo",
+				new TextTheme()
+				{
+					Id = "myahoo",
+					Cost = 100,
+					Name = "Myahoo",
+					Stylesheet = "/UI/Text/Styles/Myahoo.Theme.scss",
+					Sound = "sounds/myahoo/myahoo.sound"
+				}
 			}
+
 		};
 
 	public static TextTheme DefaultTheme => DefaultThemes["typeracer"];
@@ -57,4 +69,5 @@ public class TextTheme
 	public string Id = "typeracer";
 	public string Name;
 	public string Stylesheet;
+	public string Sound = "sounds/keypress.sound";
 }

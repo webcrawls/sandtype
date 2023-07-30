@@ -1,0 +1,21 @@
+{
+  "UI": false,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/myahoo/among.vsnd",
+    "sounds/myahoo/bruh.vsnd",
+    "sounds/myahoo/erro.vsnd",
+    "sounds/myahoo/fart.vsnd",
+    "sounds/myahoo/fortnite.vsnd",
+    "sounds/myahoo/hitmarker.vsnd",
+    "sounds/myahoo/minecraft_hurt.vsnd",
+    "sounds/myahoo/nope.vsnd",
+    "sounds/myahoo/roblox.vsnd",
+    "sounds/myahoo/skull.vsnd"
+  ],
+  "MaximumDistance": 1143.9335,
+  "MinimumDistance": 57.196674
+}

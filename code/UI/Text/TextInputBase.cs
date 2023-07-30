@@ -37,7 +37,7 @@ public class TextInputBase : TextEntry
 
 	public override void OnButtonTyped( ButtonEvent e )
 	{
-		AudioController.PlayKey(TyperGame.Entity.GamePawn);
+		TyperGame.Entity.GamePawn.Audio.PlayKey(TyperGame.Entity.GamePawn);
 		if ( e.Pressed && e.Button == "enter" )
 		{
 			CreateEvent( "onenter" );
