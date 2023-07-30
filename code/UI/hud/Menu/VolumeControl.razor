@@ -1,0 +1,59 @@
+﻿@namespace TerryTyper.UI.Hud.Menu
+@using System
+@using Sandbox.UI
+@using TerryTyper.Controller
+@attribute [StyleSheet]
+@inherits Sandbox.UI.Panel
+
+<root>
+	<img @onclick=@(ToggleMute) class="volume-icon" src="@_volumeIcon"/>
+	<SliderControl @ref="_slider" class="slider"/>
+</root>
+
+@code {
+	
+	// todo flow of state is bad, use AudioController value
+	private SliderControl _slider;
+	private string _volumeIcon = "";
+	
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		base.OnAfterTreeRender( firstTime );
+		// seed _slider with initial AudioController value.
+		_slider.ShowTextEntry = true;
+		_slider.Value = AudioController.KeyVolume;
+	}
+
+	public override void Tick()
+	{
+		AudioController.KeyVolume = _slider.Value;
+		_volumeIcon = GetIcon();
+	}
+
+	private void ToggleMute()
+	{
+		if ( _slider.Value != 0 )
+		{
+			_slider.Value = 0;
+		}
+	}
+
+	private string GetIcon()
+	{
+		if ( _slider.Value == 0 )
+		{
+			return "/assets/svg/volume-xmark-solid.svg";
+		}
+		if ( _slider.Value == 100 )
+		{
+			return "/assets/svg/volume-high-solid.svg";
+		}
+		return "/assets/svg/volume-low-solid.svg";
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _volumeIcon );
+	}
+
+}

@@ -1,0 +1,18 @@
+﻿VolumeControl {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  
+  .volume-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .slider {
+    width: 100%;
+  }
+}

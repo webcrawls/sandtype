@@ -1,7 +1,7 @@
 ﻿using Sandbox;
-using Sandbox.UI;
 using TerryTyper.Race;
 using TerryTyper.UI.Hud;
+using TerryTyper.UI.Hud.Menu;
 using TerryTyper.UI.Hud.Page;
 
 namespace TerryTyper.Controller;
