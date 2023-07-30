@@ -32,7 +32,7 @@
 				<div class="starting-overlay">
 					<div class="starting-container">
 						<h1>@Math.Round( Race.TimeUntilStart, 2 )s</h1>
-						<button class="start-button" @onclick=@(() => RaceEntity.ForceStartGameCmd())>Force Start</button>
+						<button class="start-button" @onclick=@RaceEntity.ForceStartGameCmd>Force Start</button>
 					</div>
 				</div>
 			} else if ( LocalPlayer.Complete )

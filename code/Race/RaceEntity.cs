@@ -93,6 +93,16 @@ public partial class RaceEntity : Entity
 		race.StartGame();
 	}
 
+	[ConCmd.Server("tw_theme")]
+	public static void ThemeGameCmd(string theme)
+	{
+		var caller = ConsoleSystem.Caller;
+		var race = GetJoinedRace( caller.SteamId );
+		if ( race == null ) return;
+		var player = race.GetPlayer( caller.SteamId );
+		player.Theme = theme;
+	}
+
 	public static RaceEntity GetRace( int raceId )
 	{
 		return FindByIndex( raceId ) as RaceEntity;

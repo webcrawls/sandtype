@@ -2,6 +2,7 @@
 @using System.Collections.Generic
 @using Sandbox.UI
 @using TerryTyper.Controller
+@using TerryTyper.Race
 @using TerryTyper.UI.Text
 @inherits Panel
 @implements IGamePage
@@ -52,6 +53,7 @@
 				return;
 			};
 			_data.SelectedTheme = theme.Id;
+			RaceEntity.ThemeGameCmd( theme.Id );
 		};
 	}
 
