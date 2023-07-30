@@ -7,6 +7,17 @@ RaceListItem {
   border-radius: 20px;
   overflow: hidden;
   
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  
+  &:intro {
+    opacity: 0;
+  }
+
+  &:outro {
+    opacity: 0;
+  }
+  
   .race-list-item-header {
     display: flex;
     flex-direction: row;

@@ -14,7 +14,7 @@
 	// todo flow of state is bad, use AudioController value
 	private SliderControl _slider;
 	private string _volumeIcon = "";
-	
+
 	public override void Tick()
 	{
 		_slider.OnValueChanged = ( v ) => TyperGame.Entity.GamePawn.Audio.Volume = (int) v;
