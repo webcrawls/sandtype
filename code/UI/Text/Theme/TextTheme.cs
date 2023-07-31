@@ -12,10 +12,10 @@ public class TextTheme
 
 	public const string FEATURE_CURSOR_IMAGE = "FEATURE_CURSOR_IMG";
 	public static readonly IDictionary<string, TextTheme> Themes = LoadThemeDictionary();
-	public static TextTheme DefaultTheme => Themes["Default/racer"];
+	public static TextTheme DefaultTheme => Themes["default/racer"];
 	private static IDictionary<string, TextTheme> LoadThemeDictionary()
 	{
-		var folder = "/UI/Text/Theme/Themes";
+		var folder = "/themes";
 		var files = FileSystem.Mounted.FindFile(folder, "*.json", true );
 		IDictionary<string, TextTheme> result = new Dictionary<string, TextTheme>();
 		foreach (var filename in files)

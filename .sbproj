@@ -7,7 +7,7 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "Resources": "\n*.svg\n*.json\n*.scss\n*.gif\nassets/font/*\n*.ttf\n*.svg\nassets/gif/Cursor_1.png",
+  "Resources": "\n*.svg\ntext/*.json\nthemes/*.json\n*.scss\n*.gif\nassets/font/*\n*.ttf\n*.svg\nassets/gif/Cursor_1.png",
   "MenuResources": "",
   "HasCode": true,
   "CodePath": "/code/",
