@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sandtype.Engine.Text;
+namespace TerryTyper.Text;
 
 // todo configurabletextprovider
 public interface TextProvider
@@ -20,7 +20,7 @@ public interface TextProvider
 	};
 
 
-	public string[] GetText( );
+	public string[] GetText( int length = 20 );
 	
 	public string Id { get; }
 

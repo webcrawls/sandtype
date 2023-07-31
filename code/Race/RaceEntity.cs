@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.AccessControl;
 using Sandbox;
-using Sandtype.Engine.Text;
+using TerryTyper.Text;
 
 namespace TerryTyper.Race;
 
@@ -11,7 +9,7 @@ public partial class RaceEntity : Entity
 {
 
 	[ConCmd.Server("tw_create")]
-	public static void CreateGameCmd(string language = "English")
+	public static void CreateGameCmd(string language = "English", int size = 20)
 	{
 		var caller = ConsoleSystem.Caller.Pawn as Pawn;
 		var existingGame = GetJoinedRace( caller.Client.SteamId );
@@ -23,6 +21,7 @@ public partial class RaceEntity : Entity
 		var raceEntity = new RaceEntity();
 		raceEntity.GameOwner = caller;
 		raceEntity.Language = language;
+		raceEntity.Size = size;
 		raceEntity.Spawn();
 	}
 
@@ -141,6 +140,7 @@ public partial class RaceEntity : Entity
 
 	public Pawn GameOwner;
 	public string Language;
+	public int Size;
 	public int RaceId => NetworkIdent;
 	public List<RacePlayer> Players => Components.GetAll<RacePlayer>().ToList();
 

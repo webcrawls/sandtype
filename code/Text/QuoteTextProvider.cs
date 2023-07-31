@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sandtype.Engine.Text;
+namespace TerryTyper.Text;
 
 public class QuoteTextProvider : TextProvider
 {
@@ -18,7 +18,7 @@ public class QuoteTextProvider : TextProvider
 		return "Static";
 	}
 
-	public string[] GetText()
+	public string[] GetText(int size = 0)
 	{
 		return Text;
 	}

@@ -4,19 +4,39 @@
   height: 100%;
   font-family: Poppins;
   
-  .header {
+  .race-creation {
+    padding: 20px;
+    background-color: #f4dfbe;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    .inner {
+
+    .create-section {
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+    }
+
+    .setup-section {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      
+      .slidercontrol {
+        .thumb {
+          display: none;
+        }
+      }
     }
   }
   
   border: 4px #c45d9f;
   border-radius: 20px;
+  overflow: hidden;
   background-color: #e39aac;
   
   .races {
