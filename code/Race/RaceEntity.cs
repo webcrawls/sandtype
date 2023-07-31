@@ -258,7 +258,6 @@ public partial class RaceEntity : Entity
 	{
 		State = RaceState.RUNNING;
 		StartTime = Time.Now;
-		Log.Info( Language );
 		Target = TextProvider.Providers[Language].GetText();
 	}
 	

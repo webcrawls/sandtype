@@ -9,9 +9,9 @@ public class RaceTextTypeDropdown : DropDown
 
 	public RaceTextTypeDropdown()
 	{
-		foreach ( var (name, provider) in TextProvider.Providers )
+		foreach ( var id in TextProvider.Providers.Keys )
 		{
-			var item = new Option( name, name );
+			var item = new Option( id, id );
 			Options.Add( item );
 			
 			// update 'default' selection

@@ -1,0 +1,7 @@
+﻿{
+  "name": "Green",
+  "stylesheet": "/UI/Text/Styles/Green.Theme.scss",
+  "description": "The green theme",
+  "rarity": "common",
+  "icon": "/assets/svg/sun-solid.svg"
+}

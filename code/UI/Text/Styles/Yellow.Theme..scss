@@ -1,0 +1,31 @@
+﻿TextView {
+  background-color: #d3cb53;
+  font-size: 40px;
+  font-family: JetBrainsMono;
+  font-weight: medium;
+  background-repeat: no-repeat;
+  background-position: 80%, -50%;
+  
+  .cursor {
+    color: #93d4b5;
+  }
+  
+  .error {
+    color: #c45d9f;
+  }
+  
+  .typed {
+    color: #634b7d;
+  }
+  
+  .untyped {
+    color: #6461c2;    
+  }
+}
+
+.text-race-view {
+  background-color: #d3cb53;
+  font-size: 30px;
+  background-repeat: no-repeat;
+  background-position: 80%, -100%;
+}

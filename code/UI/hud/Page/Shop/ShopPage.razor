@@ -14,7 +14,7 @@
 	<div class="shop-section">
 		<div class="shop-header">
 			<h1 class="title">Themes</h1>
-			<button class="open" @onclick=@(() => _shop.OpenCategory( _themes ))><label>Run the lootbox for 10wt?</label></button>
+			<button class="open" @onclick=@(() => _shop.OpenCategory( _themes ))><label>Run the lootbox for 15wt?</label></button>
 		</div>
 		<div class="shop-cards">
 			@foreach ( var theme in TextTheme.Themes.Values )
@@ -37,5 +37,4 @@
 	private DataController _data => TyperGame.Entity.GamePawn.Data;
 	private IList<string> _unlockedthemes => _data.UnlockedThemes;
 	private string _selectedTheme => _data.SelectedTheme;
-
 }

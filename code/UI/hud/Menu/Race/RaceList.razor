@@ -65,7 +65,6 @@
 	{
 		if ( !CanInteract() ) return;
 		var language = (string) LanguageDropdown.Selected.Value;
-		Log.Info( "Creating race: "+language );
 		RaceEntity.CreateGameCmd(language);
 	}
 	
