@@ -1,0 +1,7 @@
+{
+  "name": "Obamium",
+  "stylesheet": "/UI/Text/Styles/Obamium.Theme.scss",
+  "description": "The rarest element",
+  "rarity": "rare",
+  "icon": "/assets/gif/obamium.gif"
+}

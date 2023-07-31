@@ -1,73 +1,44 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using Editor;
+using Microsoft.VisualBasic;
+using FileSystem = Sandbox.FileSystem;
 
 namespace TerryTyper.UI.Text;
 
 public class TextTheme
 {
 
-	public static IDictionary<string, TextTheme> DefaultThemes { get; private set; } =
-		new Dictionary<string, TextTheme>
+	public const string FEATURE_CURSOR_IMAGE = "FEATURE_CURSOR_IMG";
+	public static readonly IDictionary<string, TextTheme> Themes = LoadThemeDictionary();
+	public static TextTheme DefaultTheme => Themes["racer"];
+
+	private static IDictionary<string, TextTheme> LoadThemeDictionary()
+	{
+		var folder = "/UI/Text/Theme/Themes";
+		var files = FileSystem.Mounted.FindFile(folder, "*.json", false );
+		IDictionary<string, TextTheme> result = new Dictionary<string, TextTheme>();
+		foreach (var filename in files)
 		{
-			{
-				"typeracer",
-				new TextTheme()
-				{
-					Id = "typeracer",
-					Cost = 5,
-					Name = "TypeRacer",
-					Stylesheet = "/UI/Text/Styles/TypeRacer.Theme.scss"
-				}
-			},
-			{
-				"typeracerdark",
-				new TextTheme()
-				{
-					Id = "typeracerdark",
-					Cost = 5,
-					Name = "TypeRacer Dark",
-					Stylesheet = "/UI/Text/Styles/TypeRacerDark.Theme.scss"
-				}
-			},
-			{
-				"pastel",
-				new TextTheme()
-				{
-					Id = "pastel",
-					Cost = 5,
-					Name = "Pastel",
-					Stylesheet = "/UI/Text/Styles/Pastel.Theme.scss"
-				}
-			},
-			{
-				"obamium",
-				new TextTheme()
-				{
-					Id = "obamium",
-					Cost = 5,
-					Name = "Obamium",
-					Stylesheet = "/UI/Text/Styles/Obamium.Theme.scss"
-				}
-			},
-			{
-				"myahoo",
-				new TextTheme()
-				{
-					Id = "myahoo",
-					Cost = 100,
-					Name = "Myahoo",
-					Stylesheet = "/UI/Text/Styles/Myahoo.Theme.scss",
-					Sound = "sounds/myahoo/myahoo.sound"
-				}
-			}
+			var id = filename.Replace( ".json", "" );
+			var theme = FileSystem.Mounted.ReadJson<TextTheme>( folder + "/" + filename );
+			theme.Id = id;
+			theme.Features ??= new List<string>();
+			result[id] = theme;
+		}
 
-		};
+		result = result.ToImmutableSortedDictionary( StringComparer.CurrentCulture );
 
-	public static TextTheme DefaultTheme => DefaultThemes["typeracer"];
+		return result;
+	}
 
-	public int Cost = 5;
-	public string Id = "typeracer";
-	public string Name;
-	public string Stylesheet;
-	public string Sound = "sounds/keypress.sound";
+	public string Id {get; set;}
+	public string Name {get; set;}
+	public string Stylesheet {get; set;}
+	public string Sound {get; set;}
+	public string Description {get; set;}
+	public string Rarity {get; set;}
+	public string Icon {get; set;}
+	public List<string> Features {get; set;}
 }

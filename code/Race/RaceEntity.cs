@@ -11,7 +11,7 @@ public partial class RaceEntity : Entity
 {
 
 	[ConCmd.Server("tw_create")]
-	public static void CreateGameCmd()
+	public static void CreateGameCmd(string language = "English")
 	{
 		var caller = ConsoleSystem.Caller.Pawn as Pawn;
 		var existingGame = GetJoinedRace( caller.Client.SteamId );
@@ -22,6 +22,7 @@ public partial class RaceEntity : Entity
 		
 		var raceEntity = new RaceEntity();
 		raceEntity.GameOwner = caller;
+		raceEntity.Language = language;
 		raceEntity.Spawn();
 	}
 
@@ -93,6 +94,13 @@ public partial class RaceEntity : Entity
 		race.StartGame();
 	}
 
+	[ConCmd.Client("tw_freecoins")]
+	public static void FreeCoinsGameCmd()
+	{
+		var caller = ConsoleSystem.Caller.Pawn as Pawn;
+		caller.Data.Currency = 1000;
+	}
+
 	[ConCmd.Server("tw_theme")]
 	public static void ThemeGameCmd(string theme)
 	{
@@ -131,7 +139,8 @@ public partial class RaceEntity : Entity
 	[Net] public float StartTime { get; set; }
 
 
-	public Pawn GameOwner; 
+	public Pawn GameOwner;
+	public string Language;
 	public int RaceId => NetworkIdent;
 	public List<RacePlayer> Players => Components.GetAll<RacePlayer>().ToList();
 
@@ -249,7 +258,8 @@ public partial class RaceEntity : Entity
 	{
 		State = RaceState.RUNNING;
 		StartTime = Time.Now;
-		Target = new DictionaryFileTextProvider( "text/english_1k.json" ).GetText();
+		Log.Info( Language );
+		Target = TextProvider.Providers[Language].GetText();
 	}
 	
 }

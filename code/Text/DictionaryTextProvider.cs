@@ -5,7 +5,8 @@ namespace Sandtype.Engine.Text;
 
 public class DictionaryTextProvider : TextProvider
 {
-	
+
+	public virtual string Id { get; } = "dictionary";
 	public string[] Words;
 	public int Size = 10;
 

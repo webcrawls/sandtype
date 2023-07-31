@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sandbox;
+using TerryTyper.Race;
 using TerryTyper.UI.Text;
 using TerryTyper.Util;
 
@@ -26,6 +27,14 @@ public class DataController : EntityComponent<Pawn>, ISingletonComponent
 		var themes = new List<string>( UnlockedThemes );
 		themes.Add( theme );
 		UnlockedThemes = themes;
+	}
+
+	public void SelectTheme( string theme )
+	{
+		if ( !UnlockedThemes.Contains( theme ) ) return;
+		SelectedTheme = theme;
+		var race = RaceEntity.GetJoinedRace( Entity.Client.SteamId );
+		if ( race != null ) RaceEntity.ThemeGameCmd( theme );
 	}
 
 	public void ForceSave()
@@ -90,7 +99,8 @@ public class DataController : EntityComponent<Pawn>, ISingletonComponent
 	{
 		_steamId = Entity.Client.SteamId;
 		_data = FileSystem.Data.ReadJson<PlayerData>( _filename ) ?? new PlayerData();
-		if ( !TextTheme.DefaultThemes.ContainsKey( _data.SelectedTheme ) )
+		_data.SelectedTheme ??= TextTheme.DefaultTheme.Id;
+		if ( !TextTheme.Themes.ContainsKey( _data.SelectedTheme ) )
 		{
 			_data.SelectedTheme = TextTheme.DefaultTheme.Id;
 		}
@@ -106,7 +116,7 @@ public class DataController : EntityComponent<Pawn>, ISingletonComponent
 public class PlayerData
 {
 	public IList<string> UnlockedThemes {get; set;} = new List<string>{"default"};
-	public string SelectedTheme {get; set;} = "default";
+	public string SelectedTheme {get; set;}
 	public long Currency { get; set; } = 0;
 	public IDictionary<string, TextTheme> Themes { get; set; } = new Dictionary<string, TextTheme>();
 	public int Volume { get; set; } = 50;

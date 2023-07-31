@@ -33,7 +33,7 @@
 				<label>completed in @(Math.Round(Player.CompleteTime - Race.StartTime, 2))s</label>
 			}
 		</div>
-		<TextView class="text-race-view @(Race.State == RaceState.ENDED ? "text-race-hidden" : "")" Theme="@_theme" @ref="_view"/>
+		<TextView class="text-race-view @( (Race.State == RaceState.ENDED && Player.Complete) ? "text-race-hidden" : "")" Theme="@_theme" @ref="_view"/>
 	</div>
 </root>
 
@@ -47,7 +47,7 @@
 	private bool _winner => Race.Winners.Contains( Player.SteamId );
 	private long _steamId => Player.SteamId;
 	private float _progress => Player.Input.Count / (float) Math.Max(1, Race.Target.Count);
-	private TextTheme _theme => TextTheme.DefaultThemes[Player.Theme];
+	private TextTheme _theme => TextTheme.Themes[Player.Theme];
 	private TextTheme _currentTheme = null;
 
 	public override void Tick()

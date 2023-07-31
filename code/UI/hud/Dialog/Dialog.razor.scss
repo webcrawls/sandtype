@@ -1,0 +1,43 @@
+﻿.dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  transform: translate(0);
+  transition: transform 0.25s ease-in-out;
+
+  &:intro {
+    transform: translateX(100%);
+  }
+
+  &:outro {
+    transform: translateX(100%);
+  }
+  
+  .dialog-inner {
+    background-color: #e5d988;
+    backdrop-filter: blur(4px);
+    border: #e55388 4px solid;
+    color: #3b073f;
+    min-width: 400px;
+    min-height: 250px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    
+    .big-text {
+      font-size: 40px;
+      font-weight: bold;
+      font-family: Poppins;
+    } 
+  }
+}

@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.Services;
 using TerryTyper.Controller;
+using TerryTyper.Controller.Shop;
 
 namespace TerryTyper;
 
@@ -15,6 +16,7 @@ public partial class Pawn : AnimatedEntity
 {
 	public DataController Data { get; set; }
 	public AudioController Audio { get; set; }
+	public ShopController Shop { get; set; }
 
 	public override void Spawn()
 	{
@@ -30,6 +32,7 @@ public partial class Pawn : AnimatedEntity
 		base.ClientSpawn();
 		Data = Components.Create<DataController>();
 		Audio = Components.Create<AudioController>();
+		Shop = Components.Create<ShopController>();
 	}
 
 	public override void Simulate( IClient cl )

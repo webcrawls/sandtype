@@ -1,0 +1,7 @@
+﻿{
+  "name": "Racer",
+  "stylesheet": "/UI/Text/Styles/TypeRacer.Theme.scss",
+  "description": "Similar to TypeRacer's colours",
+  "rarity": "common",
+  "icon": "/assets/svg/sun-solid.svg"
+}

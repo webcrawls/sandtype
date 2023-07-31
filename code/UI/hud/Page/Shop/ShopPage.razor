@@ -1,26 +1,29 @@
-﻿@using System
-@using System.Collections.Generic
+﻿@using System.Collections.Generic
+@using System.Linq
 @using Sandbox.UI
 @using TerryTyper.Controller
-@using TerryTyper.Race
+@using TerryTyper.Controller.Shop
+@using TerryTyper.Controller.Shop.Category
 @using TerryTyper.UI.Text
 @inherits Panel
 @implements IGamePage
-@namespace TerryTyper.UI.Hud.Page.Info
+@namespace TerryTyper.UI.Hud.Page.Shop
 @attribute [StyleSheet]
 
 <root>
 	<div class="shop-section">
-		<h1 class="title">Themes</h1>
-		<div class="shop-items">
-			@foreach ( var theme in _themes.Values )
+		<div class="shop-header">
+			<h1 class="title">Themes</h1>
+			<button class="open" @onclick=@(() => _shop.OpenCategory( _themes ))><label>Run the lootbox for 10wt?</label></button>
+		</div>
+		<div class="shop-cards">
+			@foreach ( var theme in TextTheme.Themes.Values )
 			{
-				bool unlocked = _unlockedThemes.Contains( theme.Id );
-				string name = theme.Name;
-				<ShopItem Unlocked="@(unlocked)"
-				          Name="@(name + (_theme == theme.Id ? " (Selected)" : ""))"
-				          Price="@(theme.Cost)"
-				          ClickAction="@( SelectThemeAction( theme ) )"/>
+				<ShopCard Selected="@(_selectedTheme == theme.Id)"
+				          Icon="@theme.Icon"
+				          Name="@theme.Name"
+				          Unlocked="@_unlockedthemes.Contains( theme.Id )"
+				          OnSelect="@( () => { _data.SelectTheme( theme.Id ); })"/>
 			}
 		</div>
 	</div>
@@ -28,33 +31,11 @@
 
 @code {
 	public string Name => "Shop";
-	public bool ShouldScroll => true;
+	public bool ShouldScroll => false;
+	private ShopController _shop => TyperGame.Entity.GamePawn.Shop;
+	private ThemeCategory _themes => _shop.Categories.OfType<ThemeCategory>().First();
 	private DataController _data => TyperGame.Entity.GamePawn.Data;
-	private long _currency => _data.Currency;
-	private string _theme => _data.SelectedTheme;
-	private IList<string> _unlockedThemes => _data.UnlockedThemes;
-	private IDictionary<string, TextTheme> _themes = TextTheme.DefaultThemes;
-
-	private void UnlockTheme( TextTheme theme )
-	{
-		if ( _unlockedThemes.Contains( theme.Id ) ) return;
-		if ( _currency < theme.Cost ) return;
-		_data.Currency -= theme.Cost;
-		_data.UnlockTheme( theme.Id );
-	}
-
-	private Action SelectThemeAction( TextTheme theme )
-	{
-		return () =>
-		{
-			if ( !_unlockedThemes.Contains( theme.Id ) )
-			{
-				UnlockTheme( theme );
-				return;
-			};
-			_data.SelectedTheme = theme.Id;
-			RaceEntity.ThemeGameCmd( theme.Id );
-		};
-	}
+	private IList<string> _unlockedthemes => _data.UnlockedThemes;
+	private string _selectedTheme => _data.SelectedTheme;
 
 }

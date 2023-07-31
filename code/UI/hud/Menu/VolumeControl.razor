@@ -6,7 +6,7 @@
 
 <root>
 	<img @onclick=@(ToggleMute) class="volume-icon" src="@_volumeIcon"/>
-	<SliderControl @ref="_slider" class="slider" @onchange="@HandleSliderChange"/>
+	<SliderControl @ref="_slider" class="slider"/>
 </root>
 
 @code {
@@ -20,11 +20,6 @@
 		_slider.OnValueChanged = ( v ) => TyperGame.Entity.GamePawn.Audio.Volume = (int) v;
 		_slider.Value = TyperGame.Entity.GamePawn.Audio.Volume;
 		_volumeIcon = GetIcon();
-	}
-
-	private void HandleSliderChange( float value )
-	{
-		Log.Info( value );
 	}
 
 	private void ToggleMute()

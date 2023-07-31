@@ -1,0 +1,103 @@
+﻿
+.loot-inner {
+  background-color: #e55388;
+  border-radius: 12.5px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.35s, transform 0.25s;
+  
+  &:intro {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  
+  .header {
+    background-color: #e57d88;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    label {
+      font-weight: bold;
+      
+    }
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+    img {
+      aspect-ratio: 1;
+      width: 100%;
+      height: 100%; 
+    }
+    label {
+      font-size: 40px;
+      color: white;
+      font-family: Poppins;
+      font-weight: bold;
+    }
+  }
+  
+  .bottom {
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 30px;
+    padding: 10px;
+    background-image: linear-gradient(to right, #e57d88, #5ac5cc);
+    
+    .close-button {
+      pointer-events: all;
+      cursor: pointer;
+      background-color: white;
+      border-radius: 10px;
+      padding: 7.5px 20px;
+
+      transform: translateY(0);
+      transition: transform 0.25s ease-in-out;
+      
+      &:hover {
+        transform: translateY(-10%);
+      }
+    }
+  }
+}
+
+
+//.loot-close {
+//  background-image: linear-gradient(to right,#e57d88, #5ac5cc);
+//  cursor: pointer;
+//  pointer-events: all;
+//  background-color: #e57d88;
+//  color: #e3d5cc;
+//  width: 100%;
+//  font-family: Poppins;
+//  font-weight: bold;
+//  font-size: 40px;
+//  border-radius: 10px;
+//  padding-left: 25px;
+//  padding-right: 25px;
+//  padding-left: 12.5px;
+//  padding-right: 12.5px;
+//
+//  transform: translateY(0);
+//  transition: transform 0.35s ease-in-out;
+//
+//  &:hover {
+//    transform: translateY(-10%);
+//  }
+//}

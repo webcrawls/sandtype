@@ -1,0 +1,7 @@
+{
+  "name": "Pastel",
+  "stylesheet": "/UI/Text/Styles/Pastel.Theme.scss",
+  "description": "Similar to TypeRacer's colours",
+  "rarity": "common",
+  "icon": "/assets/svg/palette-solid.svg"
+}

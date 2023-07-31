@@ -53,12 +53,20 @@
 					charClass = "typed";
 				}
 
-				<label class="@charClass">@( visibleChar )</label>
+				<label class="@charClass">
+					@( visibleChar )
+				</label>
+				
 				currentCharacter += 1;
 			}
 			
 			<label class="@currentCharacter">@( _cursorPos == (currentCharacter) ? "_" : " " )</label>
 			currentCharacter += 1;
+		}
+		
+		@if ( _theme.Features.Contains( TextTheme.FEATURE_CURSOR_IMAGE ) )
+		{
+			<div @ref="_cursor" class="cursor-img"></div>
 		}
 	}
 </root>
@@ -72,6 +80,16 @@
 	public bool Enabled;
 	private TextTheme _theme = TextTheme.DefaultTheme;
 	private int _cursorPos => (InputTokens.Sum( s => s.Length ) + InputTokens.Count) + CurrentInput.Length;
+	private Panel _cursor;
+
+	public override void Tick()
+	{
+		base.Tick();
+		if ( _cursor != null )
+		{
+			_cursor.Style.Left = _cursorPos * 30;
+		}
+	}
 
 	protected override int BuildHash()
 	{

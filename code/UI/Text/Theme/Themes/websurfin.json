@@ -1,0 +1,8 @@
+{
+  "name": "Websurfin'",
+  "stylesheet": "/UI/Text/Styles/Websurfin.Theme.scss",
+  "description": "Live like you're in the 90s",
+  "rarity": "legendary",
+  "icon": "/assets/gif/best800x600.gif",
+  "features": ["FEATURE_CURSOR_IMAGE"]
+}

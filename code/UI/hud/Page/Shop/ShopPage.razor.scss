@@ -6,6 +6,8 @@ ShopPage {
   padding-right: 100px;
   font-size: 30px;
   gap: 20px;
+  height: 100%;
+  overflow: visible;
   
   .shop-section {
     background-color: #f0f6e8;
@@ -14,22 +16,40 @@ ShopPage {
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    max-width: 800px;
+    height: 100%;
     
     .title {
       
     }
-    
+
+    .shop-header {
+      gap: 20px;
+      padding-bottom: 20px;
+      
+      .open {
+        pointer-events: all;
+        cursor: pointer;
+        background-color: #5ac5cc;
+        color: #ffffff;
+        font-weight: bold;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
+      }
+    }
+
     label {
       margin-top: 10px;
       margin-bottom: 10px;
     }
   }
   
-  .shop-items {
+  .shop-cards {
     gap: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
   }
   
   .info-header {

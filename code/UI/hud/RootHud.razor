@@ -15,12 +15,16 @@
 			
 		</div>
 	</div>
+	<div class="game-dialog-wrapper" @ref="DialogWrapper">
+    	
+    </div>
 </root>
 
 @code {
 
 	public Panel MenuWrapper;
 	public Panel PageWrapper;
+	public Panel DialogWrapper;
 	public bool ShowMenu = false;
 
 	protected override int BuildHash()

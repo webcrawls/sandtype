@@ -4,8 +4,7 @@
 @using Sandbox
 @using TerryTyper.UI.Text
 @using Sandbox.UI
-@using TerryTyper.UI.Hud.Page.Race.List
-@using TerryTyper.UI.Hud.Page.Race.Player
+@using TerryTyper.UI.Hud.Page.Race.Player;
 @using TerryTyper.Race
 @inherits Panel
 @implements TerryTyper.UI.Hud.Page.IGamePage
@@ -54,7 +53,7 @@
 	public RacePlayer LocalPlayer => Race.GetPlayer( Game.LocalClient.SteamId );
 	public string Name => Race?.Name ?? "No race, join one!";
 	private TextInput _input;
-	private TextTheme _theme => TextTheme.DefaultThemes[TyperGame.Entity.GamePawn.Data.SelectedTheme];
+	private TextTheme _theme => TextTheme.Themes[TyperGame.Entity.GamePawn.Data.SelectedTheme];
 	public bool ShouldScroll => false;
 
 	public override void Tick()

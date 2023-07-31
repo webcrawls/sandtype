@@ -6,11 +6,11 @@ namespace Sandtype.Engine.Text;
 
 public class DictionaryFileTextProvider : DictionaryTextProvider
 {
-	
-	public string File { get; set; }
+
+	public override string Id { get; }
 
 	public DictionaryFileTextProvider( string file ) : base(FileSystem.Mounted.ReadJson<TextDictionary>( file ).Words)
 	{
-		File = file;
+		Id = file;
 	}
 }

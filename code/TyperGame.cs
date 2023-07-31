@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Sandbox;
 using TerryTyper.Controller;
-using TerryTyper.Race;
 
 namespace TerryTyper
 {
@@ -39,7 +38,7 @@ namespace TerryTyper
 			if ( randomSpawnPoint != null )
 			{
 				var tx = randomSpawnPoint.Transform;
-				tx.Position = tx.Position + Vector3.Up * 50.0f; // raise it up
+				tx.Position += Vector3.Up * 50.0f; // raise it up
 				pawn.Transform = tx;
 			}
 		}

@@ -1,0 +1,8 @@
+{
+  "name": "Myahoo!",
+  "stylesheet": "/UI/Text/Styles/Myahoo.Theme.scss",
+  "sound": "sounds/myahoo/myahoo.sound",
+  "description": "The chef's pick",
+  "rarity": "legendary",
+  "icon": "/assets/gif/hamster.gif"
+}

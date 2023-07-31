@@ -22,4 +22,6 @@ public class QuoteTextProvider : TextProvider
 	{
 		return Text;
 	}
+
+	public string Id { get; } = "Quote";
 }

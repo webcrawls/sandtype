@@ -1,6 +1,8 @@
-﻿using Sandbox;
+﻿using System.Collections.Generic;
+using Sandbox;
 using TerryTyper.Race;
 using TerryTyper.UI.Hud;
+using TerryTyper.UI.Hud.Dialog;
 using TerryTyper.UI.Hud.Menu;
 using TerryTyper.UI.Hud.Page;
 
@@ -10,17 +12,21 @@ public class UIController : EntityComponent<GameManager>
 {
 
 	public RootHud Hud;
-
 	public GameMenu MenuPanel { get { return _menuPanel; } set {SetMenu( value );} }
 	public RootGamePage PagePanel { get { return _pagePanel; } set {SetPage( value );} }
-
+	
 	private GameMenu _menuPanel;
 	private RootGamePage _pagePanel;
-
+	
 	public void PageNavigate(string route)
 	{
 		OpenPage();
 		_pagePanel.Navigate( route );
+	}
+
+	public void ShowDialog( Dialog dialog )
+	{
+		Hud.DialogWrapper.AddChild( dialog );
 	}
 	
 	public void ToggleUI()

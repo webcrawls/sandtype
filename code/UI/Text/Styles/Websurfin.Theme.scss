@@ -1,0 +1,53 @@
+﻿TextView {
+  background-color: white;
+  font-size: 40px;
+  font-family: JetBrainsMono;
+  background-image: url("/assets/gif/stars.gif");
+  background-repeat: repeat;
+  font-weight: bold;
+  position: relative;
+
+  .cursor-img {
+    position: absolute;
+    background-image: url("/assets/gif/cursor_1.png");
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+    left: 0;
+    
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .cursor {
+    color: #93d4b5;
+    position: relative;
+    
+    //:after {
+    //  position: absolute;
+    //  background-color: red;
+    //  width: 10px;
+    //  height: 10px;
+    //}
+  }
+
+  .error {
+    color: #c45d9f;
+  }
+
+  .typed {
+    color: #634b7d;
+  }
+
+  .untyped {
+    color: #6461c2;
+  }
+}
+
+.text-race-view {
+  font-size: 30px;
+  background-image: url("/assets/gif/stars.gif");
+  background-repeat: repeat;
+}

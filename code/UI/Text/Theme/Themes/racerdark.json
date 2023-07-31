@@ -1,0 +1,7 @@
+{
+  "name": "Racer Dark",
+  "stylesheet": "/UI/Text/Styles/TypeRacerDark.Theme.scss",
+  "description": "Similar to TypeRacer's colours, but dark-mode",
+  "rarity": "common",
+  "icon": "/assets/svg/moon-solid.svg"
+}

@@ -47,7 +47,7 @@ public class AudioController : EntityComponent<Pawn>
 
 	private string GetSound()
 	{
-		var theme = TextTheme.DefaultThemes[_data.SelectedTheme];
+		var theme = TextTheme.Themes[_data.SelectedTheme];
 		if ( string.IsNullOrEmpty(theme.Sound) )
 		{
 			return DefaultSoundAsset;
