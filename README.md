@@ -19,7 +19,7 @@ All contributions are welcome! Don't hesitate to open issues or PRs for things y
 
 ### Contributing Notes
 
-- 💄 Themes go in the [`code/UI/Text/Theme/Themes`](https://github.com/webcrawls/sandtype/tree/master/code/UI/Text/Theme/Themes) folder.
+- 💄 Themes go in the [`themes/`](https://github.com/webcrawls/sandtype/tree/master/themes) folder.
 - 🌐 New languages go in [`text/`](https://github.com/webcrawls/sandtype/tree/master/text).
 
 ## 🌎 Useful Resources
