@@ -1,0 +1,27 @@
+﻿@namespace TerryTyper
+@attribute [StyleSheet]
+@using System
+@using Sandbox
+@using Sandbox.UI
+@inherits Panel
+
+<root>
+	<button class="menu-button" @onclick=@(()  => UIController.Current.PageNavigate( "/themes" ))>
+		<img class="menu-icon" src="/assets/svg/sun.svg"/>
+		<div class="menu-text">
+			<label>Themes</label>
+			<label class="menu-text-subtitle">(@(_unlockedThemes) Unlocked)</label>
+		</div>
+	</button>
+</root>
+
+@code {
+
+	private int _unlockedThemes => DataController.Current.UnlockedThemes.Count;
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _unlockedThemes );
+	}
+
+}

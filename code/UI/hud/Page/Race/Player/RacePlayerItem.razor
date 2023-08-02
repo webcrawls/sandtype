@@ -1,8 +1,6 @@
-﻿@namespace TerryTyper.UI.Hud.Page.Race.Player
+﻿@namespace TerryTyper
 @using System
 @using Sandbox.UI
-@using TerryTyper.Race
-@using TerryTyper.UI.Text
 @inherits Panel
 @attribute [StyleSheet]
 
@@ -40,7 +38,7 @@
 @code {
 
 	public RacePlayer Player;
-	public RaceEntity Race;
+	public Race Race;
 	
 	private TextView _view;
 	private string _name => Player.SteamName;
@@ -54,9 +52,8 @@
 	{
 		base.Tick();
 		_view.CurrentInput = Player.CurrentInput;
-		_view.InputTokens = Player.Input;
-		_view.TargetTokens = Race.Target;
-		_view.Enabled = Race.State == RaceState.RUNNING;
+		_view.Input = Player.Input;
+		_view.Target = Race.Target;
 		if ( _theme.Id != _currentTheme?.Id )
 		{
 			if ( _currentTheme != null )

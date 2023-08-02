@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TerryTyper.Text;
+namespace TerryTyper;
 
 public class QuoteTextProvider : TextProvider
 {

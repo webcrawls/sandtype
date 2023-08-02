@@ -1,0 +1,101 @@
+﻿@namespace TerryTyper
+@attribute [StyleSheet]
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using Sandbox
+@using Sandbox.UI
+@inherits Panel
+
+<root>
+	<div class="race-creation">
+		<div class="create-section">
+			<h1>Create Race</h1>
+			<button class="create-button" @onclick=@(HandleCreateRace)>Create</button>
+		</div>
+		<div class="setup-section">
+			<RaceTextTypeDropdown @ref="_languageDropdown"/>
+			<SliderControl OnValueChanged="@(UpdateSizeSlider)" Value="@(20)" class="slider" @ref="_sizeSlider"/>
+		</div>
+	</div>
+	<div class="races">
+		@for ( int i = 0; i < Races.Count; i++ )
+		{
+			var race = Races[i];
+			if ( race == null ) continue;
+			int index = i;
+			<RaceListItem SelectedIndex="@index"
+			              Index="@index"
+			              Race="@race"
+			              SelectedAction="@(() => JoinRace( race.RaceId ))"
+			              LeaveAction="@(LeaveRace)"
+			              DeleteAction="@(() => DeleteRace( race.RaceId ))"/>
+		}
+	</div>
+</root>
+
+@code {
+	
+	private const float InteractTimer = 0.1f;
+	private static IList<Race> Races => Entity.All.OfType<Race>().ToList();
+	private TimeSince _timeSinceLastInteract = 0f;
+	private RaceTextTypeDropdown _languageDropdown;
+	private SliderControl _sizeSlider;
+	public bool _createSectionShown = false;
+
+	protected override int BuildHash()
+	{
+		var code = new HashCode();
+		foreach ( var race in Races )
+		{
+			code.Add( race.RaceId );
+		}
+		code.Add( _createSectionShown );
+		var res = code.ToHashCode();
+		return res;
+	}
+
+	private void ToggleCreateSection()
+	{
+		_createSectionShown = !_createSectionShown;
+	}
+
+	private void HandleCreateRace()
+	{
+		if ( !CanInteract() ) return;
+		var language = (string) _languageDropdown.Selected.Value;
+		var size = (int)_sizeSlider.Value;
+		Race.CreateGameCmd( language, size );
+	}
+	
+	private void JoinRace(int raceId)
+	{
+		if ( !CanInteract() ) return;
+		Race.JoinGameCmd( raceId, DataController.Current.SelectedTheme );
+	}
+
+	private void DeleteRace( int raceId )
+	{
+		if ( !CanInteract() ) return;
+		Race.DeleteGameCmd( raceId );
+	}
+
+	private void LeaveRace()
+	{
+		if ( !CanInteract() ) return;
+		Race.LeaveGameCmd();
+	}
+
+	private bool CanInteract()
+	{
+		if ( _timeSinceLastInteract < InteractTimer ) return false;
+		_timeSinceLastInteract = 0f;
+		return true;
+	}
+
+	private void UpdateSizeSlider(float val)
+	{
+		_sizeSlider.Tooltip = _sizeSlider.Value+" Words";
+	}
+
+}

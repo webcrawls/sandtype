@@ -1,35 +1,61 @@
 GameMenu {
-  background-color: #f0f6e8;
+  // display
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  border: 2px solid black;
+  pointer-events: all;
+  width: 100%;
+
+  // arrangement
   display: flex;
   flex-direction: column;
-  border-top-right-radius: 20px;
-  width: 100%;
-  opacity: 1;
-  transition: opacity 0.25s ease-in-out;
-  pointer-events: all;
-  
-  &:intro {
-    opacity: 0;
-  }
-
-  &:outro {
-    opacity: 0;
-  }
 
   .header {
-    font-family: Poppins;
-    font-size: 30px;
-    color: #372448;
-    padding: 6px;
-    padding-top: 12px;
-    border-bottom: 3px solid #634b7d;
+    background-color: gray;
+    color: black;
+    padding: 2px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 40px;
+    
+    .close-button {
+      background-color: white;
+      color: gray;
+      font-weight: bold;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
   }
   
   .body {
     display: flex;
     flex-direction: column;
-    padding: 40px;
-    border-radius: 20px;
     gap: 20px;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    
+    .hidden {
+      display: none;
+    }
+  }
+  
+  // intro/outro animation
+  opacity: 1;
+  transform: translate(0);
+  transition: transform 0.25s ease-in-out, opacity 0.3s;
+
+  &:intro {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  &:outro {
+    opacity: 0;
+    transform: translateY(100%);
   }
 }

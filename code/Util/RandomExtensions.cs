@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TerryTyper.Util;
+namespace TerryTyper;
 
 public static class RandomExtensions
 {
 
 	private static Random _random = new Random();
     
-	public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector) {
+	public static (T, double) RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector) {
 		float totalWeight = sequence.Sum(weightSelector);
 		// The weight we are after...
 		float itemWeightIndex =  (float)_random.NextDouble() * totalWeight;
@@ -19,12 +19,12 @@ public static class RandomExtensions
 			currentWeightIndex += item.Weight;
             
 			// If we've hit or passed the weight we are after for this item then it's the one we want....
-			if(currentWeightIndex >= itemWeightIndex)
-				return item.Value;
-            
+			if ( currentWeightIndex >= itemWeightIndex )
+				return (item.Value, (item.Weight / totalWeight) * 100f);
+
 		}
         
-		return default(T);
+		return (default(T), 0f);
         
 	}
 

@@ -1,0 +1,17 @@
+﻿@using Sandbox.UI
+@namespace TerryTyper
+@inherits Panel
+@implements IGamePage
+@attribute [StyleSheet]
+
+<root>
+	<div class="info-section">
+		<label>You are not in a battle.</label>
+		<button @onclick=@(() => Battle.CreateCmd())>Start one?</button>
+	</div>
+</root>
+
+@code {
+	public string Name => "Battle";
+	public bool ShouldScroll => false;
+}

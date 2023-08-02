@@ -1,6 +1,6 @@
 ﻿using Sandbox.UI;
 
-namespace TerryTyper.UI.Hud;
+namespace TerryTyper;
 
 public partial class RootHudBase : RootPanel
 {

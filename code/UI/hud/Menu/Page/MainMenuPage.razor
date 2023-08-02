@@ -1,0 +1,49 @@
+﻿@namespace TerryTyper
+@attribute [StyleSheet]
+@using System.Linq
+@using Sandbox
+@using Sandbox.UI
+@inherits Panel
+
+<root>
+	<button class="menu-button" @onclick=@(() => UIController.Current.MenuNavigate( "/races" ))>
+		<img class="menu-icon" src="/assets/svg/swords.svg"/>
+		<div class="menu-text">
+			<label>Races</label>
+			<div class="menu-subtitle">
+				<label>@_races races</label>
+				@if ( Race.IsInRace( Game.LocalClient.SteamId ) )
+				{
+					<label class="menu-text-active">1 joined race currency running</label>
+				}
+			</div>
+		</div>
+	</button>
+	<button class="menu-button" @onclick=@(() => UIController.Current.PageNavigate( "/battle" ) )>
+		<img class="menu-icon" src="/assets/svg/flag.svg"/>
+		<div class="menu-text">
+			<label>Battles</label>
+			<div class="menu-subtitle">
+				<label>@_battles battles</label>
+				@if ( Battle.IsInBattle( Game.LocalClient.SteamId ) )
+				{
+					<label class="menu-text-active">(Active!)</label>
+				}
+			</div>
+		</div>
+	</button>
+	<button class="menu-button" @onclick=@(() => UIController.Current.MenuNavigate( "/collection" ))>
+		<img class="menu-icon" src="/assets/svg/trophy.svg"/>
+		<label>Collection</label>
+	</button>
+	<div class="menu-button">
+		<VolumeControl/>
+	</div>
+</root>
+
+@code {
+
+	private int _races => Entity.All.OfType<Race>().Count();
+	private int _battles => Entity.All.OfType<Battle>().Count();
+
+}

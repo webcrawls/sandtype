@@ -1,0 +1,36 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Sandbox.UI
+@inherits Panel
+@implements IGamePage
+@namespace TerryTyper
+@attribute [StyleSheet]
+
+<root>
+	<div class="shop-section">
+		<div class="shop-header">
+			<h1 class="title">Themes</h1>
+			<button class="open" @onclick=@(() => _shop.OpenCategory( _themes ))><label>Run the lootbox for 15wt?</label></button>
+		</div>
+		<div class="shop-cards">
+			@foreach ( var theme in TextTheme.Themes.Values )
+			{
+				<ThemeCard Selected="@(_selectedTheme == theme.Id)"
+				          Icon="@theme.Icon"
+				          Name="@theme.Name"
+				          Unlocked="@_unlockedthemes.Contains( theme.Id )"
+				          OnSelect="@( () => { _data.SelectTheme( theme.Id ); })"/>
+			}
+		</div>
+	</div>
+</root>
+
+@code {
+	public string Name => "Themes";
+	public bool ShouldScroll => false;
+	private ShopController _shop => ShopController.Current;
+	private ThemeCategory _themes => _shop.Categories.OfType<ThemeCategory>().First();
+	private DataController _data => DataController.Current;
+	private IList<string> _unlockedthemes => _data.UnlockedThemes;
+	private string _selectedTheme => _data.SelectedTheme;
+}

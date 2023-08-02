@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TerryTyper.Text;
+namespace TerryTyper;
 
 // todo configurabletextprovider
 public interface TextProvider

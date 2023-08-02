@@ -1,0 +1,12 @@
+﻿MenuPageBase {
+	opacity: 1;
+	transition: opacity 0.4s ease-in-out;
+	
+	&:intro {
+		opacity: 0;
+	}
+
+	&:outro {
+		opacity: 0;
+	}
+}

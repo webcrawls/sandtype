@@ -1,64 +1,46 @@
 GameNav {
+  // display
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  border: 2px solid black;
+  border-top: none;
+  
+  // arrangement
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 100px;
+  justify-content: space-between;
 
-  .wrapper {
-    font-family: Poppins;
-    font-weight: bold;
-    font-color: white;
-    background-color: rgba(99, 75, 125, 0.7);
-    backdrop-filter: blur(4px);
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-    font-size: 40px;
-    text-stroke: 3px black;
-    width: 100%;
-    overflow: hidden;
-
+  margin-left: 100px;
+  margin-right: 100px;
+  
+  .header {
+    background-color: gray;
+    color: black;
+    padding: 2px;
+    padding-bottom: 5px;
+  }
+  
+  .content {
+    padding-left: 30px;
+    padding-right: 30px;
+    
+    .nav-text {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-radius: 7.5px;
+      font-family: Poppins;
+      color: black;
+      font-weight: bold;
+    }
+  }
+  
+  .row {
     display: flex;
     flex-direction: row;
-    
-    .spacer {
-      padding: 15px;
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-    
-    .info {
-      padding: 15px;
-      flex-grow: 1;
-      width: 100%;
-      background-color:  #6461c2;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .control {
-      padding: 15px;
-      flex-grow: 1;
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-  
-  .logo-icon {
-    height: 120px;
-  }
-  
-  .menu-button {
-    background-color: white;
-    border-radius: 10px;
-    color: white;
-    text-stroke: 6px black;
-    padding-left: 20px;
-    padding-right: 20px;
+    justify-content: space-between;
     align-items: center;
   }
 }

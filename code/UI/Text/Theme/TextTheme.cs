@@ -5,7 +5,7 @@ using Editor;
 using Microsoft.VisualBasic;
 using FileSystem = Sandbox.FileSystem;
 
-namespace TerryTyper.UI.Text;
+namespace TerryTyper;
 
 public class TextTheme
 {

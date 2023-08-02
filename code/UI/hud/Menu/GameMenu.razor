@@ -1,15 +1,17 @@
-﻿@namespace TerryTyper.UI.Hud.Menu
-@using TerryTyper.UI.Hud.Menu.Race
+﻿@namespace TerryTyper
 @using Sandbox.UI
-@inherits Panel
+@inherits GameMenuBase
 @attribute [StyleSheet]
 
 <root>
 	<div class="header">
-		<h1>Typing with Terry (・∀・)ノ</h1>
+		<h1>GameMenu</h1>
+		@if ( CurrentUrl != "/" )
+		{
+			<button class="close-button" @onclick=@(() => Navigate( "/" ))><label>&lt;&lt;&lt;</label></button>
+		}
 	</div>
 	<div class="body">
-		<MenuControl/>
-		<RaceList/>
+		<div slot="navigator-canvas"></div>
 	</div>
 </root>

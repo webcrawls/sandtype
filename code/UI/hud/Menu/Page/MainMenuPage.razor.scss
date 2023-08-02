@@ -1,0 +1,51 @@
+MainMenuPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  
+  .menu-button {
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 10px;
+    font-family: Poppins;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: all;
+    cursor: pointer;
+    border-radius: 10px;
+    background-image: linear-gradient(to left, white, #4795d2);
+    
+    transition: transform 0.25s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-10%);
+    }
+    
+    .menu-icon {
+      height: 100%;
+    }
+  }
+  
+  .menu-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .menu-subtitle {
+    display: flex;
+    flex-direction: row;
+    font-weight: normal;
+    font-size: 30px;
+  }
+
+  .menu-text-active {
+    color: gray;
+    padding-left: 20px;
+  }
+}

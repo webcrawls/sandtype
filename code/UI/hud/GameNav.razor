@@ -1,4 +1,4 @@
-﻿@namespace TerryTyper.UI.Hud
+﻿@namespace TerryTyper
 @using System
 @using Sandbox
 @using Sandbox.UI
@@ -6,26 +6,28 @@
 @attribute [StyleSheet]
 
 <root>
-	<div class="wrapper">
+	<div class="header row">
+		<label>Typing with Terry v2.0.0 ~ Latest Change: Cool UI!</label>
+	</div>
+	<div class="content row">
 		<div class="info">
-			<p>@_currency wt</p>
+			<label class="nav-text">@_currency wt</label>
 		</div>
-		<div class="spacer"><img class="logo-icon" src="/assets/gif/logo.gif"/></div>
+		<div class="title"><img class="logo-icon" src="/assets/gif/logo.gif"/></div>
 		<div class="control">
-			<h1 class="menu-button">press @_tabAction</h1>
+			<label class="nav-text">Use Menu Bind</label>
 		</div>
 	</div>
 </root>
 
 @code {
 
-	private string _tabAction => Input.GetButtonOrigin( "menu" );
 	private bool _isSet = false;
-	private long _currency => TyperGame.Entity?.GamePawn.Data?.Currency ?? 0L;
+	private long _currency => DataController.Current.Currency;
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( _tabAction, _currency );
+		return HashCode.Combine( _currency );
 	}
 
 }

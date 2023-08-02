@@ -13,13 +13,15 @@
   }
 
   .game-menu-wrapper {
-    width: 45%;
+    width: 30%;
     height: 100%;
+    pointer-events: none;
   }
 
   .game-page-wrapper {
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
   
   .game-dialog-wrapper {

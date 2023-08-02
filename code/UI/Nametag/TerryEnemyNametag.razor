@@ -1,0 +1,39 @@
+﻿@namespace TerryTyper
+@using System
+@using Sandbox.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	@{
+		int length = Math.Max( _target.Length, _input.Length );
+		for ( int i = 0; i < length; i++ )
+		{
+			if ( i < _input.Length )
+			{
+				<label>@_input[i]</label>
+			} else if ( i < _target.Length )
+			{
+				<label>@_target[i]</label>
+			}
+		}
+	}
+</root>
+
+@code {
+
+	private BattleEnemy _enemy;
+	private string _input => _enemy.Input;
+	private string _target => _enemy.Target;
+
+	public TerryEnemyNametag( BattleEnemy enemy )
+	{
+		_enemy = enemy;
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _target, _input );
+	}
+
+}

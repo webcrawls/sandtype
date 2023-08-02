@@ -1,0 +1,45 @@
+CollectionMenuPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+
+  .menu-button {
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 10px;
+    gap: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Poppins;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    background-image: linear-gradient(to left, white, #4795d2);
+
+    transition: transform 0.25s ease-in-out;
+
+    &:hover {
+      transform: translateY(-10%);
+    }
+
+    .menu-text-subtitle {
+      font-size: 30px;
+      font-weight: normal;
+    }
+    
+    .menu-text {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .menu-text-active {
+    color: gray;
+    padding-left: 20px;
+  }
+
+}

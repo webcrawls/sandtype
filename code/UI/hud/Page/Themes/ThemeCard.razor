@@ -1,0 +1,40 @@
+﻿@namespace TerryTyper
+@attribute [StyleSheet]
+@using System
+@using Sandbox.UI
+@inherits Panel
+
+<root @onclick=@(HandleClick)>
+	<div class="theme-body">
+		<img src="@Icon"/>
+	</div>
+	<div class="theme-name">
+		<label>@Name</label>
+		@if ( !Unlocked )
+		{
+			<label>🔒</label>
+		}
+	</div>
+</root>
+
+@code {
+
+	public Action OnSelect;
+	public string Name;
+	public string Icon;
+	public bool Unlocked;
+	public bool Selected;
+
+	public ThemeCard()
+	{
+		BindClass( "unlocked", () => Unlocked );
+		BindClass( "selected", () => Selected );
+	}
+
+	private void HandleClick()
+	{
+		if ( !Unlocked ) return;
+		OnSelect?.Invoke();
+	}
+
+}

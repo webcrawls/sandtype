@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Sandbox;
 
-namespace TerryTyper.Race;
+namespace TerryTyper;
 
-public partial class RacePlayer : EntityComponent<RaceEntity>
+public partial class RacePlayer : EntityComponent<Race>
 {
 
 	[Net] public string SteamName { get; set; }
@@ -24,7 +24,8 @@ public partial class RacePlayer : EntityComponent<RaceEntity>
 		var input = new List<string>( Input );
 		if ( CheckInputAccuracy() )
 		{
-			TyperGame.Entity.Pawns[SteamId].WordTyped();
+			// todo this vvvv
+//			TyperGame.Entity.Pawns[SteamId].WordTyped();
 		}
 		input.Add( CurrentInput );
 		Input = input;

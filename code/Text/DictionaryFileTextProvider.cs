@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-namespace TerryTyper.Text;
+namespace TerryTyper;
 
 public class DictionaryFileTextProvider : DictionaryTextProvider
 {

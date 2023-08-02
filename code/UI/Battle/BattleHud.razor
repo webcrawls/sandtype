@@ -1,0 +1,42 @@
+﻿@namespace TerryTyper.UI
+@attribute [StyleSheet]
+@using Sandbox.UI
+@inherits Panel
+
+<root>
+	<div class="inner">
+		<div class="battle-control">
+			<button @onclick=@(() => Battle.LeaveCmd())>
+				<label>Leave Race</label>
+			</button>
+		</div>
+		<TextInput OnWordTyped="@SubmitWord" @ref="_view"/>
+	</div>
+</root>
+
+@code {
+
+	private Battle _battle;
+	private TextInput _view;
+
+	public BattleHud( Battle battle )
+	{
+		_battle = battle;
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+		if ( _view == null ) return;
+		if ( _battle == null ) return;
+
+		_view.TargetTokens = _battle.TargetList;
+		_view.Theme = TextTheme.DefaultTheme;
+	}
+
+	private void SubmitWord(string input)
+	{
+		Battle.SubmitCmd( input );
+	}
+
+}

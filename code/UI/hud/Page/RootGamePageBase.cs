@@ -1,9 +1,6 @@
 ﻿using Sandbox.UI;
-using TerryTyper.UI.Hud.Page.Info;
-using TerryTyper.UI.Hud.Page.Race;
-using TerryTyper.UI.Hud.Page.Shop;
 
-namespace TerryTyper.UI.Hud.Page;
+namespace TerryTyper;
 
 public class GamePageBase : NavHostPanel
 {
@@ -27,7 +24,8 @@ public class GamePageBase : NavHostPanel
 		AddDestination( "/", typeof(InfoPage) );
 		AddDestination( "/stats", typeof(StatsPage) );
 		AddDestination( "/race", typeof(RacePage) );
-		AddDestination( "/shop", typeof(ShopPage) );
+		AddDestination( "/themes", typeof(ThemePage) );
+		AddDestination( "/battle", typeof(BattlePage) );
 	}
 
 	protected override void OnAfterTreeRender( bool firstTime )
@@ -42,6 +40,6 @@ public class GamePageBase : NavHostPanel
 
 	protected void HandleClose()
 	{
-		TyperGame.Entity.UI.ClosePage();
+		UIController.Current.ClosePage();
 	}
 }

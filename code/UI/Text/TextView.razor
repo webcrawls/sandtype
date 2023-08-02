@@ -1,133 +1,202 @@
-﻿@namespace TerryTyper.UI.Text
+﻿@namespace TerryTyper
 @using System
 @using System.Collections.Generic
 @using System.Linq
-@using Sandbox.Razor
 @using Sandbox.UI
 @attribute [StyleSheet]
 @inherits Panel
 
 <root>
+	@if ( DebugOverlay )
+	{
+		<div class="debug-overlay">
+			<label>@String.Join( "', '", Input )</label>
+			<label>@String.Join( "', '", Target )</label>
+			<label>Breaks: @String.Join( "', '", _breaks.Select( e => e.ToString() ) )</label>
+		</div>
+	}
 	@{
-		int perPage = 10;
-		int currentWord = InputTokens.Count;
-		int page = (int)(Math.Ceiling( (float)Math.Max( currentWord + 1, 0 ) / perPage ));
-		int currentCharacter = 0;
-		int offset = Math.Max( page - 1, 0 ) * perPage;
+		int currentChar = 0;
 
-		for ( int wordIndex = offset; wordIndex < (offset + perPage); wordIndex++ )
+		for ( int word = _startBreak; word < _endBreak; word++ )
 		{
-			if ( wordIndex >= TargetTokens.Count )
-				break;
+			var isCurrentWord = word == Input.Count;
+			var input = isCurrentWord ? CurrentInput : word < Input.Count ? Input[word] : "";
+			var target = word < Target.Count ? Target[word] : "";
+			var combined = JoinWord( input, target );
 
-			var isCurrentWord = wordIndex == currentWord;
-			var targetWord = TargetTokens[wordIndex];
-			var inputWord = isCurrentWord ? CurrentInput : wordIndex < InputTokens.Count ? InputTokens[wordIndex] : "";
-
-			for ( int charIndex = 0; charIndex < Math.Max( inputWord?.Length ?? 0, targetWord?.Length??0); charIndex++ )
+			for ( int c = 0; c < combined.Length; c++ )
 			{
-				var targetChar = GetChar( targetWord, charIndex );
-				var inputChar = GetChar( inputWord, charIndex );
-				var visibleChar = inputChar ?? targetChar ?? '.';
-				visibleChar = visibleChar == ' ' ? '_' : visibleChar; // force spaces to show as underscores
-				var charClass = "";
-				if ( currentCharacter == _cursorPos )
+				string cls = "";
+
+				if ( isCurrentWord && c == input.Length )
 				{
-					// is the current position
-					charClass = "cursor";
+					cls += " cursor";
 				}
-				else if ( targetChar == null && inputChar != null )
+				else if ( c > target.Length )
 				{
-					charClass = "error";
+					// error; we typed too much
+					cls += " error";
 				}
-				else if ( targetChar != null && inputChar == null )
+				else if ( c < target.Length && c < input.Length && input[c] != target[c] )
 				{
-					charClass = "untyped";
+					// error; typo
+					cls += " error";
 				}
-				else if ( targetChar != null && inputChar != null && targetChar != inputChar )
+				else if ( c < target.Length && c < input.Length && input[c] == target[c] )
 				{
-					charClass = "error";
-				}
-				else if ( targetChar != null && inputChar != null && targetChar == inputChar )
-				{
-					charClass = "typed";
+					cls += " typed";
 				}
 
-				<label class="@charClass">
-					@( visibleChar )
-				</label>
-				
-				currentCharacter += 1;
+				<label class="@cls">@combined[c]</label>
+				currentChar += 1;
 			}
-			
-			<label class="@currentCharacter">@( _cursorPos == (currentCharacter) ? "_" : " " )</label>
-			currentCharacter += 1;
-		}
-		
-		@if ( _theme.Features.Contains( TextTheme.FEATURE_CURSOR_IMAGE ) )
-		{
-			<div @ref="_cursor" class="cursor-img"></div>
+
+			if ( currentChar == _cursorPos )
+			{
+				<label>@( "_" )</label>
+			}
+			else
+			{
+				<label>@( " " )</label>
+			}
+			currentChar += 1;
 		}
 	}
 </root>
 
 @code {
-	
+
+	private const int CHARS_PER_ROW = 55;
+
+	private bool DebugOverlay = false;
+
 	public TextTheme Theme { get { return _theme; } set { UpdateTheme(value); } }
+	
 	public string CurrentInput = "";
-	public IList<string> TargetTokens = new List<string>();
-	public IList<string> InputTokens = new List<string>();
-	public bool Enabled;
+	public IList<string> Target = new List<string>();
+	public IList<string> Input = new List<string>();
+	
+	private int _cursorPos => Input.Sum( w => w.Length ) + Input.Count + CurrentInput.Length;
 	private TextTheme _theme = TextTheme.DefaultTheme;
-	private int _cursorPos => (InputTokens.Sum( s => s.Length ) + InputTokens.Count) + CurrentInput.Length;
-	private Panel _cursor;
+	
+	// A list of word indexes indicating breakpoints in the word renderer.
+	private List<int> _breaks = new(){0};
+	private int _startBreak = 0;
+	private int _endBreak = 0;
 
 	public override void Tick()
 	{
 		base.Tick();
-		if ( _cursor != null )
-		{
-			_cursor.Style.Left = _cursorPos * 30;
-		}
+		
+		BuildBreaks();
+		var (startBreak, endBreak) = BreakBounds();
+		Log.Info( $"Target: {Target.Count}, Typed: {Input.Count}, Breaks: {String.Join(", ", _breaks.Select( e => e.ToString() ))}" );
+		_startBreak = startBreak;
+		_endBreak = endBreak;
 	}
 
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		base.OnAfterTreeRender( firstTime );
+		UpdateTheme( _theme );
+	}
+	
 	protected override int BuildHash()
 	{
 		var code = new HashCode();
-		foreach (string str in TargetTokens)
+		foreach (string str in Input)
 		{
 			code.Add( str );
 		}
-		foreach (string str in InputTokens)
+		foreach (string str in Target)
 		{
 			code.Add( str );
 		}
 		code.Add( CurrentInput );
-		code.Add( _theme.Name );
+		code.Add( _theme?.Name ?? "notheme" );
+		code.Add( _startBreak );
+		code.Add( _endBreak );
 		var res=  code.ToHashCode();
 		return res;
 	}
 
-	private char? GetChar( string text, int index )
-	{
-		if ( text == null )
-		{
-			return null;
-		}
-
-		if ( index < text.Length )
-		{
-			return text[index];
-		}
-
-		return null;
-	}
-	
 	private void UpdateTheme(TextTheme theme)
 	{
-		StyleSheet.Remove( _theme.Stylesheet );
-		StyleSheet.Load( theme.Stylesheet );
+		if ( _theme != null )
+			StyleSheet.Remove( _theme.Stylesheet );
+
+		if ( theme != null )
+			StyleSheet.Load( theme.Stylesheet );
+		
 		_theme = theme;
+	}
+
+	private void BuildBreaks()
+	{
+		// SpaceLeft := LineWidth
+		// for each Word in Text
+		// if (Width(Word) + SpaceWidth) > SpaceLeft
+		// 	insert line break before Word in Text
+		//  SpaceLeft := LineWidth - Width(Word)
+		// else
+		//  SpaceLeft := SpaceLeft - (Width(Word) + SpaceWidth)
+		// https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap
+		var breaks = new List<int> {0};
+		var spaceLeft = CHARS_PER_ROW;
+		
+		for (int i = 0; i < Target.Count; i++ )
+		{
+			var word = Target[i];
+			if ( word.Length + 1 > spaceLeft )
+			{
+				breaks.Add(i);
+				spaceLeft = CHARS_PER_ROW - word.Length;
+			}
+			else
+			{
+				spaceLeft = spaceLeft - (word.Length + 1);
+			}
+		}
+		
+		_breaks = breaks;
+	}
+	
+	private (int, int) BreakBounds()
+	{
+		int breakIndex = 0;
+		int currentBreak = 0;
+		int endingBreak = 0;
+		while ( Input.Count >= _breaks[breakIndex] )
+		{
+			currentBreak = _breaks[breakIndex];
+			endingBreak = (breakIndex + 1) < _breaks.Count ? _breaks[breakIndex + 1] : Target.Count;
+			
+			breakIndex += 1;
+			if ( breakIndex >= _breaks.Count )
+				break;
+		}
+
+		return (currentBreak,endingBreak);
+	}
+
+	private string JoinWord( string input, string target )
+	{
+		string c = "";
+		input ??= "";
+		target ??= "";
+
+		var maxLength = Math.Max( input.Length, target.Length );
+
+		for ( int i = 0; i < maxLength; i++ )
+		{
+			if ( i < input.Length )
+				c += input[i];
+			else if ( i < target.Length )
+				c += target[i];
+		}
+
+		return c;
 	}
 
 }

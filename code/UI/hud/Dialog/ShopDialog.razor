@@ -1,14 +1,13 @@
-﻿@namespace TerryTyper.UI.Hud.Dialog
+﻿@namespace TerryTyper
 @attribute [StyleSheet]
 @using Sandbox.UI
-@using TerryTyper.Controller.Shop
 @inherits Dialog
 
 <root class="dialog">
 	<div class="loot-inner">
 		<div class="header"><label>New theme unlocked!</label></div>
 		<div class="body">
-			<img src="/assets/svg/coins-solid.svg">
+			<img src="@(_item.ItemIcon == null || _item.ItemIcon == "" ? "/assets/svg/coins-solid.svg" : _item.ItemIcon)">
 			<label>@_item.ItemName (@_item.ItemRarityChance%)</label>
 		</div>
 		<div class="bottom">

@@ -1,13 +1,13 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 
-namespace TerryTyper.UI.Hud.Dialog;
+namespace TerryTyper;
 
 public class DialogBase : Panel
 {
 
-	public bool AutoClose { get; set; }
-	public TimeUntil AutoCloseTimer = 15f;
+	public bool AutoClose { get; set; } = true;
+	public TimeUntil AutoCloseTimer = 5f;
 
 	public DialogBase()
 	{

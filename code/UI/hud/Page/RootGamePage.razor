@@ -1,18 +1,16 @@
-﻿@namespace TerryTyper.UI.Hud.Page
+﻿@namespace TerryTyper
 @using System
 @using Sandbox.UI
 @inherits GamePageBase
 @attribute [StyleSheet]
 
 <root>
-	<div class="container">
-		<div class="header">
-			<h1>@PageName</h1>
-			<button class="exit-button" @onclick=@(HandleClose)>X</button>
-		</div>
-		<div>
-			<div slot="navigator-canvas">
-			</div>
+	<div class="header">
+		<h1>@PageName</h1>
+		<button class="exit-button" @onclick=@(HandleClose)>X</button>
+	</div>
+	<div>
+		<div slot="navigator-canvas">
 		</div>
 	</div>
 </root>

@@ -1,4 +1,4 @@
-﻿namespace TerryTyper.UI.Hud.Page;
+﻿namespace TerryTyper;
 
 public interface IGamePage
 {

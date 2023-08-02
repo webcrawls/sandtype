@@ -1,4 +1,4 @@
-﻿@namespace TerryTyper.UI.Hud.Menu
+﻿@namespace TerryTyper
 @using System
 @using Sandbox.UI
 @attribute [StyleSheet]
@@ -17,8 +17,8 @@
 
 	public override void Tick()
 	{
-		_slider.OnValueChanged = ( v ) => TyperGame.Entity.GamePawn.Audio.Volume = (int) v;
-		_slider.Value = TyperGame.Entity.GamePawn.Audio.Volume;
+		_slider.OnValueChanged = v => AudioController.Current.Volume = (int) v;
+		_slider.Value = AudioController.Current.Volume;
 		_volumeIcon = GetIcon();
 	}
 

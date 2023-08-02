@@ -20,3 +20,11 @@ All contributions are welcome! Don't hesitate to open issues or PRs for things y
 ### Contributing Notes
 
 - 💄 Themes go in the [`code/UI/Text/Theme/Themes`](https://github.com/webcrawls/sandtype/tree/master/code/UI/Text/Theme/Themes) folder.
+- 🌐 New languages go in [`text/`](https://github.com/webcrawls/sandtype/tree/master/text).
+
+## 🌎 Useful Resources
+
+> Resources that helped during this project's development.
+
+- https://wiki.facepunch.com/sbox/
+- https://github.com/Xenthio/sbox-Modular-FPS-Base
