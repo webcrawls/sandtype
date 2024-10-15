@@ -1,5 +1,7 @@
 # ⌨ Typing with Terry
 
+> ARCHIVED - I will come back to s&box and make a new typing game again in the future :D
+
 Typing with Terry is a typing game built for the s&box platform.
 
 > _⁉️ Terry is the name of s&box's default "citizen" model._
